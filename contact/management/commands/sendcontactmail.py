@@ -1,3 +1,4 @@
+# coding=utf-8
 from django.core.management.base import BaseCommand
 from urllib.parse import unquote_plus
 from contact.models import Contact
@@ -8,10 +9,6 @@ import os
 
 class Command(BaseCommand):
     help = 'Send email collected via contact form'
-
-    # def __init__(self):
-    #     super().__init__()
-    #     self.logger = logging.getLogger('vcelnice.info')
 
     def add_arguments(self, parser):
         pass
