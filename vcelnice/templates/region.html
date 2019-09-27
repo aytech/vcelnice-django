@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+
+{% block container %}
+  <div class="jumbotron">
+    <div class="container">
+      <h2 class="text-center webcolor">Region</h2>
+      <p>
+        <img class="pull-right" src="{% static 'images/karlstejnsko.png' %}" alt="" title="" width="200" height="200">
+        Karlštejnsko je 330 km2 velká oblast s cca 40000 obyvateli. Leží mezi Prahou a Berounem a jak již název napovídá 
+        leží v jeho centru hrad Karlštejn. Hrad Karlštejn, CHKO Český kras, Koněpruské jeskyně, údolí Berounky, 
+        historický Tetín, lom Velká Amerika a plno dalších zajímavostí jakoby předurčují regionu turistický ráz.<br>
+        A také ano. Region navštíví ročně cca 1 milion návštěvníků a Karlštejnsko tak je nejnavštěvovanější venkovskou 
+        turistickou destinací v ČR. K tomu je možné přičíst ještě dlouhou tradici chataření a chalupaření. 
+        Vždyť první chalupu si zde založil druhý největší z Čechů Karel IV. již v roce 1348!
+      </p>
+      <div class="list-group">
+        <a href="http://www.karlstejnsko.info" class="list-group-item" target="_blank">
+          <strong class="webcolor">Karlštejnsko</strong>
+        </a>
+        <a href="http://toulky.kolas.cz/2010/karls104.htm" class="list-group-item" target="_blank">
+          <strong class="webcolor">Jaro na Karlštejnsku</strong>
+        </a>
+      </div>
+    </div>
+  </div>
+{% endblock %}

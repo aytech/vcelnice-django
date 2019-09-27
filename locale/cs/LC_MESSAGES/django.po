@@ -1,0 +1,184 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2019-07-22 22:05+0200\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
+
+#: contact/forms.py:12 contact/forms.py:16
+msgid "Email address"
+msgstr "Vaše emailová adresa"
+
+#: contact/forms.py:13 contact/forms.py:17
+msgid "Contact message"
+msgstr "Text zprávy"
+
+#: contact/forms.py:21 prices/forms.py:12 prices/forms.py:13
+msgid "Enter a valid email address."
+msgstr "Zadejte platnou e-mailovou adresu."
+
+#: contact/forms.py:24
+msgid "Please enter your message."
+msgstr "Prosím, zadejte svou zprávu"
+
+#: contact/models.py:6
+msgid "email"
+msgstr "Emailová adresa"
+
+#: contact/models.py:7
+msgid "body"
+msgstr "Text"
+
+#: contact/models.py:12
+msgid "Contact"
+msgstr "Kontakt"
+
+#: contact/models.py:13
+msgid "Contacts"
+msgstr "Kontakty"
+
+#: contact/models.py:23
+msgid "Contact address"
+msgstr "Kontaktní adresa"
+
+#: contact/models.py:24
+msgid "Contact addresses"
+msgstr "Kontaktní adresy"
+
+#: contact/models.py:32
+msgid "phone number"
+msgstr "telefonní číslo"
+
+#: contact/models.py:33
+msgid "phone numbers"
+msgstr "telefonní čísla"
+
+#: documents/models.py:12
+msgid "Document"
+msgstr "Dokument"
+
+#: documents/models.py:13
+msgid "Documents"
+msgstr "Dokumenty"
+
+#: home/models.py:9 news/models.py:9 recipe/models.py:9
+msgid "Title"
+msgstr "Nadpis"
+
+#: home/models.py:10 news/models.py:10
+msgid "Body"
+msgstr "Text"
+
+#: home/models.py:11 news/models.py:11 recipe/models.py:10 video/models.py:18
+msgid "Thumbnail"
+msgstr "Miniatura"
+
+#: home/models.py:25 home/models.py:26
+msgid "Home text"
+msgstr "Text domovské stránky"
+
+#: news/apps.py:7 news/models.py:33
+msgid "news"
+msgstr "Novinky"
+
+#: news/models.py:12 recipe/models.py:14
+msgid "Created"
+msgstr "Vytvořeno"
+
+#: news/models.py:13 recipe/models.py:15
+msgid "Updated"
+msgstr "Aktualizováno"
+
+#: news/models.py:32
+msgid "news article"
+msgstr "Novinka"
+
+#: recipe/models.py:11
+msgid "Preview"
+msgstr "Náhled"
+
+#: recipe/models.py:12
+msgid "Preview for recipe thumbnails, maximum 150 characters"
+msgstr "Náhled pro miniatury receptů, maximálně 150 znaků"
+
+#: recipe/models.py:13
+msgid "Recipe text"
+msgstr "Text receptu"
+
+#: vcelnice/urls.py:27
+msgid "Administration"
+msgstr "Správa"
+
+#: video/admin.py:19
+msgid "Not ready"
+msgstr "Není připraveno"
+
+#: video/admin.py:21
+msgid "Uploaded"
+msgstr "Nahráno"
+
+#: video/admin.py:23
+msgid "Scheduled for update"
+msgstr "Ve frontě na aktualizaci"
+
+#: video/admin.py:25
+msgid "Scheduled for upload"
+msgstr "Ve frontě na nahrání"
+
+#: video/admin.py:27
+msgid "Scheduled for deletion"
+msgstr "Ve frontě na vymazání"
+
+#: video/admin.py:35
+msgid "Video deletion has been scheduled"
+msgstr "Video přidáno do fronty na vymazání"
+
+#: video/admin.py:43
+msgid ""
+"Only metadata will be updated on Youtube. To update video, remove and "
+"recreate the item"
+msgstr ""
+"Na Youtube budou aktualizovány pouze metadata. Pro nahrání nového videa je "
+"nutné vytvořit novou položku."
+
+#: video/forms.py:19
+msgid "Invalid file, allowed files must have one of these extensions: "
+msgstr ""
+"Neplatný soubor, povoleny soubory musí mít jednu z následujících přípon: "
+
+#: video/models.py:15
+msgid "Caption"
+msgstr "Nadpis"
+
+#: video/models.py:16
+msgid "Description"
+msgstr "Popis"
+
+#: video/models.py:17
+msgid "File"
+msgstr "Soubor"
+
+#: video/models.py:20
+msgid "Category"
+msgstr "Kategorie"
+
+#: video/models.py:22
+msgid "Add tags to the video, separated by commas"
+msgstr "Tagy pro video, více tagů oddělit čárkami"
+
+#: video/models.py:23
+msgid "Tags"
+msgstr "Tagy"

@@ -1,0 +1,6 @@
+.idea
+**/*__pycache__
+**/*.sqlite3
+vcelnice/common/.credentials
+vcelnice/logs
+vcelnice/media

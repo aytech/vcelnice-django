@@ -1,0 +1,54 @@
+<div class="modal fade" id="reserve-modal" tabindex="-1" role="dialog" aria-labelledby="reserve-trigger">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <h4 class="modal-title webcolor">
+          <i class="fa fa-forumbee"></i>&nbsp;
+          Rezervovat
+          <span id="reserve-title"></span>
+        </h4>
+      </div>
+      <div class="modal-body">
+        <form method="post" id="reserve-form">{% csrf_token %}
+          <div class="form-group">
+            <label for="reserve-num">Počet sklenic</label>
+            <select class="form-control" id="reserve-num">
+              {% for number in range %}
+                <option value="{{ number }}">
+                  {{ number }}
+                </option>
+              {% endfor %}
+            </select>
+          </div>
+          <div class="form-group" id="reserve-email">
+            <div class="alert alert-danger alert-sm error text-center hidden" role="alert"></div>
+            <div class="input-group">
+             <span class="input-group-addon" id="sender-addon">
+               <i class="fa fa-envelope webcolor"></i>
+             </span>
+             <input type="text" class="form-control" placeholder="Vaše emailová adresa" aria-describedby="sender-addon">
+            </div>
+          </div>
+          <div class="form-group">
+            <textarea class="form-control" id="reserve-note" placeholder="Poznámka pro včelaře" rows="5"></textarea>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer" id="form-footer">
+        <div class="alert alert-danger alert-sm error text-center hidden" role="alert"></div>
+        <div class="alert alert-success alert-sm success text-center hidden" role="alert"></div>
+        <button type="button" class="btn btn-primary" id="form-send">
+          <i class="fa fa-paper-plane"></i>&nbsp;
+          Odeslat
+        </button>
+        <button type="button" class="btn btn-danger" id="form-clear" data-dismiss="modal">
+          <i class="fa fa-times"></i>&nbsp;
+          Zavřít
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

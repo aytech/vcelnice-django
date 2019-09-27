@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% block container %}
+  <div class="jumbotron">
+    <div class="container">
+      <h2 class="text-center webcolor">Certifikáty</h2>
+
+      {% if docs %}
+        <div class="list-group">
+          {% for doc in docs %}
+            <a href="{{ MEDIA_URL }}{{ doc.file }}" class="list-group-item" title="{{ doc.description }}" target="_blank">
+              {% if doc.type == 'application/pdf' %}
+                <i class="fa fa-file-pdf-o fa-2x text-danger"></i>
+              {% endif %}
+              <strong>{{ doc.description }}</strong>
+            </a>
+          {% endfor %}
+        </div>
+      {% else %}
+        <div class="alert alert-danger text-center" role="alert">
+          <strong>certifikáty nenalezeny</strong>
+        </div>
+      {% endif %}
+    </div>
+  </div>
+{% endblock %}

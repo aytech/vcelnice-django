@@ -1,0 +1,73 @@
+{% extends 'base.html' %}
+
+{% block container %}
+  <div class="jumbotron">
+    <div class="container">
+      <h2 class="text-center webcolor">Recepty</h2>
+      <div class="row recipes">
+        {% if recipes %}
+          {% for recipe in recipes %}
+            <div class="col-sm-6 col-md-4">
+              <div class="recipe thumbnail">
+                {% if recipe.thumb %}
+                  <img src="{{ MEDIA_URL }}{{ recipe.thumb }}" alt="{{ recipe.title }}" title="{{ recipe.title }}" class="recipe-image thumbnail">
+                {% else %}
+                  <div class="text-center recipe-image-default">
+                    <span class="fa-stack fa-lg fa-5x">
+                      <i class="fa fa-square-o fa-stack-2x webcolor"></i>
+                      <i class="fa fa-cutlery fa-stack-1x text-danger"></i>
+                    </span>
+                  </div>
+                {% endif %}
+                <div class="caption">
+                  <h3 class="webcolor">
+                    {{ recipe.title | truncatechars:50 }}
+                    <span class="sr-only recipe-title">{{ recipe.title }}</span>
+                  </h3>
+                  <p>
+                    {% if recipe.preview %}
+                      {{ recipe.preview | truncatechars:150 }}
+                    {% else %}
+                      {{ recipe.text | safe | truncatechars_html:80 }}
+                    {% endif %}
+                    <div class="hidden recipe-body">
+                      {{ recipe.text | safe }}
+                    </div>
+                  </p>
+                </div>
+              </div>
+              <a href="#" class="btn btn-default btn-block read-more" role="button">
+                Číst ...
+              </a>
+            </div>
+          {% endfor %}
+        {% else %}
+          <div class="col-xs-12">
+            <div class="alert alert-danger text-center" role="alert">
+              <strong>recepty nenalezeny</strong>
+            </div>
+          </div>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+  
+  <div class="modal fade" id="modal-recipe" tabindex="-1" role="dialog">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+          <h4 class="modal-title"></h4>
+        </div>
+        <div class="modal-body"></div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">
+            Zavřít
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}

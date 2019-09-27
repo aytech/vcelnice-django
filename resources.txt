@@ -1,0 +1,17 @@
+AJAX form submit:
+https://realpython.com/blog/python/django-and-ajax-form-submissions/
+
+Django Simple captcha:
+http://django-simple-captcha.readthedocs.org/en/latest/
+
+Use Postgres:
+https://www.digitalocean.com/community/tutorials/how-to-use-postgresql-with-your-django-application-on-ubuntu-14-04
+
+Migrate to Postgres:
+http://matthewwittering.com/blog/how-to-migrating-the-database-engine-for-django.html
+
+Django management commands:
+https://docs.djangoproject.com/en/1.9/ref/django-admin/#dumpdata-app-label-app-label-app-label-model
+
+Fabric:
+https://django-fab-deploy.readthedocs.org/en/0.7.5/index.html
