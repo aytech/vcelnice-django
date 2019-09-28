@@ -177,6 +177,7 @@ STATICFILES_DIRS = (
     os.path.join(APP_DIR, 'client', 'dist'),
     os.path.join(APP_DIR, 'client', 'dist', 'assets'),
 )
+LOGS_DIR = os.path.join(os.path.dirname(BASE_DIR), 'vcelnice', 'logs')
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, "media")
@@ -196,3 +197,6 @@ YOUTUBE_STATUS_PENDING_DELETE = 4
 YOUTUBE_STATUS_DELETED = 5
 
 FALLBACK_IMAGES_NATURE_URL = 'http://lorempixel.com/200/200/nature'
+
+ADMIN_EMAIL_ADDRESS = 'Oleg Yapparov <oyapparov@gmail.com>'
+BCC_EMAIL_RECIPIENTS = ['Oleg Yapparov <oyapparov@gmail.com>']

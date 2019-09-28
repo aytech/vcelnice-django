@@ -6,9 +6,11 @@ from vcelnice.common.gmail import Gmail
 import logging
 import os
 
-
 class Command(BaseCommand):
     help = 'Send email collected via contact form'
+
+    def __init__(self):
+        self.logger = logging.getLogger('vcelnice.info')
 
     def add_arguments(self, parser):
         pass
@@ -35,5 +37,6 @@ class Command(BaseCommand):
             )
 
             if gmail.send_email(message_data):
+                self.logger.info('Contact email was sent to {0} with text {1}'.format(contact.email, contact.message))
                 contact.deleted = True
                 contact.save()

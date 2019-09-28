@@ -3,19 +3,26 @@ from django.core.management.base import BaseCommand
 from urllib.parse import unquote_plus
 from prices.models import Reservation
 from vcelnice.common.gmail import Gmail
+import logging
 import os
 
 
 class Command(BaseCommand):
     help = 'Send reservation emails'
+    LOGGER_NAME = 'vcelnice.info'
+    SETTING_NAME = 'DJANGO_SETTINGS_MODULE'
+    ENV_DEVELOPMENT = 'vcelnice.settings.development'
+
+    def __init__(self):
+        self.logger = logging.getLogger(self.LOGGER_NAME)
 
     def add_arguments(self, parser):
         pass
 
     def handle(self, *args, **options):
-        env = os.environ['DJANGO_SETTINGS_MODULE']
+        env = os.environ[self.SETTING_NAME]
 
-        if env == 'vcelnice.settings.development':
+        if env == self.ENV_DEVELOPMENT:
             from vcelnice.settings import development as settings
         else:
             from vcelnice.settings import production as settings
@@ -25,13 +32,23 @@ class Command(BaseCommand):
         if reservation is not None:
             gmail = Gmail()
             message_data = dict(
-                text='<strong>Položka:</strong> %s<br/><strong>Pocet:</strong> %i<br/><strong>Poznámka:</strong> '
-                     '%s<br/><strong>Vyzvednutí:</strong> %s' % (
-                         reservation.title,
-                         reservation.amount,
-                         unquote_plus(reservation.message),
-                         'Nespecifikováno' if reservation.location is None else reservation.location
-                     ),
+                html='''
+<strong>
+    Položka:
+</strong> {0}<br/>
+<strong>
+    Pocet:
+</strong> {1}<br/>
+<strong>
+    Poznámka:
+</strong> {2}<br/>
+<strong>
+    Vyzvednutí:
+</strong> {3}             
+'''.format(
+                    reservation.title, reservation.amount, unquote_plus(reservation.message),
+                    'Nespecifikováno' if reservation.location is None else reservation.location
+                ),
                 to=','.join(settings.TO_EMAIL_RECIPIENTS),
                 bcc=','.join(settings.BCC_EMAIL_RECIPIENTS),
                 reply_to=reservation.email,
@@ -40,5 +57,7 @@ class Command(BaseCommand):
             )
 
             if gmail.send_email(message_data):
+                self.logger.info(
+                    'Message from {0} was sent with message {1}'.format(reservation.email, reservation.message))
                 reservation.deleted = True
                 reservation.save()

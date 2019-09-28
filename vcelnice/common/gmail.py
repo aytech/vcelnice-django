@@ -22,7 +22,7 @@ class Gmail:
 
     @staticmethod
     def create_text_email(message_data):
-        message = MIMEMultipart('alternative')
+        message = MIMEMultipart()
         # Headers
         message['to'] = message_data['to']
         message['bcc'] = message_data['bcc']
@@ -30,10 +30,21 @@ class Gmail:
         message['subject'] = message_data['subject']
         message.add_header('reply-to', message_data['reply_to'])
         # Body
-        message.attach(MIMEText(message_data['text'], 'plain'))
-        message.attach(MIMEText(message_data['text'], 'html'))
+        if 'text' in message_data.keys():
+            message.attach(MIMEText(message_data['text'], 'plain'))
+        if 'html' in message_data.keys():
+            message.attach(MIMEText(message_data['html'], 'html'))
+        # Attachments
+        if 'attachments' in message_data.keys():
+            attachments = message_data['attachments']
+            if len(attachments) > 0:
+                for data in attachments:
+                    with open(data['path']) as file_handler:
+                        attachment = MIMEText(file_handler.read(), _subtype=data['type'])
+                        attachment.add_header('Content-Disposition', 'attachment', filename=data['name'])
+                        message.attach(attachment)
 
-        return base64.urlsafe_b64encode(message.as_bytes())
+        return base64.urlsafe_b64encode(message.as_string().encode('utf-8'))
 
     def get_credentials(self):
         cred_dir = os.path.dirname(os.path.abspath(__file__))

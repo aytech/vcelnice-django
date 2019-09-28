@@ -35,4 +35,3 @@ INSTALLED_APPS += [
 INTERNAL_IPS = ('10.0.2.2',)
 
 TO_EMAIL_RECIPIENTS = ['Oleg Yapparov <oyapparov@gmail.com>']
-BCC_EMAIL_RECIPIENTS = ['Oleg Yapparov <oyapparov@gmail.com>']
