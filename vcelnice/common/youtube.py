@@ -41,8 +41,8 @@ class Youtube:
     def __init__(self):
         self.cwd = os.path.dirname(os.path.abspath(__file__))
         self.CLIENT_CREDENTIALS = os.path.join(self.cwd, 'auth.dat')
-        self.youtube = self.get_authenticated_service()
         self.logger = logging.getLogger('vcelnice.info')
+        self.youtube = self.get_authenticated_service()
 
     def get_authenticated_service(self):
         cred_dir = os.path.dirname(os.path.abspath(__file__))
