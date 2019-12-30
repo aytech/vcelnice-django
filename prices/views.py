@@ -1,34 +1,26 @@
-from django.http import JsonResponse
-from django.shortcuts import render
-from .forms import ReservationForm
+from rest_framework import status
+from rest_framework.decorators import api_view
+from rest_framework.response import Response
+
+from contact.models import ContactAddress
+from vcelnice.serializers.PriceSerializer import PriceSerializer
 from .models import Price
+from .serializers.ContactAddressSerializer import ContactAddressSerializer
 
 
-def home(request):
-    if request.method == 'POST':
-        return reservation(request)
-
-    context = {
-        'prices': Price.objects.all(),
-        'range': range(1, 11)
-    }
-    return render(request, 'prices.html', context)
+@api_view(["GET"])
+def location_list(request):
+    if request.method == "GET":
+        locations = ContactAddress.objects.all()
+        serializer = ContactAddressSerializer(locations, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+    return Response(None, status=status.HTTP_400_BAD_REQUEST)
 
 
-def reservation(request):
-    form = ReservationForm(request.POST)
-    response = {
-        'success': False,
-        'message': None
-    }
-
-    if form.is_valid():
-        response['success'] = True
-        form.save()
-    else:
-        errors = form.errors.as_data()
-        for error in errors:
-            response['message'] = ''.join(errors[error][0])
-            break
-
-    return JsonResponse(response)
+@api_view(['GET'])
+def prices_list(request):
+    if request.method == 'GET':
+        prices = Price.objects.all()
+        serializer = PriceSerializer(prices, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+    return Response(None, status=status.HTTP_400_BAD_REQUEST)

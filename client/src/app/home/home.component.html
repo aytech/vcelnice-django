@@ -1,0 +1,41 @@
+<div class="container">
+  <div class="news">
+    <div class="row">
+      <div class="col-12 col-sm-6 col-md-6 col-lg-4 col-xl-3 card-container"
+           *ngFor="let article of articles; let i = index">
+        <div class="card" (click)="modal.open(article.title, article.text)">
+          <!--suppress HtmlUnknownTarget -->
+          <img *ngIf="!article.icon" class="card-img-top default"
+               src="/assets/images/default-card.png" alt="{{ article.title }}">
+          <img *ngIf="article.icon" class="card-img-top"
+               src="{{ article.icon }}" alt="{{ article.title }}">
+          <div class="card-body">
+            <h5 class="card-title">{{ article.title }}</h5>
+            <p class="card-text" [innerHTML]="article.text"></p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="jumbotron intro">
+    <div *ngIf="home">
+      <h1>{{ home.title }}</h1>
+      <div class="row">
+        <div class="col-12 col-md-6 col-lg-7 main-text" [innerHTML]="home.text"></div>
+        <div class="col-12 col-md-6 col-lg-5 text-center">
+          <img src="{{ home.icon }}" alt="">
+        </div>
+      </div>
+    </div>
+    <div class="home" *ngIf="loading">
+      <div class="spinner" *ngIf="loading">
+        <!--suppress HtmlUnknownTarget -->
+        <img src="/assets/spinner_horizontal.svg" alt="Loading...">
+      </div>
+    </div>
+    <div class="alert alert-danger text-center" role="alert" *ngIf="error">
+      <strong>neočekávaná chyba</strong>
+    </div>
+  </div>
+</div>
+<app-modal #modal></app-modal>

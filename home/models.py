@@ -6,10 +6,12 @@ import os
 
 
 class Home(models.Model):
+    objects = models.Manager()
     title = models.CharField(max_length=100, verbose_name=_('Title'))
     text = models.TextField(verbose_name=_('Body'))
     icon = models.ImageField(upload_to='news', max_length=100, null=True, blank=True, verbose_name=_('Thumbnail'))
 
+    # noinspection PyUnresolvedReferences
     def save(self, force_insert=False, force_update=False, using=None, update_fields=None):
         if hasattr(self.icon.file, 'content_type'):
             uploader = ImageUploader(self.icon, 'png')

@@ -1,0 +1,32 @@
+<div class="container">
+  <div class="jumbotron">
+    <h2 class="text-center web-color">Recepty</h2>
+    <hr>
+    <div class="row recipes" *ngIf="recipes.length">
+      <div class="col-12 col-sm-12 col-md-6 col-lg-4 col-xl-3 card-container"
+           *ngFor="let recipe of recipes; let i = index">
+        <div class="card" (click)="modal.open(recipe.title, recipe.text)">
+          <!--suppress HtmlUnknownTarget -->
+          <img *ngIf="!recipe.thumb" class="card-img-top default"
+               src="/assets/images/default.png" alt="{{ recipe.title }}">
+          <img *ngIf="recipe.thumb" class="card-img-top"
+               src="{{ recipe.thumb }}" alt="{{ recipe.title }}">
+          <div class="card-body">
+            <h5 class="card-title">{{ recipe.title }}</h5>
+            <p class="card-text" [innerHTML]="recipe.preview"></p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-xs-12" *ngIf="!recipes.length">
+      <div class="spinner" *ngIf="loading">
+        <!--suppress HtmlUnknownTarget -->
+        <img src="/assets/spinner_horizontal.svg" alt="Loading...">
+      </div>
+      <div class="alert alert-danger text-center" role="alert" *ngIf="!loading">
+        <strong>recepty nenalezeny</strong>
+      </div>
+    </div>
+  </div>
+</div>
+<app-modal #modal></app-modal>

@@ -1,6 +1,6 @@
 from django.db import models
+from django.utils.translation import ugettext_lazy as _
 
-from vcelnice import settings
 from vcelnice.common.image import ImageUploader
 from django.core.files.uploadedfile import SimpleUploadedFile
 import os
@@ -16,19 +16,18 @@ class PhotoQuerySet(models.QuerySet):
 
 class Photo(models.Model):
     objects = PhotoQuerySet.as_manager()
-    caption = models.CharField(max_length=100)
-    image = models.ImageField(upload_to='photo/', max_length=250, null=False, blank=False)
+    caption = models.CharField(max_length=100, verbose_name=_("Caption"))
+    image = models.ImageField(upload_to='photo/', max_length=250, null=False, blank=False, verbose_name=_("Image"))
     thumb = models.ImageField(upload_to='photo/thumb/', max_length=250, null=False, blank=False)
     width = models.IntegerField(null=True, blank=True)
     height = models.IntegerField(null=True, blank=True)
-    created = models.DateTimeField(auto_now_add=True, auto_now=False)
+    created = models.DateTimeField(auto_now_add=True, auto_now=False, verbose_name=_("Created"))
 
+    # noinspection PyUnresolvedReferences
     def save(self, force_insert=False, force_update=False, using=None,
              update_fields=None):
-
         if self.image:
             photo = Photo.objects.filter(image=self.image)
-
             if len(photo) == 0:
                 uploader = ImageUploader(self.image)
                 image_handle = uploader.save(800, 600)
@@ -38,7 +37,6 @@ class Photo(models.Model):
                                                  content_type=self.image.file.content_type)
                 thumb_field = SimpleUploadedFile(self.image.name, thumb_handle.read(),
                                                  content_type=self.image.file.content_type)
-
                 self.image.save('%s.%s' % (os.path.splitext(self.image.name)[0], 'jpg'), image_field, save=False)
                 self.thumb.save('%s_thumbnail.%s' % (os.path.splitext(self.image.name)[0], 'png'), thumb_field,
                                 save=False)
@@ -53,3 +51,7 @@ class Photo(models.Model):
 
     def __str__(self):
         return self.caption
+
+    class Meta:
+        verbose_name = _("Photo")
+        verbose_name_plural = _("Photos")

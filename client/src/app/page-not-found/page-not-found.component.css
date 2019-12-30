@@ -1,0 +1,28 @@
+#content {
+  margin-top: -70px;
+  position: relative;
+}
+
+#title {
+  position: absolute;
+  top: 70px;
+  text-align: center;
+  width: 100%;
+}
+
+@font-face { 
+  font-family: 'Geo';
+  /*noinspection CssUnknownTarget*/
+  src: url('/assets/fonts/Geo-Regular.ttf') format('truetype')
+}
+
+#title h3 {
+  color: #fff;
+  font-family: 'Geo', sans-serif;
+  font-weight: 500;
+}
+
+video {
+  width: 100%;
+  height: 100%;
+}

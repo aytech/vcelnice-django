@@ -35,7 +35,7 @@ Run:
     
 7. Run server:
 
-    `python manage.py runserver 0.0.0.0:2020 --settings=vcelnice.settings.development`
+    `python manage.py runserver 0.0.0.0:8888 --settings=vcelnice.settings.development`
     
 Client:
 
@@ -66,3 +66,21 @@ Deployment:
 2. Collect static files, from project directory:
 
     `python manage.py collectstatic`
+    
+Localizing:
+
+1. Import translator:
+    
+    `from django.utils.translation import ugettext_lazy as _`
+
+2. Localize fields:
+
+    - Model names: `name = models.TextField(_("Some help text"))`
+
+3. Update translation files:
+
+    `django-admin makemessages -a` or `django-admin makemessages -l cs`
+    
+4. After all strings are translated, compile:
+
+    `django-admin compilemessages`

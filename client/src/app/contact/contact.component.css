@@ -1,0 +1,22 @@
+.btn {
+  margin-bottom: 5px;
+  margin-right: 5px;
+}
+
+.content {
+  overflow: hidden;
+}
+
+.content > a, .content > button {
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.portrait {
+  padding-bottom: 10px;
+}
+
+img {
+  width: 100%;
+}

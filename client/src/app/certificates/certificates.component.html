@@ -1,0 +1,33 @@
+<div class="container">
+  <div class="jumbotron">
+    <h2 class="text-center web-color">Certifikáty</h2>
+    <hr>
+    <div class="row" *ngIf="certificates.length">
+      <div class="col-12 col-sm-12 col-md-6 col-lg-4 col-xl-3 card-container" *ngFor="let certificate of certificates;">
+        <div class="card">
+          <a
+            href="{{ certificate.file }}"
+            class="text-center"
+            title="{{ certificate.description }}"
+            target="_blank">
+              <span class="fa-stack fa-lg fa-4x" *ngIf="isPdf(certificate)">
+                <i class="fa fa-file-pdf-o fa-stack-1x text-danger"></i>
+              </span>
+          </a>
+          <div class="card-body">
+            <h5 class="card-title text-center">{{ certificate.description }}</h5>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-xs-12" *ngIf="!certificates.length">
+      <div class="spinner" *ngIf="loading">
+        <!--suppress HtmlUnknownTarget -->
+        <img src="/assets/spinner_horizontal.svg" alt="Loading...">
+      </div>
+      <div class="alert alert-danger text-center" role="alert" *ngIf="!loading">
+        <strong>certifikáty nenalezeny</strong>
+      </div>
+    </div>
+  </div>
+</div>

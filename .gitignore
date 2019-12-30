@@ -1,6 +1,13 @@
 .idea
+**/migrations
 **/*__pycache__
 **/*.sqlite3
+
+Client files
+**/*node_modules
+
+# Django generated translations
+**/*.mo
 vcelnice/common/.credentials
 vcelnice/logs
 vcelnice/media

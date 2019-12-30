@@ -1,0 +1,140 @@
+.btn-web {
+  background-color: #ee9c22;
+  border-color: #b6720e;
+}
+.btn-web:active:hover,
+.btn-web:active:focus,
+.btn-web:focus,
+.btn-web:hover {
+  background-color: #f3bc69;
+  border-color: #ee9c22;
+  outline: 5px auto #f3bc69;
+}
+
+.footer, .navbar, .container {
+  min-width: 290px;
+}
+
+.navbar-brand {
+  padding: 0 15px;
+}
+
+.navbar {
+  background-color: #ee9c22;
+  background-color: rgba(238, 156, 34, .9);
+  border-color: #ee9c22;
+  font-size: 1rem;
+  font-weight: 500;
+}
+
+.navbar .navbar-nav > li > a {
+  color: #fff;
+}
+
+.navbar .navbar-nav > li {
+  padding-left: 2px;
+}
+
+.navbar-dark .navbar-nav .nav-link:active,
+.navbar-dark .navbar-nav .nav-link:focus,
+.navbar-dark .navbar-nav .nav-link:hover {
+  background-color: #ee9c22;
+  color: rgba(255, 255, 255, 1);
+}
+.navbar button.navbar-toggler {
+  outline: none;
+}
+.navbar .navbar-toggler:hover,
+.navbar .navbar-toggler:focus {
+  background-color: #f3bc69;
+}
+
+.navbar .navbar-collapse {
+  border-color: #ee9c22;
+}
+.navbar .navbar-collapse > ul > li > a {
+  text-align: center;
+}
+
+.navbar-dark .navbar-nav .nav-link {
+  color: rgba(255, 255, 255, .8);
+}
+
+.button-striped {
+  background-image: -webkit-gradient(linear, 0 100%, 100% 0, color-stop(0.25, rgba(255, 255, 255, 0.15)), color-stop(0.25, transparent), color-stop(0.5, transparent), color-stop(0.5, rgba(255, 255, 255, 0.15)), color-stop(0.75, rgba(255, 255, 255, 0.15)), color-stop(0.75, transparent), to(transparent));
+  background-image: -webkit-linear-gradient(-90deg, rgba(255, 255, 255, 0.15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.15) 50%, rgba(255, 255, 255, 0.15) 75%, transparent 75%, transparent);
+  background-image: -moz-linear-gradient(-90deg, rgba(255, 255, 255, 0.15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.15) 50%, rgba(255, 255, 255, 0.15) 75%, transparent 75%, transparent);
+  background-image: -ms-linear-gradient(-90deg, rgba(255, 255, 255, 0.15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.15) 50%, rgba(255, 255, 255, 0.15) 75%, transparent 75%, transparent);
+  background-image: -o-linear-gradient(-90deg, rgba(255, 255, 255, 0.15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.15) 50%, rgba(255, 255, 255, 0.15) 75%, transparent 75%, transparent);
+  background-image: linear-gradient(-90deg, rgba(255, 255, 255, 0.15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.15) 50%, rgba(255, 255, 255, 0.15) 75%, transparent 75%, transparent);
+  -webkit-background-size: 40px 40px;
+  -moz-background-size: 40px 40px;
+  -o-background-size: 40px 40px;
+  background-size: 40px 40px;
+}
+.button-striped-active {
+  -webkit-animation: progress-bar-stripes 1s linear infinite;
+  -moz-animation: progress-bar-stripes 1s linear infinite;
+  animation: progress-bar-stripes 1s linear infinite;
+}
+
+.recipe p {
+  font-size: 16px;
+}
+
+html {
+  position: relative;
+  min-height: 100%;
+}
+
+body {
+  background: url('/assets/images/pozadi.jpg') repeat-x #090a0c;
+  margin: 4rem auto;
+  padding-bottom: 1rem;
+}
+
+h2.title {
+  margin-bottom: 1.5rem;
+}
+
+.jumbotron {
+  padding: 1.5rem;
+  margin-bottom: 3rem;
+}
+
+.strong {
+  font-weight: bold;
+}
+
+.web-color {
+  color: #ee9c22;
+}
+
+.spinner {
+  display: flex;
+  height: 40px;
+  justify-content: center;
+}
+
+.modal-body > p {
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+@media (min-width: 768px) {
+  .navbar .navbar-collapse {
+    height: 20px;
+  }
+}
+
+@media (max-width: 328px) {
+  .jumbotron {
+    margin-bottom: 4rem;
+  }
+}
+
+@media (max-width: 314px) {
+  .jumbotron {
+    margin-bottom: 5rem;
+  }
+}

@@ -21,6 +21,7 @@ from django.urls import re_path
 from django.views.static import serve
 
 from vcelnice import views
+from prices import views as prices
 from client import views as client
 from django.utils.translation import ugettext_lazy as _
 
@@ -45,14 +46,15 @@ urlpatterns = [
     url(r'^api/v1/home/', views.home_text, name='Home GET API'),
     url(r'^api/v1/news/', views.news_list, name='News GET API'),
     url(r'^api/v1/photos/', views.photo_list, name='Photo GET API'),
-    url(r'^api/v1/prices/', views.prices_list, name='Prices GET API'),
-    url(r'^api/v1/locations/', views.location_list, name='Locations GET API'),
+    url(r'^api/v1/prices/', prices.prices_list, name='Prices GET API'),
+    url(r'^api/v1/locations/', prices.location_list, name='Locations GET API'),
     url(r'^api/v1/recipes/', views.recipe_list, name='Recipe GET API'),
     url(r'^api/v1/certificates/', views.certificate_list, name='Certificates GET API'),
     url(r'^api/v1/videos/', views.video_list, name='Recipe GET API'),
     url(r'^api/v1/reserve/', views.reserve, name='Reservation POST API'),
     url(r'^api/v1/contact/', views.contact, name='Contact POST API'),
     url(r'^api/v1/token/', views.csrf_token, name='CSRF token GET API'),
+    url(r'^api/v1/cultures/', views.get_cultures, name='Get translations'),
 
     # Media
     re_path(r'^media/(?P<path>.*)$', serve, {

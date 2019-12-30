@@ -1,28 +1,25 @@
-from django.middleware.csrf import get_token
 from django.core.exceptions import ObjectDoesNotExist
+from django.middleware.csrf import get_token
+from django.utils.translation import activate, ugettext_lazy as _
 from rest_framework import status
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 
-from contact.models import ContactAddress
+from documents.models import Document
 from home.models import Home
 from news.models import Article
 from photo.models import Photo
-from prices.models import Price
 from recipe.models import Recipe
-from documents.models import Document
-from vcelnice.serializers.ContactAddressSerializer import ContactAddressSerializer
+from vcelnice.serializers.CertificateSerializer import CertificateSerializer
 from vcelnice.serializers.ContactSerializer import ContactSerializer
-from vcelnice.settings import YOUTUBE_STATUS_PENDING_UPLOAD
-from video.models import Video
 from vcelnice.serializers.HomeSerializer import HomeSerializer
 from vcelnice.serializers.NewsSerializer import NewsSerializer
 from vcelnice.serializers.PhotoSerializer import PhotoSerializer
-from vcelnice.serializers.PriceSerializer import PriceSerializer
 from vcelnice.serializers.RecipeSerializer import RecipeSerializer
 from vcelnice.serializers.ReservationSerializer import ReservationSerializer
-from vcelnice.serializers.CertificateSerializer import CertificateSerializer
 from vcelnice.serializers.VideoSerializer import VideoSerializer
+from vcelnice.settings import YOUTUBE_STATUS_PENDING_UPLOAD
+from video.models import Video
 
 
 @api_view(['GET'])
@@ -52,24 +49,6 @@ def photo_list(request):
     if request.method == 'GET':
         news = Photo.objects.order_by('-created').all()
         serializer = PhotoSerializer(news, many=True)
-        return Response(serializer.data)
-    return Response(None, status=status.HTTP_400_BAD_REQUEST)
-
-
-@api_view(['GET'])
-def prices_list(request):
-    if request.method == 'GET':
-        news = Price.objects.all()
-        serializer = PriceSerializer(news, many=True)
-        return Response(serializer.data)
-    return Response(None, status=status.HTTP_400_BAD_REQUEST)
-
-
-@api_view(['GET'])
-def location_list(request):
-    if request.method == 'GET':
-        locations = ContactAddress.objects.all()
-        serializer = ContactAddressSerializer(locations, many=True)
         return Response(serializer.data)
     return Response(None, status=status.HTTP_400_BAD_REQUEST)
 
@@ -130,3 +109,38 @@ def contact(request):
         else:
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     return Response(None, status=status.HTTP_400_BAD_REQUEST)
+
+
+@api_view(["GET"])
+def get_cultures(request):
+    query_params = request.query_params
+    if "locale" in query_params:
+        activate(query_params["locale"])
+    cultures = {
+        "amount_description": _("Number of glasses"),
+        "certificates": _("Certificates"),
+        "close": _("Close"),
+        "contact": _("Contact"),
+        "czk": _("CZK"),
+        "enter_email": _("Enter a valid email address"),
+        "enter_amount": _("Enter amount"),
+        "error_empty_message": _("Please enter your message"),
+        "home": _("Home"),
+        "loading": _("Loading"),
+        "news": _("News"),
+        "not_in_store": _("Not in store"),
+        "ok_message_sent": _("Message was sent, thank you"),
+        "photo": _("Photo"),
+        "pickup_location": _("Pickup location"),
+        "price_list": _("Price list"),
+        "prices_not_found": _("Prices not found"),
+        "recipes": _("Recipes"),
+        "region": _("Region"),
+        "reservation_ok": _("Reservation was sent, thank you"),
+        "reserve": _("Reserve"),
+        "send": _("Send"),
+        "server_error": _("Server error, please try again later"),
+        "video": _("Video"),
+        "your_email": _("Your email address")
+    }
+    return Response(cultures, status=status.HTTP_200_OK)

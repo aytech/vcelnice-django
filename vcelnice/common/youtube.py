@@ -1,6 +1,12 @@
 #!/usr/bin/python
 # Code samples:
 # https://developers.google.com/youtube/v3/code_samples/python#retrieve_my_uploads
+import argparse
+import json
+import sys
+from google_auth_oauthlib.flow import Flow
+from google_auth_oauthlib.flow import InstalledAppFlow
+
 import httplib2
 import logging
 import random
@@ -12,6 +18,8 @@ from googleapiclient.discovery import build
 from googleapiclient.errors import HttpError
 from googleapiclient.http import MediaFileUpload
 from oauth2client.file import Storage
+from oauth2client.client import flow_from_clientsecrets
+from oauth2client.tools import run_flow, argparser
 
 
 class Youtube:
@@ -21,6 +29,7 @@ class Youtube:
     API_KEY = 'AIzaSyAyatqlKdkU13xmdJMNr0xPSEdqnT-WLs8'
     CREDENTIALS_DIR = '.credentials'
     CLIENT_SECRET_FILE = 'youtube-python-vcelnice.json'
+    CLIENT_OAUTH2_FILE = 'youtube-oauth2.json'
 
     # Maximum number of times to retry before giving up.
     MAX_RETRIES = 10
@@ -37,32 +46,126 @@ class Youtube:
     YOUTUBE_API_SERVICE_NAME = "youtube"
     YOUTUBE_API_VERSION = "v3"
     YOUTUBE_SCOPE = 'https://www.googleapis.com/auth/youtube'
+    SCOPES = ['https://www.googleapis.com/auth/youtube.readonly']
+
+    # This variable defines a message to display if the CLIENT_SECRETS_FILE is
+    # missing.
+    MISSING_CLIENT_SECRETS_MESSAGE = """
+    WARNING: Please configure OAuth 2.0
+    To make this sample run you will need to populate the client_secrets.json file
+    found at:
+       %s
+    with information from the APIs Console
+    https://console.developers.google.com
+    For more information about the client_secrets.json file format, please visit:
+    https://developers.google.com/api-client-library/python/guide/aaa_client_secrets
+    """ % os.path.abspath(os.path.join(os.path.dirname(__file__), CREDENTIALS_DIR, CLIENT_SECRET_FILE))
 
     def __init__(self):
         self.cwd = os.path.dirname(os.path.abspath(__file__))
         self.CLIENT_CREDENTIALS = os.path.join(self.cwd, 'auth.dat')
         self.logger = logging.getLogger('vcelnice.info')
-        self.youtube = self.get_authenticated_service()
+        # self.youtube = self.get_authenticated_service()
 
-    def get_authenticated_service(self):
+    def get_credentials_files(self, client_config=None):
+        # Define files
         cred_dir = os.path.dirname(os.path.abspath(__file__))
         credential_dir = os.path.join(cred_dir, self.CREDENTIALS_DIR)
+        # Create .credentials dir, if not exist
         if not os.path.exists(credential_dir):
             os.makedirs(credential_dir)
-        credential_path = os.path.join(credential_dir, self.CLIENT_SECRET_FILE)
+        client_secret = os.path.join(credential_dir, self.CLIENT_SECRET_FILE)
+        oauth = os.path.join(credential_dir, self.CLIENT_OAUTH2_FILE)
+        # Write client file, if defined
+        if client_config is not None:
+            key = "installed"
+            data = {}
+            out = {}
+            config_data = client_config[key]
+            for line in config_data:
+                data[line] = config_data[line]
+            out[key] = data
+            with open(client_secret, "w") as file:
+                json.dump(out, file)
+        return client_secret, oauth
 
-        store = Storage(credential_path)
-        credentials = store.get()
+    def get_authorization_url(self, client_config):
+        credentials_file, oauth_file = self.get_credentials_files(client_config)
+        # Create flow instance to manage the OAuth 2.0 Authorization Grant Flow steps.
+        flow = Flow.from_client_secrets_file(credentials_file, scopes=self.YOUTUBE_SCOPE)
+        # The URI created here must exactly match one of the authorized redirect URIs
+        # for the OAuth 2.0 client, which you configured in the API Console. If this
+        # value doesn't match an authorized URI, you will get a 'redirect_uri_mismatch'
+        # error.
+        flow.redirect_uri = "urn:ietf:wg:oauth:2.0:oob"
 
-        if credentials is None:
-            self.logger.critical('Unable to find Youtube credentials storage %s' % self.CLIENT_CREDENTIALS)
+        authorization_url, state = flow.authorization_url(
+            # Enable offline access so that you can refresh an access token without
+            # re-prompting the user for permission. Recommended for web server apps.
+            access_type='offline',
+            # Enable incremental authorization. Recommended as a best practice.
+            include_granted_scopes='true')
+        return authorization_url
 
-        if credentials.invalid:
-            self.logger.critical('Youtube credentials are invalid %s' % self.CLIENT_CREDENTIALS)
+    def authorize(self, code):
+        credentials_file, oauth_file = self.get_credentials_files()
+        flow = InstalledAppFlow.from_client_secrets_file(credentials_file, self.YOUTUBE_SCOPE)
+        credentials = flow.run_console()
+        print("Code: ", build(self.YOUTUBE_API_SERVICE_NAME, self.YOUTUBE_API_VERSION, credentials=credentials))
+        # flow = Flow.from_client_config(credentials_file, scopes=self.YOUTUBE_SCOPE, state=state)
+        # flow.redirect_uri = redirect_uri
+        # os.environ['OAUTHLIB_INSECURE_TRANSPORT'] = '1'
+        # flow.fetch_token(authorization_response=request_url)
+        # os.environ['OAUTHLIB_INSECURE_TRANSPORT'] = '0'
+        # credentials = flow.credentials
+        # youtube_credentials = {
+        #     'token': credentials.token,
+        #     'refresh_token': credentials.refresh_token,
+        #     'token_uri': credentials.token_uri,
+        #     'client_id': credentials.client_id,
+        #     'client_secret': credentials.client_secret,
+        #     'scopes': credentials.scopes
+        # }
+        # print("Credentials: ", youtube_credentials)
+        return None
 
-        return build(self.YOUTUBE_API_SERVICE_NAME,
-                     self.YOUTUBE_API_VERSION,
-                     http=credentials.authorize(httplib2.Http()))
+    def get_credentials_storage(self):
+        credentials_file, oauth_file = self.get_credentials_files()
+        storage = Storage(oauth_file)
+        return storage.get()
+
+    def is_authorized(self):
+        credentials = self.get_credentials_storage()
+        return credentials is not None and credentials.valid
+
+    # https://github.com/youtube/api-samples/blob/master/python/captions.py
+    def get_authenticated_service(self):
+        credentials_file, oauth_file = self.get_credentials_files()
+        flow = flow_from_clientsecrets(credentials_file, scope=self.YOUTUBE_SCOPE,
+                                       message=self.MISSING_CLIENT_SECRETS_MESSAGE)
+        storage = Storage(oauth_file)
+        credentials = storage.get()
+
+        if credentials is None or credentials.invalid:
+            flags = argparser.parse_args(args=[])
+            auth_data = run_flow(flow, storage, flags=flags)
+            print('Auth Data: ', auth_data)
+        return None
+
+        # store = Storage(credential_path)
+        # credentials = store.get()
+        #
+        # if credentials is None:
+        #     self.logger.critical('Unable to find Youtube credentials storage %s' % self.CLIENT_CREDENTIALS)
+        #     return None
+        #
+        # if credentials.invalid:
+        #     self.logger.critical('Youtube credentials are invalid %s' % self.CLIENT_CREDENTIALS)
+        #     return None
+        #
+        # return build(self.YOUTUBE_API_SERVICE_NAME,
+        #              self.YOUTUBE_API_VERSION,
+        #              http=credentials.authorize(httplib2.Http()))
 
     def get_categories(self):
         payload = {'part': 'snippet', 'regionCode': 'CZ', 'key': self.API_KEY}

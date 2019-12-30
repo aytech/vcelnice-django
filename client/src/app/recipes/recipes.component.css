@@ -1,0 +1,25 @@
+.card-container {
+  padding-bottom: 15px;
+}
+
+.card {
+  cursor: pointer;
+  height: 100%;
+  margin: auto;
+  width: 18rem;
+}
+
+.card:hover, .card:active {
+  background-color: rgba(0, 0, 0, .075);
+}
+
+.recipes img.default {
+  margin: auto;
+  width: 96px;
+}
+
+@media (min-width: 1200px) {
+  .card {
+    width: 16rem;
+  }
+}

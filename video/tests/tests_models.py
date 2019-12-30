@@ -1,6 +1,6 @@
 from django.core.files.uploadedfile import SimpleUploadedFile
 from django.test import TestCase
-from video.management.commands.youtube import Command
+from video.management.commands.youtube_upload import Command
 from video.models import Video
 from vcelnice.common.youtube import Youtube
 from vcelnice.settings import *

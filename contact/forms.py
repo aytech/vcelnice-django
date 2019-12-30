@@ -6,22 +6,22 @@ from .models import Contact, ContactAddress, MyPhoneNumbers
 class ContactForm(forms.ModelForm):
     class Meta:
         model = Contact
-        fields = ('email', 'message')
-        localized_fields = ('email', 'message')
+        fields = ("email", "message")
+        localized_fields = ("email", "message")
         labels = {
-            'email': _('Email address'),
-            'message': _('Contact message')
+            "email": _("Your email address"),
+            "message": _("Contact message")
         }
         help_texts = {
-            'email': _('Email address'),
-            'message': _('Contact message')
+            "email": _("Your email address"),
+            "message": _("Contact message")
         }
         error_messages = {
-            'email': {
-                'invalid': _('Enter a valid email address.')
+            "email": {
+                "invalid": _("Enter a valid email address")
             },
-            'message': {
-                'required': _('Please enter your message.')
+            "message": {
+                "required": _("Please enter your message")
             }
         }
 
@@ -29,10 +29,10 @@ class ContactForm(forms.ModelForm):
 class ContactAddressForm(forms.ModelForm):
     class Meta:
         model = ContactAddress
-        fields = ('address',)
+        fields = ("address",)
 
 
 class MyPhoneNumberForm(forms.ModelForm):
     class Meta:
         model = MyPhoneNumbers
-        fields = ('label', 'number',)
+        fields = ("label", "number",)
