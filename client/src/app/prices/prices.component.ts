@@ -104,7 +104,7 @@ export class ReservationComponent implements OnInit {
     this.hasSuccess = false;
     this.form.value.title = this.title;
 
-    this.priceService.postReservation(this.form.value, this.language, this.csrf_token)
+    this.priceService.postReservation(this.form.value, this.languageService.locale, this.csrf_token)
       .subscribe(() => {
           this.hasSuccess = true;
           this.isSubmitting = false;
