@@ -1,13 +1,10 @@
-.btn {
-  margin-bottom: 5px;
-  margin-right: 5px;
-}
-
 .content {
   overflow: hidden;
+  padding: 5px;
 }
 
 .content > a, .content > button {
+  margin: auto 5px;
   max-width: 100%;
   overflow: hidden;
   text-overflow: ellipsis;

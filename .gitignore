@@ -5,6 +5,7 @@
 
 Client files
 **/*node_modules
+**/*dist
 
 # Django generated translations
 **/*.mo
