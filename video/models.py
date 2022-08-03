@@ -1,7 +1,7 @@
 from django.db import models
 from vcelnice.common.image import ImageUploader
 from vcelnice.common.translit import Translit
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext_lazy as _
 from vcelnice.settings import *
 
 
@@ -10,15 +10,16 @@ class Video(models.Model):
     CATEGORY_CHOICES = []
 
     caption = models.CharField(max_length=100, null=False, blank=False, verbose_name=_("Caption"))
-    description = models.TextField(null=True, blank=True, verbose_name=_("Description"))
-    file = models.FileField(upload_to="youtube", max_length=150, null=False, blank=False, verbose_name=_("File"))
-    thumb = models.ImageField(upload_to="video", max_length=150, null=True, blank=True, verbose_name=_("Thumbnail"))
     category = models.CharField(max_length=100, null=True, blank=True, choices=CATEGORY_CHOICES,
                                 verbose_name=_("Category"))
+    created = models.DateTimeField(auto_now_add=True, auto_now=False)
+    description = models.TextField(null=True, blank=True, verbose_name=_("Description"))
+    file = models.FileField(upload_to="youtube", max_length=150, null=False, blank=False, verbose_name=_("File"))
+    id = models.BigAutoField(primary_key=True)
+    thumb = models.ImageField(upload_to="video", max_length=150, null=True, blank=True, verbose_name=_("Thumbnail"))
     tags = models.CharField(max_length=100, null=True, blank=True,
                             help_text=_("Add tags to the video, separated by commas"),
                             verbose_name=_("Tags"))
-    created = models.DateTimeField(auto_now_add=True, auto_now=False)
     updated = models.DateTimeField(auto_now_add=False, auto_now=True)
     youtube_id = models.CharField(max_length=150, null=True, blank=True)
     youtube_status = models.IntegerField(default=YOUTUBE_STATUS_PENDING_UPLOAD, null=True, blank=True)
@@ -68,4 +69,5 @@ class Video(models.Model):
 
 class VideoCategory(models.Model):
     category_id = models.CharField(max_length=10, null=False, blank=False)
+    id = models.BigAutoField(primary_key=True)
     title = models.CharField(max_length=100, null=True, blank=True)

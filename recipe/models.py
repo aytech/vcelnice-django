@@ -1,18 +1,19 @@
 from django.core.files.uploadedfile import SimpleUploadedFile
 from django.db import models
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext_lazy as _
 from vcelnice.common.image import ImageUploader
 import os
 
 
 class Recipe(models.Model):
     objects = models.Manager()
-    title = models.CharField(max_length=100, null=False, blank=False, verbose_name=_("Title"))
-    thumb = models.ImageField(upload_to="recipe", max_length=100, null=True, blank=True, verbose_name=_("Thumbnail"))
+    created = models.DateTimeField(auto_now_add=True, auto_now=False, verbose_name=_("Created"))
+    id = models.BigAutoField(primary_key=True)
     preview = models.TextField(null=False, blank=False, verbose_name=_("Preview"),
                                help_text=_("Preview for recipe thumbnails, maximum 150 characters"))
     text = models.TextField(null=False, blank=False, verbose_name=_("Recipe text"))
-    created = models.DateTimeField(auto_now_add=True, auto_now=False, verbose_name=_("Created"))
+    thumb = models.ImageField(upload_to="recipe", max_length=100, null=True, blank=True, verbose_name=_("Thumbnail"))
+    title = models.CharField(max_length=100, null=False, blank=False, verbose_name=_("Title"))
     updated = models.DateTimeField(auto_now_add=False, auto_now=True, verbose_name=_("Updated"))
 
     def save(self, force_insert=False, force_update=False, using=None,

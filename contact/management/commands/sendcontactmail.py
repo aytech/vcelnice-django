@@ -6,6 +6,7 @@ from vcelnice.common.gmail import Gmail
 import logging
 import os
 
+
 class Command(BaseCommand):
     help = 'Send email collected via contact form'
 

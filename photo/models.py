@@ -1,5 +1,5 @@
 from django.db import models
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext_lazy as _
 
 from vcelnice.common.image import ImageUploader
 from django.core.files.uploadedfile import SimpleUploadedFile
@@ -17,11 +17,12 @@ class PhotoQuerySet(models.QuerySet):
 class Photo(models.Model):
     objects = PhotoQuerySet.as_manager()
     caption = models.CharField(max_length=100, verbose_name=_("Caption"))
+    created = models.DateTimeField(auto_now_add=True, auto_now=False, verbose_name=_("Created"))
+    height = models.IntegerField(null=True, blank=True)
+    id = models.BigAutoField(primary_key=True)
     image = models.ImageField(upload_to='photo/', max_length=250, null=False, blank=False, verbose_name=_("Image"))
     thumb = models.ImageField(upload_to='photo/thumb/', max_length=250, null=False, blank=False)
     width = models.IntegerField(null=True, blank=True)
-    height = models.IntegerField(null=True, blank=True)
-    created = models.DateTimeField(auto_now_add=True, auto_now=False, verbose_name=_("Created"))
 
     # noinspection PyUnresolvedReferences
     def save(self, force_insert=False, force_update=False, using=None,

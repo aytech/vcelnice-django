@@ -1,9 +1,10 @@
 from django.db import models
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext_lazy as _
 
 
 class Contact(models.Model):
     email = models.EmailField(max_length=254, null=False, blank=False, verbose_name=_("Email"))
+    id = models.BigAutoField(primary_key=True)
     message = models.TextField(null=False, blank=False, verbose_name=_("Message"))
     created = models.DateTimeField(auto_now_add=True, auto_now=False, verbose_name=_("Created"))
     deleted = models.BooleanField(default=False, verbose_name=_("Deleted"))
@@ -19,6 +20,7 @@ class Contact(models.Model):
 class ContactAddress(models.Model):
     objects = models.Manager()
     address = models.CharField(max_length=250, null=False, blank=False, verbose_name=_("Address"))
+    id = models.BigAutoField(primary_key=True)
 
     class Meta:
         verbose_name = _("Contact address")
@@ -26,6 +28,7 @@ class ContactAddress(models.Model):
 
 
 class MyPhoneNumbers(models.Model):
+    id = models.BigAutoField(primary_key=True)
     label = models.CharField(max_length=50, null=False, blank=False, verbose_name=_("Label"))
     number = models.CharField(max_length=50, null=False, blank=False, verbose_name=_("Number"))
 

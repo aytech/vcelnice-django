@@ -1,6 +1,6 @@
 from django.core.exceptions import ObjectDoesNotExist
 from django.middleware.csrf import get_token
-from django.utils.translation import activate, ugettext_lazy as _
+from django.utils.translation import activate, gettext_lazy as _
 from rest_framework import status
 from rest_framework.decorators import api_view
 from rest_framework.response import Response

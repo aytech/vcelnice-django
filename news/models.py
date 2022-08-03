@@ -1,16 +1,17 @@
 from django.core.files.uploadedfile import SimpleUploadedFile
 from django.db import models
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext_lazy as _
 from vcelnice.common.image import ImageUploader
 import os
 
 
 class Article(models.Model):
     objects = models.Manager()
-    title = models.CharField(max_length=100, verbose_name=_("Title"))
-    text = models.TextField(verbose_name=_("Body"))
-    icon = models.ImageField(upload_to="news", max_length=100, null=True, blank=True, verbose_name=_("Thumbnail"))
     created = models.DateTimeField(auto_now_add=True, auto_now=False, verbose_name=_("Created"))
+    icon = models.ImageField(upload_to="news", max_length=100, null=True, blank=True, verbose_name=_("Thumbnail"))
+    id = models.BigAutoField(primary_key=True)
+    text = models.TextField(verbose_name=_("Body"))
+    title = models.CharField(max_length=100, verbose_name=_("Title"))
     updated = models.DateTimeField(auto_now_add=False, auto_now=True, verbose_name=_("Updated"))
 
     # noinspection PyUnresolvedReferences

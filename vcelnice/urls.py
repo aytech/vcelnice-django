@@ -14,7 +14,7 @@ Including another URLconf
     2. Import the include() function: from django.conf.urls import url, include
     3. Add a URL to urlpatterns:  url(r'^blog/', include(blog_urls))
 """
-from django.conf.urls import url
+from django.urls import path
 from django.contrib import admin
 from django.conf import settings
 from django.urls import re_path
@@ -23,38 +23,38 @@ from django.views.static import serve
 from vcelnice import views
 from prices import views as prices
 from client import views as client
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext_lazy as _
 
 admin.site.site_header = _('Administration')
 
 urlpatterns = [
     # Client UI routes
-    url(r'^$', client.home, name='home'),
-    url(r'^foto/', client.home, name='photo'),
-    url(r'^video/', client.home, name='video'),
-    url(r'^certifikaty/', client.home, name='certificates'),
-    url(r'^region/', client.home, name='region'),
-    url(r'^novinky/', client.home, name='news'),
-    url(r'^recepty/', client.home, name='recipes'),
-    url(r'^cenik/', client.home, name='prices'),
-    url(r'^kontakt/', client.home, name='contact'),
+    re_path(r'^$', client.home, name='home'),
+    re_path(r'^foto/', client.home, name='photo'),
+    re_path(r'^video/', client.home, name='video'),
+    re_path(r'^certifikaty/', client.home, name='certificates'),
+    re_path(r'^region/', client.home, name='region'),
+    re_path(r'^novinky/', client.home, name='news'),
+    re_path(r'^recepty/', client.home, name='recipes'),
+    re_path(r'^cenik/', client.home, name='prices'),
+    re_path(r'^kontakt/', client.home, name='contact'),
 
     # Admin section
-    url(r'^admin/', admin.site.urls),
+    re_path(r'^admin/', admin.site.urls),
 
     # API routes
-    url(r'^api/v1/home/', views.home_text, name='Home GET API'),
-    url(r'^api/v1/news/', views.news_list, name='News GET API'),
-    url(r'^api/v1/photos/', views.photo_list, name='Photo GET API'),
-    url(r'^api/v1/prices/', prices.prices_list, name='Prices GET API'),
-    url(r'^api/v1/locations/', prices.location_list, name='Locations GET API'),
-    url(r'^api/v1/recipes/', views.recipe_list, name='Recipe GET API'),
-    url(r'^api/v1/certificates/', views.certificate_list, name='Certificates GET API'),
-    url(r'^api/v1/videos/', views.video_list, name='Recipe GET API'),
-    url(r'^api/v1/reserve/', views.reserve, name='Reservation POST API'),
-    url(r'^api/v1/contact/', views.contact, name='Contact POST API'),
-    url(r'^api/v1/token/', views.csrf_token, name='CSRF token GET API'),
-    url(r'^api/v1/cultures/', views.get_cultures, name='Get translations'),
+    re_path(r'^api/v1/home/', views.home_text, name='Home GET API'),
+    re_path(r'^api/v1/news/', views.news_list, name='News GET API'),
+    re_path(r'^api/v1/photos/', views.photo_list, name='Photo GET API'),
+    re_path(r'^api/v1/prices/', prices.prices_list, name='Prices GET API'),
+    re_path(r'^api/v1/locations/', prices.location_list, name='Locations GET API'),
+    re_path(r'^api/v1/recipes/', views.recipe_list, name='Recipe GET API'),
+    re_path(r'^api/v1/certificates/', views.certificate_list, name='Certificates GET API'),
+    re_path(r'^api/v1/videos/', views.video_list, name='Recipe GET API'),
+    re_path(r'^api/v1/reserve/', views.reserve, name='Reservation POST API'),
+    re_path(r'^api/v1/contact/', views.contact, name='Contact POST API'),
+    re_path(r'^api/v1/token/', views.csrf_token, name='CSRF token GET API'),
+    re_path(r'^api/v1/cultures/', views.get_cultures, name='Get translations'),
 
     # Media
     re_path(r'^media/(?P<path>.*)$', serve, {
@@ -67,6 +67,6 @@ urlpatterns = [
     }),
 
     # Catch all
-    url(r'^.*$', client.home, name='home'),
+    re_path(r'^.*$', client.home, name='home'),
 ]
 

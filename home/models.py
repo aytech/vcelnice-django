@@ -1,5 +1,5 @@
 from django.core.files.uploadedfile import SimpleUploadedFile
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext_lazy as _
 from django.db import models
 from vcelnice.common.image import ImageUploader
 import os
@@ -7,9 +7,10 @@ import os
 
 class Home(models.Model):
     objects = models.Manager()
+    icon = models.ImageField(upload_to='news', max_length=100, null=True, blank=True, verbose_name=_('Thumbnail'))
+    id = models.BigAutoField(primary_key=True)
     title = models.CharField(max_length=100, verbose_name=_('Title'))
     text = models.TextField(verbose_name=_('Body'))
-    icon = models.ImageField(upload_to='news', max_length=100, null=True, blank=True, verbose_name=_('Thumbnail'))
 
     # noinspection PyUnresolvedReferences
     def save(self, force_insert=False, force_update=False, using=None, update_fields=None):
