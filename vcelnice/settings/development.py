@@ -1,6 +1,5 @@
 from .base import *
 
-
 ALLOWED_HOSTS = [
     '10.0.2.2',
     '10.0.3.2',
@@ -34,4 +33,7 @@ INSTALLED_APPS += [
 
 INTERNAL_IPS = ('10.0.2.2',)
 
+SENDER_EMAIL_ADDRESS = 'oyapparov@gmail.com'
+SENDER_EMAIL_NAME = 'Včelnice Rudná'
 TO_EMAIL_RECIPIENTS = ['Oleg Yapparov <oyapparov@gmail.com>']
+BCC_EMAIL_RECIPIENTS = []

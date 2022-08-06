@@ -154,7 +154,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
 # Internationalization
 # https://docs.djangoproject.com/en/1.9/topics/i18n/
 
@@ -167,7 +166,6 @@ USE_I18N = True
 USE_L10N = True
 
 USE_TZ = True
-
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.9/howto/static-files/
@@ -199,4 +197,3 @@ YOUTUBE_STATUS_DELETED = 5
 FALLBACK_IMAGES_NATURE_URL = 'http://lorempixel.com/200/200/nature'
 
 ADMIN_EMAIL_ADDRESS = 'Oleg Yapparov <oyapparov@gmail.com>'
-BCC_EMAIL_RECIPIENTS = ['Oleg Yapparov <oyapparov@gmail.com>']
