@@ -2,7 +2,6 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
-import { AngularFontAwesomeModule } from 'angular-font-awesome';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
@@ -33,6 +32,7 @@ import {
   RecipeService,
   VideoService
 } from 'services';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 @NgModule({
   declarations: [
@@ -55,7 +55,7 @@ import {
     PrivacyComponent
   ],
   imports: [
-    AngularFontAwesomeModule,
+    FontAwesomeModule,
     FormsModule,
     BrowserModule,
     AppRoutingModule,

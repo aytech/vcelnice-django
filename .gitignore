@@ -6,6 +6,7 @@
 Client files
 **/*node_modules
 **/*dist
+**/*.angular
 
 # Django generated translations
 **/*.mo
