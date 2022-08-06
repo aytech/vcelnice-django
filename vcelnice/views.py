@@ -10,7 +10,6 @@ from home.models import Home
 from news.models import Article
 from photo.models import Photo
 from recipe.models import Recipe
-from vcelnice.common.email import Email
 from vcelnice.serializers.CertificateSerializer import CertificateSerializer
 from vcelnice.serializers.ContactSerializer import ContactSerializer
 from vcelnice.serializers.HomeSerializer import HomeSerializer
