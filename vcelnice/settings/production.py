@@ -15,5 +15,11 @@ DATABASES = {
 
 DEBUG = False
 
-TO_EMAIL_RECIPIENTS = ['Jan Šaroch <jan.saroch@email.cz>']
-BCC_EMAIL_RECIPIENTS = ['Oleg Yapparov <oyapparov@gmail.com>']
+TO_EMAIL_RECIPIENTS = [{
+    'name': 'Jan Šaroch',
+    'address': 'jan.saroch@email.cz'
+}]
+BCC_EMAIL_RECIPIENTS = [{
+    'name': 'Oleg Yapparov',
+    'address': 'oyapparov@gmail.com'
+}]

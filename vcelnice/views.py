@@ -10,6 +10,7 @@ from home.models import Home
 from news.models import Article
 from photo.models import Photo
 from recipe.models import Recipe
+from vcelnice.common.email import Email
 from vcelnice.serializers.CertificateSerializer import CertificateSerializer
 from vcelnice.serializers.ContactSerializer import ContactSerializer
 from vcelnice.serializers.HomeSerializer import HomeSerializer
@@ -104,8 +105,8 @@ def contact(request):
     if request.method == 'POST':
         serializer = ContactSerializer(data=request.data)
         if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
+            Email().send_contact_email(serializer)
+            return Response(serializer.data, status=status.HTTP_200_OK)
         else:
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     return Response(None, status=status.HTTP_400_BAD_REQUEST)

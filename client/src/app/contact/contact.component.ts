@@ -1,18 +1,19 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { HttpErrorResponse } from '@angular/common/http';
-import { ActivatedRoute } from '@angular/router';
 import { NgForm } from '@angular/forms';
-import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { NgbActiveModal, NgbModal, NgbModalConfig } from '@ng-bootstrap/ng-bootstrap';
 import { ContactService, GenericService, LanguageService } from 'services';
 
 @Component({
   selector: 'app-contact',
-  templateUrl: './contact.component.html',
-  styleUrls: ['./contact.component.css']
+  providers: [NgbModalConfig, NgbModal],
+  styleUrls: ['./contact.component.css'],
+  templateUrl: './contact.component.html'
 })
 export class ContactComponent implements OnInit {
 
-  constructor(private modalService: NgbModal) {
+  constructor(config: NgbModalConfig, private modalService: NgbModal) {
+    config.backdrop = 'static'
   }
 
   ngOnInit() {
@@ -43,7 +44,6 @@ export class ContactModalComponent implements OnInit {
     public activeModal: NgbActiveModal,
     private contactService: ContactService,
     private genericService: GenericService,
-    private route: ActivatedRoute,
     private languageService: LanguageService
   ) {
     this.emailErrorMessage = languageService.cultures.error_empty_message;

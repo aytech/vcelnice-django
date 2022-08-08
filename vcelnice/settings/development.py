@@ -33,7 +33,8 @@ INSTALLED_APPS += [
 
 INTERNAL_IPS = ('10.0.2.2',)
 
-SENDER_EMAIL_ADDRESS = 'oyapparov@gmail.com'
-SENDER_EMAIL_NAME = 'Včelnice Rudná'
-TO_EMAIL_RECIPIENTS = ['Oleg Yapparov <oyapparov@gmail.com>']
+TO_EMAIL_RECIPIENTS = [{
+    'name': 'Oleg Yapparov',
+    'address': 'oyapparov@gmail.com'
+}]
 BCC_EMAIL_RECIPIENTS = []

@@ -197,3 +197,5 @@ YOUTUBE_STATUS_DELETED = 5
 FALLBACK_IMAGES_NATURE_URL = 'http://lorempixel.com/200/200/nature'
 
 ADMIN_EMAIL_ADDRESS = 'Oleg Yapparov <oyapparov@gmail.com>'
+SENDER_EMAIL_ADDRESS = 'vcelnicerudna@gmail.com'
+SENDER_EMAIL_NAME = 'Včelnice Rudná'

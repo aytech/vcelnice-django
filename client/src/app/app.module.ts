@@ -77,10 +77,6 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
     RecipeService,
     VideoService
   ],
-  entryComponents: [
-    ReservationComponent,
-    ContactModalComponent
-  ],
   exports: [PrivacyComponent]
 })
 export class AppModule {

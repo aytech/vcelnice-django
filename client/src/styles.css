@@ -116,6 +116,10 @@ h2.title {
   justify-content: center;
 }
 
+.modal {
+  z-index: 1055;
+}
+
 .modal-body > p {
   overflow: hidden;
   text-overflow: ellipsis;
