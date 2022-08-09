@@ -7,9 +7,9 @@ ALLOWED_HOSTS = [".vcelnicerudna.cz", ".pythonanywhere.com"]
 # CSRF_COOKIE_SECURE = True
 
 DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": os.path.join(os.path.dirname(BASE_DIR), "data", "db.sqlite3"),
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': os.path.join(os.path.dirname(BASE_DIR), 'db.sqlite3'),
     }
 }
 

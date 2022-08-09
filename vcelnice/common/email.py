@@ -10,7 +10,7 @@ from vcelnice.serializers.ReservationSerializer import ReservationSerializer
 
 class Email:
     def __init__(self):
-        env = os.environ['DJANGO_SETTINGS_MODULE']
+        env = os.getenv('DJANGO_SETTINGS_MODULE')
         if env == 'vcelnice.settings.production':
             from vcelnice.settings import production as configuration
         else:
@@ -24,7 +24,7 @@ class Email:
             'email': data.data.get('email'),
             'message': data.data.get('message')
         }
-        mail.template_id = os.environ['EMAIL_CONTACT_TEMPLATE']
+        mail.template_id = os.getenv('EMAIL_CONTACT_TEMPLATE')
         self.send_email(mail)
 
     def send_reservation_email(self, data: ReservationSerializer):
@@ -37,7 +37,7 @@ class Email:
             'note': data.data.get('message'),
             'sender': data.data.get('email')
         }
-        mail.template_id = os.environ['EMAIL_RESERVATION_TEMPLATE']
+        mail.template_id = os.getenv('EMAIL_RESERVATION_TEMPLATE')
         self.send_email(mail)
 
     def get_email_template(self):
@@ -53,6 +53,6 @@ class Email:
     @staticmethod
     def send_email(email: Mail):
         try:
-            SendGridAPIClient(os.environ['EMAIL_API_KEY']).send(email)
+            SendGridAPIClient(os.getenv('EMAIL_API_KEY')).send(email)
         except HTTPError as e:
             logging.getLogger('vcelnice.info').error(e.to_dict)
