@@ -77,7 +77,7 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
     RecipeService,
     VideoService
   ],
-  exports: [PrivacyComponent]
+  exports: [ PrivacyComponent ]
 })
 export class AppModule {
 }
