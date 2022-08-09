@@ -9,7 +9,7 @@ from vcelnice import settings
 
 class ImageUploader:
     def __init__(self, image, ext="jpeg"):
-        self.image = Image.open(BytesIO(image.read()))
+        self.image = Image.open(BytesIO(image.read())).convert('RGB')
         self.IMAGE_TYPE = ext
         self.THUMBNAIL_EXTENSION = "png"
 
