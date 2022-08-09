@@ -93,7 +93,8 @@ def reserve(request):
     if request.method == 'POST':
         serializer = ReservationSerializer(data=request.data)
         if serializer.is_valid():
-            serializer.save()
+            serializer.save()  # Just for auditing, will not be used for sending
+            Email().send_reservation_email(serializer)
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         else:
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
@@ -105,6 +106,7 @@ def contact(request):
     if request.method == 'POST':
         serializer = ContactSerializer(data=request.data)
         if serializer.is_valid():
+            serializer.save()  # Just for auditing, will not be used for sending
             Email().send_contact_email(serializer)
             return Response(serializer.data, status=status.HTTP_200_OK)
         else:
