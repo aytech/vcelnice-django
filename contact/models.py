@@ -1,8 +1,10 @@
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 
+from vcelnice.common.model import Model
 
-class Contact(models.Model):
+
+class Contact(Model):
     email = models.EmailField(max_length=254, null=False, blank=False, verbose_name=_("Email"))
     id = models.BigAutoField(primary_key=True)
     message = models.TextField(null=False, blank=False, verbose_name=_("Message"))

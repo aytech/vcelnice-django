@@ -8,6 +8,10 @@ from vcelnice.serializers.ContactSerializer import ContactSerializer
 from vcelnice.serializers.ReservationSerializer import ReservationSerializer
 
 
+class EmailException(Exception):
+    pass
+
+
 class Email:
     def __init__(self):
         env = os.getenv('DJANGO_SETTINGS_MODULE')
@@ -55,4 +59,16 @@ class Email:
         try:
             SendGridAPIClient(os.getenv('EMAIL_API_KEY')).send(email)
         except HTTPError as e:
-            logging.getLogger('vcelnice.info').error(e.to_dict)
+            logging.getLogger('vcelnice.info') \
+                .error(
+                'Failed to send email from {}, error: {}, API key: {}'.format(
+                    email.dynamic_template_data['sender'], e.to_dict, os.getenv('EMAIL_API_KEY')
+                ))
+            raise EmailException
+        except Exception as e:
+            logging.getLogger('vcelnice.info') \
+                .error(
+                'Failed to send email from {}, error: {}, API key: {}'.format(
+                    email.dynamic_template_data['sender'], e, os.getenv('EMAIL_API_KEY')
+                ))
+            raise EmailException

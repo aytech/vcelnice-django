@@ -10,7 +10,7 @@ from home.models import Home
 from news.models import Article
 from photo.models import Photo
 from recipe.models import Recipe
-from vcelnice.common.email import Email
+from vcelnice.common.email import Email, EmailException
 from vcelnice.serializers.CertificateSerializer import CertificateSerializer
 from vcelnice.serializers.ContactSerializer import ContactSerializer
 from vcelnice.serializers.HomeSerializer import HomeSerializer
@@ -107,7 +107,10 @@ def contact(request):
         serializer = ContactSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()  # Just for auditing, will not be used for sending
-            Email().send_contact_email(serializer)
+            try:
+                Email().send_contact_email(serializer)
+            except EmailException:
+                return Response(_("Failed to send email"), status=status.HTTP_500_INTERNAL_SERVER_ERROR)
             return Response(serializer.data, status=status.HTTP_200_OK)
         else:
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
