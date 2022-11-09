@@ -5,3 +5,12 @@
 .card-container {
   padding-bottom: 15px;
 }
+
+.card-container a.thumbnail {
+  height: 200px;
+  overflow: hidden;
+}
+
+.card-container .card-body {
+  height: 100px;
+}

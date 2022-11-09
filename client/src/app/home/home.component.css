@@ -48,3 +48,7 @@ img.card-img-top {
   overflow: hidden;
   text-overflow: ellipsis;
 }
+
+img.home-image {
+  border-radius: .5rem;
+}
