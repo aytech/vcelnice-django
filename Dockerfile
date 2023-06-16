@@ -10,7 +10,7 @@ RUN apt update
 RUN apt -y upgrade
 RUN apt install -y zip
 RUN apt install -y curl
-RUN curl -fsSL https://deb.nodesource.com/setup_16.x | bash - && apt install -y nodejs
+RUN curl -fsSL https://deb.nodesource.com/setup_20.x | bash - && apt install -y nodejs
 RUN corepack enable
 RUN npm install -g @angular/cli
 

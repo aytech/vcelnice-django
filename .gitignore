@@ -14,3 +14,5 @@ vcelnice/common/.credentials
 vcelnice/logs
 vcelnice/media
 vcelnice/static_root
+
+.DS_Store
