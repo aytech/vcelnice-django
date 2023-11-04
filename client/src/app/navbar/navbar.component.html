@@ -1,108 +1,109 @@
 <nav class="navbar navbar-expand-md navbar-dark fixed-top">
-  <a class="navbar-brand" routerLink="/">
-    <!--suppress HtmlUnknownTarget -->
-    <img src="/assets/images/bee_news.png" alt="" title="" width="50" height="35">
-  </a>
-  <button
+  <div class="container-fluid">
+    <a class="navbar-brand" routerLink="/">
+      <img src="/assets/images/bee_news.png" alt="" title="" width="50" height="35">
+    </a>
+    <button 
       #navbarToggle
-      class="navbar-toggler"
-      type="button"
-      data-toggle="collapse"
-      data-target="#navbarCollapse"
-      aria-controls="navbarCollapse"
-      aria-expanded="false"
+      class="navbar-toggler" 
+      type="button" 
+      data-bs-toggle="collapse" 
+      data-bs-target="#navbarCollapse" 
+      aria-controls="navbarCollapse" 
+      aria-expanded="false" 
       aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
-  </button>
-  <div
-      #menu
-      class="collapse navbar-collapse"
-      id="navbarCollapse">
-    <div class="container">
-      <ul class="navbar-nav mr-auto">
-        <li class="nav-item">
-          <a
-            class="nav-link"
-            routerLink="/"
-            routerLinkActive="active"
-            [routerLinkActiveOptions]="{exact: true}"
-            [queryParams]="{locale: locale}">
-            {{cultures.home}}
-          </a>
-        </li>
-        <li class="nav-item">
-          <a
-            class="nav-link"
-            routerLink="/foto"
-            routerLinkActive="active"
-            [queryParams]="{locale: locale}">
-            {{cultures.photo}}
-          </a>
-        </li>
-        <li class="nav-item">
-          <a
-            class="nav-link"
-            routerLink="/video"
-            routerLinkActive="active"
-            [queryParams]="{locale: locale}">
-            {{cultures.video}}
-          </a>
-        </li>
-        <li class="nav-item">
-          <a
-            class="nav-link"
-            routerLink="/certifikaty"
-            routerLinkActive="active"
-            [queryParams]="{locale: locale}">
-            {{cultures.certificates}}
-          </a>
-        </li>
-        <li class="nav-item">
-          <a
-            class="nav-link"
-            routerLink="/region"
-            routerLinkActive="active"
-            [queryParams]="{locale: locale}">
-            {{cultures.region}}
-          </a>
-        </li>
-        <li class="nav-item">
-          <a
-            class="nav-link"
-            routerLink="/novinky"
-            routerLinkActive="active"
-            [queryParams]="{locale: locale}">
-            {{cultures.news}}
-          </a>
-        </li>
-        <li class="nav-item">
-          <a
-            class="nav-link"
-            routerLink="/recepty"
-            routerLinkActive="active"
-            [queryParams]="{locale: locale}">
-            {{cultures.recipes}}
-          </a>
-        </li>
-        <li class="nav-item">
-          <a
-            class="nav-link"
-            routerLink="/cenik"
-            routerLinkActive="active"
-            [queryParams]="{locale: locale}">
-            {{cultures.price_list}}
-          </a>
-        </li>
-        <li class="nav-item">
-          <a
-            class="nav-link"
-            routerLink="/kontakt"
-            routerLinkActive="active"
-            [queryParams]="{locale: locale}">
-            {{cultures.contact}}
-          </a>
-        </li>
-      </ul>
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div
+        #menu
+        class="collapse navbar-collapse"
+        id="navbarCollapse">
+      <div class="container">
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item">
+            <a
+              class="nav-link"
+              routerLink="/"
+              routerLinkActive="active"
+              [routerLinkActiveOptions]="{exact: true}"
+              [queryParams]="{locale: locale}">
+              {{cultures.home}}
+            </a>
+          </li>
+          <li class="nav-item">
+            <a
+              class="nav-link"
+              routerLink="/foto"
+              routerLinkActive="active"
+              [queryParams]="{locale: locale}">
+              {{cultures.photo}}
+            </a>
+          </li>
+          <li class="nav-item">
+            <a
+              class="nav-link"
+              routerLink="/video"
+              routerLinkActive="active"
+              [queryParams]="{locale: locale}">
+              {{cultures.video}}
+            </a>
+          </li>
+          <li class="nav-item">
+            <a
+              class="nav-link"
+              routerLink="/certifikaty"
+              routerLinkActive="active"
+              [queryParams]="{locale: locale}">
+              {{cultures.certificates}}
+            </a>
+          </li>
+          <li class="nav-item">
+            <a
+              class="nav-link"
+              routerLink="/region"
+              routerLinkActive="active"
+              [queryParams]="{locale: locale}">
+              {{cultures.region}}
+            </a>
+          </li>
+          <li class="nav-item">
+            <a
+              class="nav-link"
+              routerLink="/novinky"
+              routerLinkActive="active"
+              [queryParams]="{locale: locale}">
+              {{cultures.news}}
+            </a>
+          </li>
+          <li class="nav-item">
+            <a
+              class="nav-link"
+              routerLink="/recepty"
+              routerLinkActive="active"
+              [queryParams]="{locale: locale}">
+              {{cultures.recipes}}
+            </a>
+          </li>
+          <li class="nav-item">
+            <a
+              class="nav-link"
+              routerLink="/cenik"
+              routerLinkActive="active"
+              [queryParams]="{locale: locale}">
+              {{cultures.price_list}}
+            </a>
+          </li>
+          <li class="nav-item">
+            <a
+              class="nav-link"
+              routerLink="/kontakt"
+              routerLinkActive="active"
+              [queryParams]="{locale: locale}">
+              {{cultures.contact}}
+            </a>
+          </li>
+        </ul>
+      </div>
     </div>
   </div>
 </nav>
