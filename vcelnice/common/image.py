@@ -15,7 +15,7 @@ class ImageUploader:
 
     def save(self, to_width, to_height):
         size = self.get_new_size(to_width, to_height)
-        self.image = self.image.resize(size, Image.ANTIALIAS)
+        self.image = self.image.resize(size, Image.Resampling.LANCZOS)
 
         temp_handle = BytesIO()
         self.image.save(temp_handle, self.IMAGE_TYPE)
@@ -32,7 +32,7 @@ class ImageUploader:
 
     def create_thumbnail(self, to_width, to_height):
         thumbnail = self.image.copy()
-        thumbnail.thumbnail((to_width, to_height), Image.ANTIALIAS)
+        thumbnail.thumbnail((to_width, to_height), Image.Resampling.LANCZOS)
 
         temp_handle = BytesIO()
         thumbnail.save(temp_handle, self.THUMBNAIL_EXTENSION)

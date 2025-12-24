@@ -94,7 +94,8 @@ def reserve(request):
         serializer = ReservationSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()  # Just for auditing, will not be used for sending
-            Email().send_reservation_email(serializer)
+            # Fix email sending, since Sendgrid expired
+            # Email().send_reservation_email(serializer)
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         else:
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)

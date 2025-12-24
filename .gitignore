@@ -15,4 +15,7 @@ vcelnice/logs
 vcelnice/media
 vcelnice/static_root
 
+# Virtual environments
+.venv
+
 .DS_Store

@@ -6,7 +6,7 @@ from .models import Reservation
 class ReservationForm(forms.ModelForm):
     class Meta:
         model = Reservation
-        fields = ("amount", "email", "message", "title", "location")
+        fields = ("amount", "email", "message", "title", "location", "deleted")
         error_messages = {
             "sender": {
                 "invalid": _("Enter a valid email address"),
