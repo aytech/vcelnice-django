@@ -11,11 +11,11 @@ Run:
 
 1. Switch to a directory where the virtual environment is to be stored and create one:
 
-    `python3 -m venv vcelnice-env`
+    `python3 -m venv .venv`
     
 2. Activate environment:
 
-    `source vcelnice-env/bin/activate`
+    `source .venv/bin/activate`
 
 3. Switch to the project directory, install dependencies:
     

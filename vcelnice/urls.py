@@ -14,16 +14,15 @@ Including another URLconf
     2. Import the include() function: from django.conf.urls import url, include
     3. Add a URL to urlpatterns:  url(r'^blog/', include(blog_urls))
 """
-from django.urls import path
-from django.contrib import admin
 from django.conf import settings
+from django.contrib import admin
 from django.urls import re_path
+from django.utils.translation import gettext_lazy as _
 from django.views.static import serve
 
-from vcelnice import views
-from prices import views as prices
 from client import views as client
-from django.utils.translation import gettext_lazy as _
+from prices import views as prices
+from vcelnice import views
 
 admin.site.site_header = _('Administration')
 
