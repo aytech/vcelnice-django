@@ -30,6 +30,7 @@ rm --force vcelnice.zip &&
     --exclude=*tests* \
     --exclude=*vcelnice/logs* \
     --exclude=*vcelnice/media* \
+    --exclude=*vcelnice/common/credentials* \
     --exclude=*.venv* \
     --exclude=*.git* \
     --exclude=*.idea* \
