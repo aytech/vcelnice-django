@@ -1,0 +1,22 @@
+<!--suppress HtmlFormInputWithoutLabel -->
+<div class="modal-header">
+  <h4 class="modal-title web-color">
+    <i class="fa fa-forumbee"></i>&nbsp;
+    {{cultures.reserve}} - {{title}}
+  </h4>
+  <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body">
+    <p>{{cultures.reservation_text}}&nbsp;<a href="mailto:jan.saroch@email.cz">jan.saroch&#64;email.cz</a></p>
+</div>
+<div class="modal-footer">
+  <button
+    type="button"
+    class="btn btn-danger"
+    (click)="activeModal.close('Close click')">
+    <i class="fa fa-times"></i>&nbsp;
+    {{cultures.close}}
+  </button>
+</div>

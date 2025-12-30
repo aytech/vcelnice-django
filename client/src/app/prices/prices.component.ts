@@ -1,15 +1,14 @@
-import { Component, OnInit, Input, ViewChild } from '@angular/core';
-import { NgForm } from '@angular/forms';
+import { Component, OnInit, Input } from '@angular/core'
 import { HttpErrorResponse } from '@angular/common/http';
 import { NgbModal, NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { PriceService, GenericService, LanguageService } from 'services';
-import { Culture, PickLocation, Price } from 'interfaces';
+import { PriceService, LanguageService } from 'services';
+import { Culture, Price } from 'interfaces';
 
 @Component({
-    selector: 'app-prices',
-    templateUrl: './prices.component.html',
-    styleUrls: ['./prices.component.css'],
-    standalone: false
+  selector: 'app-prices',
+  templateUrl: './prices.component.html',
+  styleUrls: ['./prices.component.css'],
+  standalone: false
 })
 export class PricesComponent implements OnInit {
 
@@ -43,7 +42,7 @@ export class PricesComponent implements OnInit {
 
   openReservationForm(index: number): void {
     const price: Price = this.prices[index];
-    const modalRef = this.modalService.open(ReservationComponent);
+    const modalRef = this.modalService.open(ReservationModalComponent);
     let amount_description = price.amount_description;
     if (amount_description === null || amount_description === undefined) {
       amount_description = this.cultures.amount_description;
@@ -54,70 +53,26 @@ export class PricesComponent implements OnInit {
 }
 
 @Component({
-    selector: 'reservation',
-    templateUrl: './reservation.component.html',
-    styleUrls: ['./prices.component.css'],
-    standalone: false
+  selector: 'reservation',
+  templateUrl: './reservation.modal.html',
+  styleUrls: ['./prices.component.css'],
+  standalone: false
 })
-export class ReservationComponent implements OnInit {
+export class ReservationModalComponent implements OnInit {
 
-  @ViewChild('form') form: NgForm;
   @Input() title: string;
-  @Input() amount_description: string;
-  private csrf_token: string;
-  public isSubmitting: boolean;
-  public hasError: boolean;
-  public hasSuccess: boolean;
-  private readonly language: string;
-  public postMessage: string;
-  public locations: Array<PickLocation>;
   public cultures: Culture;
 
   constructor(
     public activeModal: NgbActiveModal,
-    private priceService: PriceService,
-    private genericService: GenericService,
     private languageService: LanguageService
-  ) {
-    this.isSubmitting = false;
-    this.hasError = false;
-    this.hasSuccess = false;
-  }
+  ) { }
 
   ngOnInit() {
     this.cultures = this.languageService.cultures;
-    this.priceService.getLocations()
-      .subscribe((locations) => {
-        this.locations = locations;
-      }, (error: HttpErrorResponse) => {
-        console.error('Error fetching data: ', error.statusText);
-      });
-    this.genericService.getCSRFToken().subscribe((response: string) => {
-      this.csrf_token = response;
-    });
+
     this.languageService.language.subscribe(() => {
       this.cultures = this.languageService.cultures;
     });
-  }
-
-  send(): void {
-    this.isSubmitting = true;
-    this.hasError = false;
-    this.hasSuccess = false;
-    this.form.value.title = this.title;
-
-    this.priceService.postReservation(this.form.value, this.languageService.locale, this.csrf_token)
-      .subscribe(() => {
-          this.hasSuccess = true;
-          this.isSubmitting = false;
-          this.postMessage = this.cultures.reservation_ok;
-          this.form.reset();
-          this.form.controls.location.setValue('');
-        }, () => {
-          this.hasError = true;
-          this.isSubmitting = false;
-          this.postMessage = this.cultures.server_error;
-        }
-      );
   }
 }

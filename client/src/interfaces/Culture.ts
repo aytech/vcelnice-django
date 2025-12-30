@@ -20,6 +20,7 @@ export interface Culture {
   recipes: string;
   region: string;
   reservation_ok: string;
+  reservation_text: string;
   reserve: string;
   send: string;
   server_error: string;

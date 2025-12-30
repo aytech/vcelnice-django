@@ -144,6 +144,7 @@ def get_cultures(request):
         "recipes": _("Recipes"),
         "region": _("Region"),
         "reservation_ok": _("Reservation was sent, thank you"),
+        "reservation_text": _("For reservation, please contact Jan Šaroch at"),
         "reserve": _("Reserve"),
         "send": _("Send"),
         "server_error": _("Server error, please try again later"),

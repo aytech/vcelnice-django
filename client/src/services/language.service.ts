@@ -57,6 +57,7 @@ export class LanguageService {
       recipes: 'Recepty',
       region: 'Region',
       reservation_ok: 'Rezervace byla úspěšně odeslána, děkuji',
+      reservation_text: 'Pro rezervaci kontaktujte prosím Jana Šarocha na e-mailové adrese',
       reserve: 'Rezervovat',
       send: 'Odeslat',
       server_error: 'Chyba serveru, zkuste to prosím později',

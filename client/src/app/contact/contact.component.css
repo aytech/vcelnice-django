@@ -3,7 +3,8 @@
   padding: 5px;
 }
 
-.content > a, .content > button {
+.content a, .content > button {
+  color: #fff;
   margin: auto 5px;
   max-width: 100%;
   overflow: hidden;
