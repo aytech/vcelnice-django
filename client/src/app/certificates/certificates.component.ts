@@ -5,9 +5,10 @@ import { FileConstants } from 'config';
 import { Certificate } from 'interfaces';
 
 @Component({
-  selector: 'app-certificates',
-  templateUrl: './certificates.component.html',
-  styleUrls: ['./certificates.component.css']
+    selector: 'app-certificates',
+    templateUrl: './certificates.component.html',
+    styleUrls: ['./certificates.component.css'],
+    standalone: false
 })
 export class CertificatesComponent implements OnInit {
 

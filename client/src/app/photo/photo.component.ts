@@ -4,9 +4,10 @@ import { PhotoService } from 'services';
 import { Photo } from 'interfaces';
 
 @Component({
-  selector: 'app-photo',
-  templateUrl: './photo.component.html',
-  styleUrls: ['./photo.component.css']
+    selector: 'app-photo',
+    templateUrl: './photo.component.html',
+    styleUrls: ['./photo.component.css'],
+    standalone: false
 })
 export class PhotoComponent implements OnInit {
 

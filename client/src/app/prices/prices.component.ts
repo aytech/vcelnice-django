@@ -6,9 +6,10 @@ import { PriceService, GenericService, LanguageService } from 'services';
 import { Culture, PickLocation, Price } from 'interfaces';
 
 @Component({
-  selector: 'app-prices',
-  templateUrl: './prices.component.html',
-  styleUrls: ['./prices.component.css']
+    selector: 'app-prices',
+    templateUrl: './prices.component.html',
+    styleUrls: ['./prices.component.css'],
+    standalone: false
 })
 export class PricesComponent implements OnInit {
 
@@ -53,9 +54,10 @@ export class PricesComponent implements OnInit {
 }
 
 @Component({
-  selector: 'reservation',
-  templateUrl: './reservation.component.html',
-  styleUrls: ['./prices.component.css']
+    selector: 'reservation',
+    templateUrl: './reservation.component.html',
+    styleUrls: ['./prices.component.css'],
+    standalone: false
 })
 export class ReservationComponent implements OnInit {
 

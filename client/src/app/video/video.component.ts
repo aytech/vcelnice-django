@@ -4,9 +4,10 @@ import { VideoService } from 'services';
 import { Video } from 'interfaces';
 
 @Component({
-  selector: 'app-video',
-  templateUrl: './video.component.html',
-  styleUrls: ['./video.component.css']
+    selector: 'app-video',
+    templateUrl: './video.component.html',
+    styleUrls: ['./video.component.css'],
+    standalone: false
 })
 export class VideoComponent implements OnInit {
 

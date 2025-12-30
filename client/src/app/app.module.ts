@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { HttpClientModule } from '@angular/common/http';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { AppComponent } from './app.component';
@@ -34,50 +34,44 @@ import {
 } from 'services';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
-@NgModule({
-  declarations: [
-    AppComponent,
-    HomeComponent,
-    PhotoComponent,
-    VideoComponent,
-    CertificatesComponent,
-    RegionComponent,
-    ModalComponent,
-    NewsComponent,
-    RecipesComponent,
-    PricesComponent,
-    ReservationComponent,
-    ContactComponent,
-    ContactModalComponent,
-    PageNotFoundComponent,
-    NavbarComponent,
-    FooterComponent,
-    PrivacyComponent
-  ],
-  imports: [
-    FontAwesomeModule,
-    FormsModule,
-    BrowserModule,
-    AppRoutingModule,
-    HttpClientModule,
-    NgbModule
-  ],
-  bootstrap: [
-    AppComponent
-  ],
-  providers: [
-    CertificateService,
-    ContactService,
-    GenericService,
-    HomeService,
-    LanguageService,
-    NewsService,
-    PhotoService,
-    PriceService,
-    RecipeService,
-    VideoService
-  ],
-  exports: [ PrivacyComponent ]
-})
+@NgModule({ declarations: [
+        AppComponent,
+        HomeComponent,
+        PhotoComponent,
+        VideoComponent,
+        CertificatesComponent,
+        RegionComponent,
+        ModalComponent,
+        NewsComponent,
+        RecipesComponent,
+        PricesComponent,
+        ReservationComponent,
+        ContactComponent,
+        ContactModalComponent,
+        PageNotFoundComponent,
+        NavbarComponent,
+        FooterComponent,
+        PrivacyComponent
+    ],
+    bootstrap: [
+        AppComponent
+    ],
+    exports: [PrivacyComponent], imports: [FontAwesomeModule,
+        FormsModule,
+        BrowserModule,
+        AppRoutingModule,
+        NgbModule], providers: [
+        CertificateService,
+        ContactService,
+        GenericService,
+        HomeService,
+        LanguageService,
+        NewsService,
+        PhotoService,
+        PriceService,
+        RecipeService,
+        VideoService,
+        provideHttpClient(withInterceptorsFromDi())
+    ] })
 export class AppModule {
 }

@@ -27,12 +27,14 @@
         required
         email>
     </div>
-    <div
-      role="alert"
-      class="alert alert-danger"
-      *ngIf="!email.valid && email.touched">
-      Zadejte prosím platnou e-mailovou adresu
-    </div>
+    @if (!email.valid && email.touched) {
+      <div
+        role="alert"
+        class="alert alert-danger"
+        >
+        Zadejte prosím platnou e-mailovou adresu
+      </div>
+    }
     <div class="form-group">
       <!--suppress HtmlFormInputWithoutLabel -->
       <textarea
@@ -42,21 +44,27 @@
         name="message"
         #message="ngModel"
         ngModel
-        required></textarea>
+      required></textarea>
     </div>
-    <div
-      role="alert"
-      class="alert alert-danger"
-      *ngIf="!message.valid && message.touched">
-      {{ emailErrorMessage }}
-    </div>
+    @if (!message.valid && message.touched) {
+      <div
+        role="alert"
+        class="alert alert-danger"
+        >
+        {{ emailErrorMessage }}
+      </div>
+    }
   </form>
-  <div class="alert alert-success" role="alert" *ngIf="hasSuccess">
-    {{ postMessage }}
-  </div>
-  <div class="alert alert-danger" role="alert" *ngIf="hasError">
-    {{ postMessage }}
-  </div>
+  @if (hasSuccess) {
+    <div class="alert alert-success" role="alert">
+      {{ postMessage }}
+    </div>
+  }
+  @if (hasError) {
+    <div class="alert alert-danger" role="alert">
+      {{ postMessage }}
+    </div>
+  }
 </div>
 <div class="modal-footer">
   <button

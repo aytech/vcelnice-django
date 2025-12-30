@@ -4,9 +4,10 @@ import { RecipeService } from 'services';
 import { Recipe } from 'interfaces';
 
 @Component({
-  selector: 'app-recipees',
-  templateUrl: './recipes.component.html',
-  styleUrls: ['./recipes.component.css']
+    selector: 'app-recipees',
+    templateUrl: './recipes.component.html',
+    styleUrls: ['./recipes.component.css'],
+    standalone: false
 })
 export class RecipesComponent implements OnInit {
 

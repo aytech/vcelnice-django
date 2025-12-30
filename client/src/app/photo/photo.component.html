@@ -2,34 +2,46 @@
   <div class="jumbotron">
     <h2 class="text-center web-color">Foto</h2>
     <hr>
-    <div class="row" *ngIf="photos.length">
-      <div class="col-12 col-sm-12 col-md-6 col-lg-4 col-xl-3 card-container"
-           *ngFor="let photo of photos; let i = index">
-        <div class="card">
-          <!--suppress HtmlUnknownTarget -->
-          <img *ngIf="!photo.thumb" class="card-img-top default"
-               src="/assets/images/default.png" alt="{{ photo.caption }}">
-          <a
-            class="thumbnail"
-            data-fancybox="gallery"
-            [attr.data-caption]="photo.caption"
-            href="{{ photo.image }}">
-            <img src="{{ photo.thumb }}" alt="" class="card-img-top default">
-          </a>
-          <div class="card-body">
-            <h5 class="card-title text-center">{{ photo.caption }}</h5>
-          </div>
+      @if (photos.length) {
+        <div class="row">
+          @for (photo of photos; track photo; let i = $index) {
+            <div class="col-12 col-sm-12 col-md-6 col-lg-4 col-xl-3 card-container"
+              >
+              <div class="card">
+                <!--suppress HtmlUnknownTarget -->
+                @if (!photo.thumb) {
+                  <img class="card-img-top default"
+                    src="/assets/images/default.png" alt="{{ photo.caption }}">
+                  }
+                  <a
+                    class="thumbnail"
+                    data-fancybox="gallery"
+                    [attr.data-caption]="photo.caption"
+                    href="{{ photo.image }}">
+                  <img src="{{ photo.thumb }}" alt="" class="card-img-top default">
+                </a>
+                <div class="card-body">
+                  <h5 class="card-title text-center">{{ photo.caption }}</h5>
+                </div>
+              </div>
+            </div>
+          }
         </div>
-      </div>
-    </div>
-    <div class="col-xs-12" *ngIf="!photos.length">
-      <div class="spinner" *ngIf="loading">
-        <!--suppress HtmlUnknownTarget -->
-        <img src="/assets/spinner_horizontal.svg" alt="Loading...">
-      </div>
-      <div class="alert alert-danger text-center" role="alert" *ngIf="!loading">
-        <strong>obrázky nenalezeny</strong>
-      </div>
+      }
+      @if (!photos.length) {
+        <div class="col-xs-12">
+          @if (loading) {
+            <div class="spinner">
+              <!--suppress HtmlUnknownTarget -->
+              <img src="/assets/spinner_horizontal.svg" alt="Loading...">
+            </div>
+          }
+          @if (!loading) {
+            <div class="alert alert-danger text-center" role="alert">
+              <strong>obrázky nenalezeny</strong>
+            </div>
+          }
+        </div>
+      }
     </div>
   </div>
-</div>

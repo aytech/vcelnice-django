@@ -2,31 +2,45 @@
   <div class="jumbotron">
     <h2 class="text-center web-color title">Novinky</h2>
     <hr>
-    <div class="row news" *ngIf="articles.length">
-      <div class="col-12 col-sm-12 col-md-6 col-lg-4 col-xl-3 card-container"
-           *ngFor="let article of articles; let i = index">
-        <div class="card" (click)="modal.open(article.title, article.text)">
-          <!--suppress HtmlUnknownTarget -->
-          <img *ngIf="!article.icon" class="card-img-top default"
-               src="/assets/images/default.png" alt="{{ article.title }}">
-          <img *ngIf="article.icon" class="card-img-top"
-               src="{{ article.icon }}" alt="{{ article.title }}">
-          <div class="card-body">
-            <h5 class="card-title">{{ article.title }}</h5>
-            <p class="card-text" [innerHTML]="article.text"></p>
+      @if (articles.length) {
+        <div class="row news">
+          @for (article of articles; track article; let i = $index) {
+            <div class="col-12 col-sm-12 col-md-6 col-lg-4 col-xl-3 card-container"
+              >
+              <div class="card" (click)="modal.open(article.title, article.text)">
+                <!--suppress HtmlUnknownTarget -->
+                @if (!article.icon) {
+                  <img class="card-img-top default"
+                    src="/assets/images/default.png" alt="{{ article.title }}">
+                  }
+                  @if (article.icon) {
+                    <img class="card-img-top"
+                      src="{{ article.icon }}" alt="{{ article.title }}">
+                  }
+                  <div class="card-body">
+                    <h5 class="card-title">{{ article.title }}</h5>
+                    <p class="card-text" [innerHTML]="article.text"></p>
+                  </div>
+                </div>
+              </div>
+            }
           </div>
-        </div>
+        }
+        @if (!articles.length) {
+          <div class="news">
+            @if (loading) {
+              <div class="spinner">
+                <!--suppress HtmlUnknownTarget -->
+                <img src="/assets/spinner_horizontal.svg" alt="Loading...">
+              </div>
+            }
+            @if (!loading) {
+              <div class="alert alert-danger text-center" role="alert">
+                <strong>novinky nenalezeny</strong>
+              </div>
+            }
+          </div>
+        }
       </div>
     </div>
-    <div class="news" *ngIf="!articles.length">
-      <div class="spinner" *ngIf="loading">
-        <!--suppress HtmlUnknownTarget -->
-        <img src="/assets/spinner_horizontal.svg" alt="Loading...">
-      </div>
-      <div class="alert alert-danger text-center" role="alert" *ngIf="!loading">
-        <strong>novinky nenalezeny</strong>
-      </div>
-    </div>
-  </div>
-</div>
-<app-modal #modal></app-modal>
+    <app-modal #modal></app-modal>

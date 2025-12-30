@@ -4,50 +4,66 @@
       {{cultures.price_list}}
     </h2>
     <hr>
-    <div class="recipes" *ngIf="prices.length">
-      <div class="row" *ngFor="let price of prices; let i = index">
-        <div class="col-4 text-center image">
-          <img class="align-self-start mr-3 img-thumbnail" src="{{ price.image }}" alt="{{ price.title }}">
+      @if (prices.length) {
+        <div class="recipes">
+          @for (price of prices; track price; let i = $index) {
+            <div class="row">
+              <div class="col-4 text-center image">
+                <img class="align-self-start mr-3 img-thumbnail" src="{{ price.image }}" alt="{{ price.title }}">
+              </div>
+              <div class="col-8">
+                <ul class="list-group">
+                  <li class="list-group-item text-center">
+                    <strong>
+                      {{ price.title }}
+                    </strong>
+                  </li>
+                  <li class="list-group-item">
+                    <span class="align-middle strong">
+                      {{ price.price }} {{cultures.czk}}
+                      @if (price.weight) {
+                        <span>
+                          ({{ price.weight }})
+                        </span>
+                      }
+                    </span>
+                    @if (price.in_store > 0) {
+                      <button
+                        type="button"
+                        class="btn btn-warning float-right"
+                        (click)="openReservationForm(i)">
+                        {{cultures.reserve}}
+                      </button>
+                    }
+                    @if (price.in_store <= 0) {
+                      <button
+                        type="button"
+                        class="btn btn-outline-secondary float-right"
+                        disabled>
+                        {{cultures.not_in_store}}
+                      </button>
+                    }
+                  </li>
+                </ul>
+              </div>
+            </div>
+          }
         </div>
-        <div class="col-8">
-          <ul class="list-group">
-            <li class="list-group-item text-center">
-              <strong>
-                {{ price.title }}
-              </strong>
-            </li>
-            <li class="list-group-item">
-                <span class="align-middle strong">
-                  {{ price.price }} {{cultures.czk}}
-                  <span *ngIf="price.weight">
-                    ({{ price.weight }})
-                  </span>
-                </span>
-              <button *ngIf="price.in_store > 0"
-                      type="button"
-                      class="btn btn-warning float-right"
-                      (click)="openReservationForm(i)">
-                {{cultures.reserve}}
-              </button>
-              <button *ngIf="price.in_store <= 0"
-                      type="button"
-                      class="btn btn-outline-secondary float-right"
-                      disabled>
-                {{cultures.not_in_store}}
-              </button>
-            </li>
-          </ul>
+      }
+      @if (!prices.length) {
+        <div class="col-xs-12">
+          @if (loading) {
+            <div class="spinner">
+              <!--suppress HtmlUnknownTarget -->
+              <img src="/assets/spinner_horizontal.svg" alt="{{cultures.loading}}...">
+            </div>
+          }
+          @if (!loading) {
+            <div class="alert alert-danger text-center" role="alert">
+              <strong>{{cultures.prices_not_found}}</strong>
+            </div>
+          }
         </div>
-      </div>
-    </div>
-    <div class="col-xs-12" *ngIf="!prices.length">
-      <div class="spinner" *ngIf="loading">
-        <!--suppress HtmlUnknownTarget -->
-        <img src="/assets/spinner_horizontal.svg" alt="{{cultures.loading}}...">
-      </div>
-      <div class="alert alert-danger text-center" role="alert" *ngIf="!loading">
-        <strong>{{cultures.prices_not_found}}</strong>
-      </div>
+      }
     </div>
   </div>
-</div>

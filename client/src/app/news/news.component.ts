@@ -4,9 +4,10 @@ import { NewsService } from 'services';
 import { Article } from 'interfaces';
 
 @Component({
-  selector: 'app-news',
-  templateUrl: './news.component.html',
-  styleUrls: ['./news.component.css']
+    selector: 'app-news',
+    templateUrl: './news.component.html',
+    styleUrls: ['./news.component.css'],
+    standalone: false
 })
 export class NewsComponent implements OnInit {
 

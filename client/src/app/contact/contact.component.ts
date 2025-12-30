@@ -5,10 +5,11 @@ import { NgbActiveModal, NgbModal, NgbModalConfig } from '@ng-bootstrap/ng-boots
 import { ContactService, GenericService, LanguageService } from 'services';
 
 @Component({
-  selector: 'app-contact',
-  providers: [NgbModalConfig, NgbModal],
-  styleUrls: ['./contact.component.css'],
-  templateUrl: './contact.component.html'
+    selector: 'app-contact',
+    providers: [NgbModalConfig, NgbModal],
+    styleUrls: ['./contact.component.css'],
+    templateUrl: './contact.component.html',
+    standalone: false
 })
 export class ContactComponent implements OnInit {
 
@@ -25,9 +26,10 @@ export class ContactComponent implements OnInit {
 }
 
 @Component({
-  selector: 'reservation',
-  templateUrl: './contact.modal.html',
-  styleUrls: ['./contact.component.css']
+    selector: 'reservation',
+    templateUrl: './contact.modal.html',
+    styleUrls: ['./contact.component.css'],
+    standalone: false
 })
 export class ContactModalComponent implements OnInit {
 

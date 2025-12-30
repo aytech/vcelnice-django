@@ -27,12 +27,14 @@
         ngModel
         required>
     </div>
-    <div
-      role="alert"
-      class="alert alert-danger"
-      *ngIf="!amount.valid && amount.touched">
-      {{cultures.enter_amount}}
-    </div>
+    @if (!amount.valid && amount.touched) {
+      <div
+        role="alert"
+        class="alert alert-danger"
+        >
+        {{cultures.enter_amount}}
+      </div>
+    }
     <div class="input-group mb-3">
       <div class="input-group-prepend">
         <span class="input-group-text" id="email-addon">
@@ -51,12 +53,14 @@
         required
         email>
     </div>
-    <div
-      role="alert"
-      class="alert alert-danger"
-      *ngIf="!email.valid && email.touched">
-      {{cultures.enter_email}}
-    </div>
+    @if (!email.valid && email.touched) {
+      <div
+        role="alert"
+        class="alert alert-danger"
+        >
+        {{cultures.enter_email}}
+      </div>
+    }
     <div class="input-group mb-3">
       <div class="input-group-prepend">
         <span class="input-group-text">
@@ -71,9 +75,11 @@
         <option selected disabled value="">
           {{cultures.pickup_location}}
         </option>
-        <option *ngFor="let location of locations" [value]="location.address">
-          {{ location.address }}
-        </option>
+        @for (location of locations; track location) {
+          <option [value]="location.address">
+            {{ location.address }}
+          </option>
+        }
       </select>
     </div>
     <div class="form-group">
@@ -82,15 +88,19 @@
         id="message"
         rows="3"
         name="message"
-        ngModel></textarea>
+      ngModel></textarea>
     </div>
   </form>
-  <div class="alert alert-success" role="alert" *ngIf="hasSuccess">
-    {{ postMessage }}
-  </div>
-  <div class="alert alert-danger" role="alert" *ngIf="hasError">
-    {{ postMessage }}
-  </div>
+  @if (hasSuccess) {
+    <div class="alert alert-success" role="alert">
+      {{ postMessage }}
+    </div>
+  }
+  @if (hasError) {
+    <div class="alert alert-danger" role="alert">
+      {{ postMessage }}
+    </div>
+  }
 </div>
 <div class="modal-footer">
   <button

@@ -2,37 +2,51 @@
   <div class="jumbotron">
     <h2 class="text-center web-color">Video</h2>
     <hr>
-    <div class="row" *ngIf="videos.length">
-      <div class="col-12 col-sm-12 col-md-6 col-lg-4 col-xl-3 card-container"
-           *ngFor="let video of videos; let i = index">
-        <div class="card">
-          <a
-            data-fancybox
-            href="https://youtu.be/{{ video.youtube_id }}"
-            class="text-center"
-            title="{{ video.caption }}"
-            target="_blank">
-            <img *ngIf="video.thumb" class="card-img-top default"
-                 src="{{ video.thumb }}" alt="{{ video.caption }}">
-            <span class="fa-stack fa-lg fa-4x" *ngIf="!video.thumb">
-                <i class="fa fa-square-o fa-stack-2x web-color"></i>
-                <i class="fa fa-youtube fa-stack-1x text-danger"></i>
-              </span>
-          </a>
-          <div class="card-body">
-            <h5 class="card-title text-center">{{ video.caption }}</h5>
-          </div>
+      @if (videos.length) {
+        <div class="row">
+          @for (video of videos; track video; let i = $index) {
+            <div class="col-12 col-sm-12 col-md-6 col-lg-4 col-xl-3 card-container"
+              >
+              <div class="card">
+                <a
+                  data-fancybox
+                  href="https://youtu.be/{{ video.youtube_id }}"
+                  class="text-center"
+                  title="{{ video.caption }}"
+                  target="_blank">
+                  @if (video.thumb) {
+                    <img class="card-img-top default"
+                      src="{{ video.thumb }}" alt="{{ video.caption }}">
+                  }
+                  @if (!video.thumb) {
+                    <span class="fa-stack fa-lg fa-4x">
+                      <i class="fa fa-square-o fa-stack-2x web-color"></i>
+                      <i class="fa fa-youtube fa-stack-1x text-danger"></i>
+                    </span>
+                  }
+                </a>
+                <div class="card-body">
+                  <h5 class="card-title text-center">{{ video.caption }}</h5>
+                </div>
+              </div>
+            </div>
+          }
         </div>
-      </div>
-    </div>
-    <div class="col-xs-12" *ngIf="!videos.length">
-      <div class="spinner" *ngIf="loading">
-        <!--suppress HtmlUnknownTarget -->
-        <img src="/assets/spinner_horizontal.svg" alt="Loading...">
-      </div>
-      <div class="alert alert-danger text-center" role="alert" *ngIf="!loading">
-        <strong>videa nenalezeny</strong>
-      </div>
+      }
+      @if (!videos.length) {
+        <div class="col-xs-12">
+          @if (loading) {
+            <div class="spinner">
+              <!--suppress HtmlUnknownTarget -->
+              <img src="/assets/spinner_horizontal.svg" alt="Loading...">
+            </div>
+          }
+          @if (!loading) {
+            <div class="alert alert-danger text-center" role="alert">
+              <strong>videa nenalezeny</strong>
+            </div>
+          }
+        </div>
+      }
     </div>
   </div>
-</div>
