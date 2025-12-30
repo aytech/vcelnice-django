@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-08-06 21:40+0000\n"
+"POT-Creation-Date: 2025-12-30 15:34+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -16,11 +16,11 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
 
-#: contact/apps.py:7 contact/models.py:13 vcelnice/views.py:124
+#: contact/apps.py:7 contact/models.py:15 vcelnice/views.py:132
 msgid "Contact"
 msgstr "Kontakt"
 
-#: contact/forms.py:12 contact/forms.py:16 vcelnice/views.py:145
+#: contact/forms.py:12 contact/forms.py:16 vcelnice/views.py:146
 msgid "Your email address"
 msgstr "Vaše emailová adresa"
 
@@ -29,60 +29,59 @@ msgid "Contact message"
 msgstr "Text zprávy"
 
 #: contact/forms.py:21 prices/forms.py:12 prices/forms.py:13
-#: vcelnice/views.py:126
 msgid "Enter a valid email address"
 msgstr "Zadejte platnou e-mailovou adresu"
 
-#: contact/forms.py:24 vcelnice/views.py:128
+#: contact/forms.py:24
 msgid "Please enter your message"
 msgstr "Prosím, zadejte svou zprávu"
 
-#: contact/models.py:6 prices/models.py:10
+#: contact/models.py:8 prices/models.py:10
 msgid "Email"
 msgstr "Emailová adresa"
 
-#: contact/models.py:8 prices/models.py:13
+#: contact/models.py:10 prices/models.py:13
 msgid "Message"
 msgstr "Zpráva"
 
-#: contact/models.py:9 news/models.py:10 photo/models.py:20 prices/models.py:8
+#: contact/models.py:11 news/models.py:10 photo/models.py:20 prices/models.py:8
 #: recipe/models.py:10
 msgid "Created"
 msgstr "Vytvořeno"
 
-#: contact/models.py:10 prices/models.py:9
+#: contact/models.py:12 prices/models.py:9
 msgid "Deleted"
 msgstr "Vymazáno"
 
-#: contact/models.py:14
+#: contact/models.py:16
 msgid "Contacts"
 msgstr "Kontakty"
 
-#: contact/models.py:22
+#: contact/models.py:24
 msgid "Address"
 msgstr "Adresa"
 
-#: contact/models.py:26
+#: contact/models.py:28
 msgid "Contact address"
 msgstr "Kontaktní adresa"
 
-#: contact/models.py:27
+#: contact/models.py:29
 msgid "Contact addresses"
 msgstr "Kontaktní adresy"
 
-#: contact/models.py:32
+#: contact/models.py:34
 msgid "Label"
 msgstr "Název"
 
-#: contact/models.py:33
+#: contact/models.py:35
 msgid "Number"
 msgstr "Číslo"
 
-#: contact/models.py:36
+#: contact/models.py:38
 msgid "Phone number"
 msgstr "telefonní číslo"
 
-#: contact/models.py:37
+#: contact/models.py:39
 msgid "Phone numbers"
 msgstr "telefonní čísla"
 
@@ -127,7 +126,7 @@ msgstr "Text"
 msgid "Home text"
 msgstr "Text domovské stránky"
 
-#: news/apps.py:7 news/models.py:34 vcelnice/views.py:131
+#: news/apps.py:7 news/models.py:34
 msgid "News"
 msgstr "Novinky"
 
@@ -139,7 +138,7 @@ msgstr "Aktualizováno"
 msgid "News article"
 msgstr "Novinka"
 
-#: photo/apps.py:7 photo/models.py:57 vcelnice/views.py:134
+#: photo/apps.py:7 photo/models.py:57 vcelnice/views.py:138
 msgid "Photo"
 msgstr "Foto"
 
@@ -195,7 +194,7 @@ msgstr "Cena"
 msgid "Weight"
 msgstr "Váha"
 
-#: recipe/apps.py:7 recipe/models.py:40 vcelnice/views.py:138
+#: recipe/apps.py:7 recipe/models.py:40 vcelnice/views.py:141
 msgid "Recipes"
 msgstr "Recepty"
 
@@ -215,79 +214,67 @@ msgstr "Text receptu"
 msgid "Recipe"
 msgstr "Recept"
 
-#: vcelnice/urls.py:28
+#: vcelnice/urls.py:27
 msgid "Administration"
 msgstr "Správa"
 
-#: vcelnice/views.py:121
+#: vcelnice/views.py:114
+msgid "Failed to send email"
+msgstr ""
+
+#: vcelnice/views.py:129
 msgid "Number of glasses"
 msgstr "Počet sklenic"
 
-#: vcelnice/views.py:122
+#: vcelnice/views.py:130
 msgid "Certificates"
 msgstr "Certifikáty"
 
-#: vcelnice/views.py:123
+#: vcelnice/views.py:131
 msgid "Close"
 msgstr "Zavřít"
 
-#: vcelnice/views.py:125
+#: vcelnice/views.py:133
 msgid "CZK"
 msgstr "Kč"
 
-#: vcelnice/views.py:127
-msgid "Enter amount"
-msgstr "Zadejte počet"
-
-#: vcelnice/views.py:129
+#: vcelnice/views.py:134
 msgid "Home"
 msgstr "Domů"
 
-#: vcelnice/views.py:130
+#: vcelnice/views.py:135
 msgid "Loading"
 msgstr "Načítám"
 
-#: vcelnice/views.py:132
+#: vcelnice/views.py:136
 msgid "Not in store"
 msgstr "Není skladem"
 
-#: vcelnice/views.py:133
+#: vcelnice/views.py:137
 msgid "Message was sent, thank you"
 msgstr "Zpráva byla odeslána, děkujeme"
 
-#: vcelnice/views.py:135
-msgid "Pickup location"
-msgstr "Vyzvednutí na adrese"
-
-#: vcelnice/views.py:136
+#: vcelnice/views.py:139
 msgid "Price list"
 msgstr "Ceník"
 
-#: vcelnice/views.py:137
+#: vcelnice/views.py:140
 msgid "Prices not found"
 msgstr "Ceníky nenalezeny"
 
-#: vcelnice/views.py:139
+#: vcelnice/views.py:142
 msgid "Region"
 msgstr "Region"
 
-#: vcelnice/views.py:140
-msgid "Reservation was sent, thank you"
-msgstr "Rezervace byla úspěšně odeslána, děkuj"
+#: vcelnice/views.py:143
+msgid "For reservation, please contact Jan Šaroch at"
+msgstr "Pro rezervaci kontaktujte prosím Jana Šarocha na e-mailové adrese"
 
-#: vcelnice/views.py:141
+#: vcelnice/views.py:144
 msgid "Reserve"
 msgstr "Rezervovat"
 
-#: vcelnice/views.py:142
-msgid "Send"
-msgstr "Odeslat"
-
-#: vcelnice/views.py:143
-msgid "Server error, please try again later"
-msgstr "Chyba serveru, zkuste to prosím později"
-
-#: vcelnice/views.py:144 video/models.py:66
+#: vcelnice/views.py:145 video/models.py:66
 msgid "Video"
 msgstr "Video"
 

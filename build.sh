@@ -3,7 +3,7 @@
 rm --force vcelnice.zip &&
 (
   cd client && npm install --force && npm run build && (
-    cd dist &&
+    cd dist && cp -r browser/* . && rm -rf browser &&
       sed -i 's+styles.css+/assets/styles.css+g' index.html &&
       sed -i 's+runtime.js+/assets/runtime.js+g' index.html &&
       sed -i 's+polyfills.js+/assets/polyfills.js+g' index.html &&

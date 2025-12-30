@@ -1,6 +1,6 @@
 from django.core.exceptions import ObjectDoesNotExist
 from django.middleware.csrf import get_token
-from django.utils.translation import activate, gettext_lazy as _
+from django.utils.translation import activate, gettext_lazy as _, deactivate
 from rest_framework import status
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
@@ -121,34 +121,30 @@ def contact(request):
 @api_view(["GET"])
 def get_cultures(request):
     query_params = request.query_params
-    if "locale" in query_params:
+    cultures = {}
+
+    if "locale" in query_params and query_params["locale"] in ["cs", "en"]:
         activate(query_params["locale"])
-    cultures = {
-        "amount_description": _("Number of glasses"),
-        "certificates": _("Certificates"),
-        "close": _("Close"),
-        "contact": _("Contact"),
-        "czk": _("CZK"),
-        "enter_email": _("Enter a valid email address"),
-        "enter_amount": _("Enter amount"),
-        "error_empty_message": _("Please enter your message"),
-        "home": _("Home"),
-        "loading": _("Loading"),
-        "news": _("News"),
-        "not_in_store": _("Not in store"),
-        "ok_message_sent": _("Message was sent, thank you"),
-        "photo": _("Photo"),
-        "pickup_location": _("Pickup location"),
-        "price_list": _("Price list"),
-        "prices_not_found": _("Prices not found"),
-        "recipes": _("Recipes"),
-        "region": _("Region"),
-        "reservation_ok": _("Reservation was sent, thank you"),
-        "reservation_text": _("For reservation, please contact Jan Šaroch at"),
-        "reserve": _("Reserve"),
-        "send": _("Send"),
-        "server_error": _("Server error, please try again later"),
-        "video": _("Video"),
-        "your_email": _("Your email address")
-    }
+
+        cultures["amount_description"] = _("Number of glasses")
+        cultures["certificates"] = _("Certificates")
+        cultures["close"] = _("Close")
+        cultures["contact"] = _("Contact")
+        cultures["czk"] = _("CZK")
+        cultures["home"] = _("Home")
+        cultures["loading"] = _("Loading")
+        cultures["not_in_store"] = _("Not in store")
+        cultures["ok_message_sent"] = _("Message was sent, thank you")
+        cultures["photo"] = _("Photo")
+        cultures["price_list"] = _("Price list")
+        cultures["prices_not_found"] = _("Prices not found")
+        cultures["recipes"] = _("Recipes")
+        cultures["region"] = _("Region")
+        cultures["reservation_text"] = _("For reservation, please contact Jan Šaroch at")
+        cultures["reserve"] = _("Reserve")
+        cultures["video"] = _("Video")
+        cultures["your_email"] = _("Your email address")
+
+        deactivate()
+
     return Response(cultures, status=status.HTTP_200_OK)

@@ -79,8 +79,24 @@ Localizing:
 
 3. Update translation files:
 
-    `django-admin makemessages -a` or `django-admin makemessages -l cs`
+    `django-admin makemessages -a` or `django-admin makemessages -l cs --ignore={node_modules,dist,static_root}`
     
 4. After all strings are translated, compile:
 
     `django-admin compilemessages`
+
+Deploying to PythonAnywhere:
+
+1. Build project with Docker:
+   
+   `docker compose up`
+
+2. Upload to PythonAnywhere:
+
+   `scp vcelnice.zip <username>@ssh.pythonanywhere.com:~/vcelnice`
+
+3. Login to web interface, unzip archive overwriting the files:
+
+   `unzip -o vcelnice.zip`
+
+4. Reload the app, if necessary. No need to collect static, as all directories are updated during build

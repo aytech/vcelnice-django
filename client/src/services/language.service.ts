@@ -40,30 +40,20 @@ export class LanguageService {
       certificates: 'Certifikáty',
       close: 'Zavřít',
       contact: 'Kontakt',
-      contact_form: 'Kontaktní formulář',
       czk: 'Kč',
-      enter_email: 'Zadejte platnou e-mailovou adresu',
-      enter_amount: 'Zadejte počet',
-      error_empty_message: 'Prosím, zadejte svou zprávu',
       home: 'Domů',
       loading: 'Načítám',
-      ok_message_sent: 'Zpráva byla odeslána, děkujeme',
       news: 'Novinky',
       not_in_store: 'Není skladem',
       photo: 'Foto',
-      pickup_location: 'Vyzvednutí na adrese',
       price_list: 'Ceník',
       prices_not_found: 'Ceníky nenalezeny',
       recipes: 'Recepty',
       region: 'Region',
-      reservation_ok: 'Rezervace byla úspěšně odeslána, děkuji',
       reservation_text: 'Pro rezervaci kontaktujte prosím Jana Šarocha na e-mailové adrese',
       reserve: 'Rezervovat',
-      send: 'Odeslat',
-      server_error: 'Chyba serveru, zkuste to prosím později',
-      video: 'Video',
-      your_email: 'Vaše emailová adresa'
-    };
+      video: 'Video'
+    }
   }
 
   setLanguage(locale: string) {
