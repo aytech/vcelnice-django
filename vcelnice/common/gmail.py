@@ -2,10 +2,6 @@
 import base64
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
-from googleapiclient.errors import HttpError
-from oauth2client.file import Storage
-from apiclient import discovery
-import httplib2
 import logging
 import os
 
@@ -45,29 +41,3 @@ class Gmail:
                         message.attach(attachment)
 
         return base64.urlsafe_b64encode(message.as_string().encode('utf-8'))
-
-    def get_credentials(self):
-        cred_dir = os.path.dirname(os.path.abspath(__file__))
-        credential_dir = os.path.join(cred_dir, self.CREDENTIALS_DIR)
-        if not os.path.exists(credential_dir):
-            os.makedirs(credential_dir)
-        credential_path = os.path.join(credential_dir, self.CLIENT_SECRET_FILE)
-
-        store = Storage(credential_path)
-        return store.get()
-
-    def send_email(self, message_data):
-        message_encoded = self.create_text_email(message_data)
-        credentials = self.get_credentials()
-        http = credentials.authorize(httplib2.Http())
-        service = discovery.build(self.GMAIL_API_SERVICE_NAME, self.GMAIL_API_VERSION, http=http)
-
-        try:
-            message = (service.users().messages().send(userId='me', body={'raw': message_encoded.decode()})
-                       .execute())
-            self.logger.info('Message was sent with ID %s' % message['id'])
-            return True
-        except HttpError as error:
-            self.logger.critical('Error sending email: %s' % error)
-
-        return False
