@@ -3,12 +3,12 @@ import logging
 import os
 
 import httplib2
+from django.conf import settings
 from django.core.management import BaseCommand
 from google.oauth2.credentials import Credentials
 from googleapiclient.discovery import build
 from googleapiclient.errors import HttpError
 
-from vcelnice.settings import MEDIA_ROOT
 from video.models import Video
 
 
@@ -41,7 +41,7 @@ class Youtube(BaseCommand):
         if filename == '':
             return
 
-        file_path = os.path.join(MEDIA_ROOT, filename)
+        file_path = os.path.join(settings.MEDIA_ROOT, filename)
 
         if not os.path.exists(file_path):
             return self.logger.error('Thumbnail %s for youtube video %i not found' % (filename, video_id))
@@ -49,7 +49,7 @@ class Youtube(BaseCommand):
         try:
             self.youtube.thumbnails().set(
                 videoId=video_id,
-                media_body=os.path.join(MEDIA_ROOT, filename)
+                media_body=os.path.join(settings.MEDIA_ROOT, filename)
             ).execute()
             self.logger.info("Thumbnail %s updated for video %s" % (filename, video_id))
         except HttpError as e:

@@ -1,17 +1,17 @@
 # coding=utf-8
-from django.core.management.base import BaseCommand
+import logging
 from urllib.parse import unquote_plus
+
+from django.conf import settings
+from django.core.management.base import BaseCommand
+
 from prices.models import Reservation
 from vcelnice.common.gmail import Gmail
-import logging
-import os
 
 
 class Command(BaseCommand):
     help = 'Send reservation emails'
     LOGGER_NAME = 'vcelnice.info'
-    SETTING_NAME = 'DJANGO_SETTINGS_MODULE'
-    ENV_DEVELOPMENT = 'vcelnice.settings.development'
 
     def __init__(self):
         self.logger = logging.getLogger(self.LOGGER_NAME)
@@ -20,13 +20,6 @@ class Command(BaseCommand):
         pass
 
     def handle(self, *args, **options):
-        env = os.environ[self.SETTING_NAME]
-
-        if env == self.ENV_DEVELOPMENT:
-            from vcelnice.settings import development as settings
-        else:
-            from vcelnice.settings import production as settings
-
         reservation = Reservation.objects.filter(deleted=False).first()
 
         if reservation is not None:

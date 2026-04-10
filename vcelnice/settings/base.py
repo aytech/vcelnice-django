@@ -13,6 +13,10 @@ https://docs.djangoproject.com/en/1.9/ref/settings/
 from time import strftime
 import os
 
+from vcelnice.settings_loader import load_project_env
+
+load_project_env()
+
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 APP_DIR = os.path.dirname(os.path.dirname(os.path.dirname(__file__)))
@@ -37,14 +41,15 @@ INSTALLED_APPS = [
     'rest_framework',
 
     # My apps
-    'contact',
-    'documents',
-    'home',
-    'news',
-    'photo',
-    'prices',
-    'recipe',
-    'video',
+    'contact.apps.ContactConfig',
+    'documents.apps.DocumentsConfig',
+    'home.apps.HomeConfig',
+    'news.apps.NewsConfig',
+    'photo.apps.PhotoConfig',
+    'prices.apps.PricesConfig',
+    'recipe.apps.RecipeConfig',
+    'video.apps.VideoConfig',
+    # The region page is served by the SPA, so the legacy Django app stays uninstalled.
 ]
 
 LANGUAGE_COOKIE_NAME = 'cs'
@@ -162,8 +167,6 @@ LANGUAGE_CODE = 'cs'
 TIME_ZONE = 'UTC'
 
 USE_I18N = True
-
-USE_L10N = True
 
 USE_TZ = True
 

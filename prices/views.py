@@ -3,9 +3,9 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 
 from contact.models import ContactAddress
-from vcelnice.serializers.PriceSerializer import PriceSerializer
+from prices.serializers import ContactAddressSerializer
+from vcelnice.serializers import PriceSerializer
 from .models import Price
-from .serializers.ContactAddressSerializer import ContactAddressSerializer
 
 
 @api_view(["GET"])

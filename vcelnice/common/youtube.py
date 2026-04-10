@@ -3,9 +3,8 @@
 # https://developers.google.com/youtube/v3/code_samples/python#retrieve_my_uploads
 import argparse
 import json
+import os
 import sys
-from google_auth_oauthlib.flow import Flow
-from google_auth_oauthlib.flow import InstalledAppFlow
 
 import httplib2
 import logging
@@ -13,7 +12,9 @@ import random
 import re
 import requests
 import time
-from vcelnice.settings import *
+from django.conf import settings
+from google_auth_oauthlib.flow import Flow
+from google_auth_oauthlib.flow import InstalledAppFlow
 from googleapiclient.discovery import build
 from googleapiclient.errors import HttpError
 from googleapiclient.http import MediaFileUpload
@@ -234,7 +235,7 @@ class Youtube:
             tags = [tag.strip() for tag in video.tags.split(',')]
         else:
             tags = None
-        file_path = os.path.join(MEDIA_ROOT, video.file.name)
+        file_path = os.path.join(settings.MEDIA_ROOT, video.file.name)
         body = dict(
             snippet=dict(
                 title=video.caption,
@@ -309,7 +310,7 @@ class Youtube:
         if filename == '':
             return
 
-        file_path = os.path.join(MEDIA_ROOT, filename)
+        file_path = os.path.join(settings.MEDIA_ROOT, filename)
 
         if not os.path.exists(file_path):
             return self.logger.error('Thumbnail %s for youtube video %i not found' % (filename, video_id))
@@ -317,7 +318,7 @@ class Youtube:
         try:
             self.youtube.thumbnails().set(
                 videoId=video_id,
-                media_body=os.path.join(MEDIA_ROOT, filename)
+                media_body=os.path.join(settings.MEDIA_ROOT, filename)
             ).execute()
             self.logger.info("Thumbnail %s updated for video %s" % (filename, video_id))
         except HttpError as e:

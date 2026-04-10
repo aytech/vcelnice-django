@@ -1,16 +1,15 @@
 import base64
 import logging
-import os
 from email.header import Header
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 from email.utils import formataddr
 
+from django.conf import settings
 from django.template.loader import render_to_string
 
 from prices.models import Reservation
-from vcelnice.serializers.ContactSerializer import ContactSerializer
-from vcelnice.serializers.ReservationSerializer import ReservationSerializer
+from vcelnice.serializers import ContactSerializer, ReservationSerializer
 
 
 class EmailException(Exception):
@@ -19,12 +18,6 @@ class EmailException(Exception):
 
 class Email:
     def __init__(self):
-        env = os.getenv('DJANGO_SETTINGS_MODULE')
-        if env == 'vcelnice.settings.production':
-            from vcelnice.settings import production as configuration
-        else:
-            from vcelnice.settings import development as configuration
-        self.configuration = configuration
         self.logger = logging.getLogger("vcelnice.info")
         self.SCOPES = ["https://www.googleapis.com/auth/gmail.send"]
 
@@ -45,12 +38,16 @@ class Email:
             return
 
         message = MIMEMultipart("alternative")
-        message["From"] = self.formataddr_utf8(self.configuration.SENDER_EMAIL_NAME,
-                                               self.configuration.SENDER_EMAIL_ADDRESS)
+        message["From"] = self.formataddr_utf8(
+            settings.SENDER_EMAIL_NAME,
+            settings.SENDER_EMAIL_ADDRESS,
+        )
         message["To"] = ", ".join(
-            self.formataddr_utf8(sender, email) for sender, email in self.configuration.TO_EMAIL_RECIPIENTS)
+            self.formataddr_utf8(sender, email) for sender, email in settings.TO_EMAIL_RECIPIENTS
+        )
         message["Bcc"] = ", ".join(
-            formataddr((sender, email)) for sender, email in self.configuration.BCC_EMAIL_RECIPIENTS)
+            formataddr((sender, email)) for sender, email in settings.BCC_EMAIL_RECIPIENTS
+        )
         message["Subject"] = "Rezervace medu"
 
         html_body = render_to_string("email/reservation.html", context={

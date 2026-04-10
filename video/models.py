@@ -1,8 +1,12 @@
+import os
+
+from django.core.files.uploadedfile import SimpleUploadedFile
+from django.conf import settings
 from django.db import models
+from django.utils.translation import gettext_lazy as _
+
 from vcelnice.common.image import ImageUploader
 from vcelnice.common.translit import Translit
-from django.utils.translation import gettext_lazy as _
-from vcelnice.settings import *
 
 
 class Video(models.Model):
@@ -22,18 +26,28 @@ class Video(models.Model):
                             verbose_name=_("Tags"))
     updated = models.DateTimeField(auto_now_add=False, auto_now=True)
     youtube_id = models.CharField(max_length=150, null=True, blank=True)
-    youtube_status = models.IntegerField(default=YOUTUBE_STATUS_PENDING_UPLOAD, null=True, blank=True)
+    youtube_status = models.IntegerField(default=settings.YOUTUBE_STATUS_PENDING_UPLOAD, null=True, blank=True)
 
     def save(self, *args, **kwargs):
         if self.thumb:
             video = Video.objects.filter(thumb=self.thumb)
             if len(video) == 0:
                 uploader = ImageUploader(self.thumb)
-                uploader.save_model(self)
+                image_handle = uploader.save(200, 200)
+                image_field = SimpleUploadedFile(
+                    self.thumb.name,
+                    image_handle.read(),
+                    content_type=self.thumb.file.content_type,
+                )
+                self.thumb.save(
+                    "%s.%s" % (os.path.splitext(self.thumb.name)[0], "jpg"),
+                    image_field,
+                    save=False,
+                )
         self.file.name = Translit.translit(self.file.name)
 
-        if self.youtube_status > YOUTUBE_STATUS_PENDING_UPLOAD:
-            self.youtube_status = YOUTUBE_STATUS_PENDING_UPDATE
+        if self.youtube_status > settings.YOUTUBE_STATUS_PENDING_UPLOAD:
+            self.youtube_status = settings.YOUTUBE_STATUS_PENDING_UPDATE
 
         super(Video, self).save(*args, **kwargs)
 
@@ -42,12 +56,12 @@ class Video(models.Model):
         super(Video, self).save()
 
     def delete(self, using=None, keep_parents=False):
-        deleted = self.youtube_status == YOUTUBE_STATUS_DELETED
-        not_uploaded = self.youtube_status == YOUTUBE_STATUS_PENDING_UPLOAD
+        deleted = self.youtube_status == settings.YOUTUBE_STATUS_DELETED
+        not_uploaded = self.youtube_status == settings.YOUTUBE_STATUS_PENDING_UPLOAD
         if deleted or not_uploaded:
             super(Video, self).delete(using, keep_parents)
         else:
-            self.youtube_status = YOUTUBE_STATUS_PENDING_DELETE
+            self.youtube_status = settings.YOUTUBE_STATUS_PENDING_DELETE
             super(Video, self).save()
 
     def get_categories(self):

@@ -1,6 +1,6 @@
+from django.conf import settings
 from googleapiclient.errors import HttpError
 
-from vcelnice.settings import YOUTUBE_STATUS_PENDING_UPDATE, YOUTUBE_STATUS_UPLOADED
 from video.management.commands.youtube import Youtube
 
 
@@ -9,7 +9,7 @@ class Command(Youtube):
         super().__init__()
 
     def handle(self, *args, **options):
-        query_set = self.get_videos(status=YOUTUBE_STATUS_PENDING_UPDATE)
+        query_set = self.get_videos(status=settings.YOUTUBE_STATUS_PENDING_UPDATE)
         if query_set.count() > 0:
             self.update(query_set.first())
 
@@ -32,7 +32,7 @@ class Command(Youtube):
                 )
             ).execute()
             self.upload_thumbnail(video.youtube_id, video.thumb.name)
-            video.save_upload_status(YOUTUBE_STATUS_UPLOADED)
+            video.save_upload_status(settings.YOUTUBE_STATUS_UPLOADED)
             self.logger.info("Video id '%s' was successfully updated." % video.youtube_id)
         except HttpError as e:
             self.logger.critical(

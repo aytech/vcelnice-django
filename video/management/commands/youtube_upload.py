@@ -1,11 +1,12 @@
+import os
 import random
 import time
 
+from django.conf import settings
 from googleapiclient.errors import HttpError
 from googleapiclient.http import MediaFileUpload
 
 from video.management.commands.youtube import Youtube
-from vcelnice.settings import *
 
 
 class Command(Youtube):
@@ -18,7 +19,7 @@ class Command(Youtube):
         pass
 
     def handle(self, *args, **options):
-        query_set = self.get_videos(status=YOUTUBE_STATUS_PENDING_UPLOAD)
+        query_set = self.get_videos(status=settings.YOUTUBE_STATUS_PENDING_UPLOAD)
         if query_set.count() > 0:
             self.upload(query_set.first())
 
@@ -37,7 +38,7 @@ class Command(Youtube):
             tags = [tag.strip() for tag in video.tags.split(',')]
         else:
             tags = None
-        file_path = os.path.join(MEDIA_ROOT, video.file.name)
+        file_path = os.path.join(settings.MEDIA_ROOT, video.file.name)
         body = dict(
             snippet=dict(
                 title=video.caption,
@@ -78,7 +79,7 @@ class Command(Youtube):
                     if 'id' in response:
                         video.youtube_id = response['id']
                         video.save()
-                        video.save_upload_status(YOUTUBE_STATUS_UPLOADED)
+                        video.save_upload_status(settings.YOUTUBE_STATUS_UPLOADED)
                         self.upload_thumbnail(response['id'], video.thumb.name)
                         self.logger.info("Video id '%s' was successfully uploaded." % response['id'])
                     else:

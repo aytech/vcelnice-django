@@ -1,10 +1,12 @@
 # coding=utf-8
-from django.core.management.base import BaseCommand
+import logging
 from urllib.parse import unquote_plus
+
+from django.conf import settings
+from django.core.management.base import BaseCommand
+
 from contact.models import Contact
 from vcelnice.common.gmail import Gmail
-import logging
-import os
 
 
 class Command(BaseCommand):
@@ -17,13 +19,6 @@ class Command(BaseCommand):
         pass
 
     def handle(self, *args, **options):
-        env = os.environ['DJANGO_SETTINGS_MODULE']
-
-        if env == 'vcelnice.settings.development':
-            from vcelnice.settings import development as settings
-        else:
-            from vcelnice.settings import production as settings
-
         contact = Contact.objects.filter(deleted=False).first()
 
         if contact is not None:

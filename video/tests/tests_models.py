@@ -1,71 +1,78 @@
+import os
+import tempfile
+from io import BytesIO
+
+from django.conf import settings
 from django.core.files.uploadedfile import SimpleUploadedFile
 from django.test import TestCase
-from video.management.commands.youtube_upload import Command
+from django.test.utils import override_settings
+from PIL import Image
+
 from video.models import Video
-from vcelnice.common.youtube import Youtube
-from vcelnice.settings import *
+from video.models import VideoCategory
 
 
 class VideoTestCase(TestCase):
     def setUp(self):
-        path = os.path.dirname(os.path.abspath(__file__))
-        thumb_path = os.path.join(path, 'test.jpg')
-        video_path = os.path.join(path, 'test.wmv')
-        self.youtube = Youtube()
+        self.media_root = tempfile.TemporaryDirectory()
+        self.override = override_settings(MEDIA_ROOT=self.media_root.name)
+        self.override.enable()
 
-        video = Video()
-        video.caption = 'Testing Video'
-        video.description = 'Testing Video description'
-        video.category = self.youtube.get_categories()[0][0]
-        video.tags = 'vcelnice, vcelka, med'
-        video.file = SimpleUploadedFile('test.wmv', bytes(video_path, 'utf-8'), content_type='video/x-ms-wmv')
-        video.thumb = SimpleUploadedFile('test.jpg', open(thumb_path, 'rb').read(), content_type='image/jpeg')
-        video.save()
-
-    def test_video_created(self):
-        video = Video.objects.get(caption='Testing Video')
-        self.assertEqual(YOUTUBE_STATUS_PENDING_UPLOAD, video.youtube_status)
-
-        cron = Command()
-        cron.handle()
-        uploaded_videos = self.youtube.get_uploaded_videos()
-
-        video_updated = Video.objects.get(caption='Testing Video')
-        self.assertIn(video_updated.youtube_id, uploaded_videos)
-
-    def test_video_updated(self):
-        cron = Command()
-        cron.handle()
-
-        video = Video.objects.get(caption='Testing Video')
-        video.caption = 'Testing Video UPDATED'
-        video.description = 'Testing Video description UPDATED'
-        video.tags += ', UPDATED'
-        category = self.youtube.get_categories()[1][0]
-        video.category = category
-        video.save()
-
-        cron = Command()
-        cron.handle()
-
-        video_updated = Video.objects.get(caption='Testing Video UPDATED')
-        uploaded_video = self.youtube.get_uploaded_video(video_updated.youtube_id)
-
-        self.assertEqual(video_updated.caption, uploaded_video['title'])
-        self.assertEqual(video_updated.description, uploaded_video['description'])
-        self.assertEqual(video_updated.category, uploaded_video['categoryId'])
-        self.assertEqual(video_updated.tags.split(', '), uploaded_video['tags'])
-        self.assertEqual(video_updated.category, uploaded_video['categoryId'])
-
-        video_updated.caption = 'Testing Video'
-        video_updated.save()
+        VideoCategory.objects.create(category_id="1", title="Category 1")
+        VideoCategory.objects.create(category_id="2", title="Category 2")
 
     def tearDown(self):
-        videos = Video.objects.all()
+        self.override.disable()
+        self.media_root.cleanup()
 
-        for video in videos:
-            print('Removing video with youtube ID %s' % video.youtube_id)
-            os.remove(os.path.join(MEDIA_ROOT, video.thumb.name))
-            os.remove(os.path.join(MEDIA_ROOT, video.file.name))
-            if video.youtube_id != '':
-                self.youtube.delete_video(video.youtube_id)
+    @staticmethod
+    def make_thumb(name="test image.jpg"):
+        image = Image.new("RGB", (10, 10), color="red")
+        buffer = BytesIO()
+        image.save(buffer, format="JPEG")
+        return SimpleUploadedFile(name, buffer.getvalue(), content_type="image/jpeg")
+
+    @staticmethod
+    def make_video_file(name="test video.wmv"):
+        return SimpleUploadedFile(name, b"video-bytes", content_type="video/x-ms-wmv")
+
+    def create_video(self, **overrides):
+        data = {
+            "caption": "Testing Video",
+            "description": "Testing Video description",
+            "category": "1",
+            "tags": "vcelnice, vcelka, med",
+            "file": self.make_video_file(),
+            "thumb": self.make_thumb(),
+        }
+        data.update(overrides)
+        return Video.objects.create(**data)
+
+    def test_video_created_defaults_to_pending_upload(self):
+        video = self.create_video()
+
+        self.assertEqual(settings.YOUTUBE_STATUS_PENDING_UPLOAD, video.youtube_status)
+        self.assertTrue(video.file.name.endswith(".wmv"))
+        self.assertNotIn(" ", os.path.basename(video.file.name))
+        self.assertTrue(video.thumb.name.endswith(".jpg"))
+
+    def test_uploaded_video_is_marked_for_update_on_save(self):
+        video = self.create_video(youtube_status=settings.YOUTUBE_STATUS_UPLOADED)
+
+        self.assertEqual(settings.YOUTUBE_STATUS_PENDING_UPDATE, video.youtube_status)
+
+    def test_delete_pending_upload_video_removes_record(self):
+        video = self.create_video()
+        video_id = video.id
+
+        video.delete()
+
+        self.assertFalse(Video.objects.filter(id=video_id).exists())
+
+    def test_delete_uploaded_video_marks_pending_delete(self):
+        video = self.create_video(youtube_status=settings.YOUTUBE_STATUS_UPLOADED)
+
+        video.delete()
+
+        video.refresh_from_db()
+        self.assertEqual(settings.YOUTUBE_STATUS_PENDING_DELETE, video.youtube_status)

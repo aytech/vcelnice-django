@@ -1,19 +1,16 @@
 # coding=utf-8
-from django.core.management.base import BaseCommand
-from urllib.parse import unquote_plus
-from email.mime.multipart import MIMEMultipart
-from email.mime.text import MIMEText
 from datetime import date
-from contact.models import Contact
-from vcelnice.common.gmail import Gmail
 import logging
-import os, mimetypes
+import os
+
+from django.conf import settings
+from django.core.management.base import BaseCommand
+
+from vcelnice.common.gmail import Gmail
 
 class Command(BaseCommand):
     help = 'Send email collected via contact form'
     LOGGER_NAME = 'vcelnice.info'
-    SETTING_NAME = 'DJANGO_SETTINGS_MODULE'
-    ENV_DEVELOPMENT = 'vcelnice.settings.development'
 
     def __init__(self):
         self.logger = logging.getLogger(self.LOGGER_NAME)
@@ -22,13 +19,6 @@ class Command(BaseCommand):
         pass
 
     def handle(self, *args, **options):
-        env = os.environ[self.SETTING_NAME]
-
-        if env == self.ENV_DEVELOPMENT:
-            from vcelnice.settings import development as settings
-        else:
-            from vcelnice.settings import production as settings
-
         gmail = Gmail()
         date_formatted = str(date.today()).replace('-', '_')
         attachments = []
