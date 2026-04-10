@@ -19,8 +19,9 @@ def location_list(request):
 
 @api_view(['GET'])
 def prices_list(request):
-    if request.method == 'GET':
-        prices = Price.objects.all()
-        serializer = PriceSerializer(prices, many=True)
-        return Response(serializer.data, status=status.HTTP_200_OK)
-    return Response(None, status=status.HTTP_400_BAD_REQUEST)
+    return Response(None, status=status.HTTP_404_NOT_FOUND)
+    # if request.method == 'GET':
+    #     prices = Price.objects.all()
+    #     serializer = PriceSerializer(prices, many=True)
+    #     return Response(serializer.data, status=status.HTTP_200_OK)
+    # return Response(None, status=status.HTTP_400_BAD_REQUEST)

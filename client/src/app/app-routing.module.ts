@@ -7,7 +7,7 @@ import { CertificatesComponent } from './certificates/certificates.component';
 import { RegionComponent } from './region/region.component';
 import { NewsComponent } from './news/news.component';
 import { RecipesComponent } from './recipes/recipes.component';
-import { PricesComponent } from './prices/prices.component';
+// import { PricesComponent } from './prices/prices.component';
 import { ContactComponent } from './contact/contact.component';
 import { PrivacyComponent } from './privacy/privacy.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
@@ -20,7 +20,7 @@ const routes: Routes = [
   { path: 'region', component: RegionComponent },
   { path: 'novinky', component: NewsComponent },
   { path: 'recepty', component: RecipesComponent },
-  { path: 'cenik', component: PricesComponent },
+  // { path: 'cenik', component: PricesComponent },
   { path: 'kontakt', component: ContactComponent },
   { path: 'privacy', component: PrivacyComponent },
   { path: '**', component: PageNotFoundComponent }

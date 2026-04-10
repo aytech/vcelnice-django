@@ -17,6 +17,6 @@
   "include": [
     "src/main.ts",
     "src/polyfills.ts",
-    "node_modules/angular2-lightbox/index.ts"
+    "src/**/*.d.ts"
   ]
 }
