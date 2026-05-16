@@ -98,6 +98,8 @@ h2.title {
 }
 
 .jumbotron {
+  background-color: rgba(248, 249, 250, 0.95);
+  border-radius: 0.3rem;
   padding: 1.5rem;
   margin-bottom: 3rem;
 }

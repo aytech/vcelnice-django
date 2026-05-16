@@ -9,7 +9,7 @@
           @for (price of prices; track price; let i = $index) {
             <div class="row">
               <div class="col-4 text-center image">
-                <img class="align-self-start mr-3 img-thumbnail" src="{{ price.image }}" alt="{{ price.title }}">
+                <img class="align-self-start me-3 img-thumbnail" src="{{ price.image }}" alt="{{ price.title }}">
               </div>
               <div class="col-8">
                 <ul class="list-group">
@@ -30,7 +30,7 @@
                     @if (price.in_store > 0) {
                       <button
                         type="button"
-                        class="btn btn-warning float-right"
+                        class="btn btn-warning float-end"
                         (click)="openReservationForm(i)">
                         {{cultures.reserve}}
                       </button>
@@ -38,7 +38,7 @@
                     @if (price.in_store <= 0) {
                       <button
                         type="button"
-                        class="btn btn-outline-secondary float-right"
+                        class="btn btn-outline-secondary float-end"
                         disabled>
                         {{cultures.not_in_store}}
                       </button>
@@ -51,7 +51,7 @@
         </div>
       }
       @if (!prices.length) {
-        <div class="col-xs-12">
+        <div class="col-12">
           @if (loading) {
             <div class="spinner">
               <!--suppress HtmlUnknownTarget -->
