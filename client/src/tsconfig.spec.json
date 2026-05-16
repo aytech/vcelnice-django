@@ -5,6 +5,7 @@
     "baseUrl": "./",
     "module": "es2022",
     "target": "es2022",
+    "strictPropertyInitialization": false,
     "types": [
       "jasmine",
       "node"
