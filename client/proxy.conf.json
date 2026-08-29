@@ -1,12 +1,14 @@
 {
   "/api": {
-    "target": "http://0.0.0.0:8000",
+    "target": "http://api:8888",
     "secure": false,
-    "logLevel": "debug"
+    "logLevel": "debug",
+    "changeOrigin": true
   },
   "/media": {
-    "target": "http://0.0.0.0:8000",
+    "target": "http://api:8888",
     "secure": false,
-    "logLevel": "debug"
+    "logLevel": "debug",
+    "changeOrigin": true
   }
 }

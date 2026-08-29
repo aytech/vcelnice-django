@@ -1,0 +1,75 @@
+name: django-angular-dev
+
+services:
+  api:
+    image: ${PYTHON_IMAGE:-python:3.13-slim-bookworm}
+    init: true
+    working_dir: /workspace
+
+    environment:
+      PYTHONDONTWRITEBYTECODE: "1"
+      PYTHONUNBUFFERED: "1"
+
+    volumes:
+      - type: bind
+        source: ..
+        target: /workspace
+      - django_pip_cache:/root/.cache/pip
+
+    command: 
+      - sh
+      - -c
+      - |
+        python -m pip install --disable-pip-version-check -r requirements.txt
+        exec python manage.py runserver 0.0.0.0:8888 --settings=vcelnice.settings.development
+
+    ports:
+      - "127.0.0.1:8888:8888"
+
+  ui:
+    image: ${NODE_IMAGE:-node:24-bookworm-slim}
+    init: true
+    working_dir: /workspace
+
+    environment:
+      NG_CLI_ANALYTICS: "false"
+
+    depends_on:
+      - api
+
+    volumes:
+      - type: bind
+        source: ../client
+        target: /workspace
+      - type: bind
+        source: ../client/proxy.conf.json
+        target: /config/proxy.conf.json
+        read_only: true
+      - angular_node_modules:/workspace/node_modules
+      - npm_cache:/root/.npm
+
+    command: 
+      - sh
+      - -c
+      - |
+        if [ ! -x node_modules/.bin/ng ]; then
+          if [ -f package-lock.json ]; then
+            npm ci --prefer-offline --no-audit --no-fund
+          else
+            npm install --prefer-offline --no-audit --no-fund
+          fi
+        fi
+
+        exec npx --no-install ng serve \
+          --host 0.0.0.0 \
+          --port 4200 \
+          --poll 1000 \
+          --proxy-config /config/proxy.conf.json
+
+    ports:
+      - "127.0.0.1:4200:4200"
+
+volumes:
+  django_pip_cache:
+  angular_node_modules:
+  npm_cache:

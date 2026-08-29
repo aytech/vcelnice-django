@@ -14,15 +14,19 @@ class Home(models.Model):
 
     # noinspection PyUnresolvedReferences
     def save(self, force_insert=False, force_update=False, using=None, update_fields=None):
-        if hasattr(self.icon.file, 'content_type'):
+        if self.icon and hasattr(self.icon.file, 'content_type'):
             uploader = ImageUploader(self.icon, 'png')
             image_handle = uploader.save(300, 300)
 
             image_field = SimpleUploadedFile(self.icon.name, image_handle.read(),
                                              content_type=self.icon.file.content_type)
-            self.icon.save('%s.%s' % (os.path.splitext(self.icon.name)[0], 'png'), image_field, save=False)
+            self.icon.save(f'{os.path.splitext(self.icon.name)[0]}.png', image_field, save=False)
 
-        super(Home, self).save(force_insert, force_update, using, update_fields)
+        super().save(
+            force_insert=force_insert,
+            force_update=force_update,
+            using=using,
+            update_fields=update_fields)
 
     class Meta:
         verbose_name = _('Home text')
