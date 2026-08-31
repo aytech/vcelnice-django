@@ -1,7 +1,7 @@
-import { Component, OnInit } from '@angular/core';
-import { HttpErrorResponse } from '@angular/common/http';
-import { NewsService } from 'services';
-import { Article } from 'interfaces';
+import { Component, OnInit } from '@angular/core'
+import { HttpErrorResponse } from '@angular/common/http'
+import { NewsService } from '@services'
+import { Article } from '@interfaces'
 
 @Component({
     selector: 'app-news',

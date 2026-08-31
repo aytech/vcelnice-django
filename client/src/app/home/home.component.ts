@@ -1,11 +1,11 @@
-import { Component, OnInit } from '@angular/core';
-import { HttpErrorResponse } from '@angular/common/http';
-import { HomeService, NewsService } from 'services';
-import { forkJoin } from 'rxjs';
+import { Component, OnInit } from '@angular/core'
+import { HttpErrorResponse } from '@angular/common/http'
+import { HomeService, NewsService } from '@services'
+import { forkJoin } from 'rxjs'
 import {
   Article,
   Home
-} from 'interfaces';
+} from '@interfaces'
 
 @Component({
     selector: 'app-home',
@@ -43,6 +43,6 @@ export class HomeComponent implements OnInit {
           this.loading = false;
           this.error = true;
           console.error('Error fetching data: ', error.statusText);
-        });
+        })
   }
 }

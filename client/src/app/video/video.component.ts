@@ -1,7 +1,7 @@
-import { Component, OnInit } from '@angular/core';
-import { HttpErrorResponse } from '@angular/common/http';
-import { VideoService } from 'services';
-import { Video } from 'interfaces';
+import { Component, OnInit } from '@angular/core'
+import { HttpErrorResponse } from '@angular/common/http'
+import { VideoService } from '@services'
+import { Video } from '@interfaces'
 
 @Component({
     selector: 'app-video',

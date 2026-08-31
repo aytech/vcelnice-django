@@ -1,8 +1,8 @@
-import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
-import { ApiConstants } from 'config';
-import { Photo } from 'interfaces';
+import { Injectable } from '@angular/core'
+import { HttpClient } from '@angular/common/http'
+import { Observable } from 'rxjs'
+import { ApiConstants } from '@config'
+import { Photo } from '@interfaces'
 
 @Injectable()
 export class PhotoService {

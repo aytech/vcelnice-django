@@ -1,8 +1,8 @@
-import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
-import { ApiConstants } from 'config';
-import { Home } from 'interfaces';
+import { HttpClient } from '@angular/common/http'
+import { Injectable } from '@angular/core'
+import { Observable } from 'rxjs'
+import { ApiConstants } from '@config'
+import { Home } from '@interfaces'
 
 @Injectable()
 export class HomeService {

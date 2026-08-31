@@ -1,8 +1,8 @@
-import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable } from 'rxjs';
-import { ApiConstants } from 'config';
-import { Location, Price } from 'interfaces';
+import { Injectable } from '@angular/core'
+import { HttpClient, HttpHeaders } from '@angular/common/http'
+import { Observable } from 'rxjs'
+import { ApiConstants } from '@config'
+import { Location, Price } from '@interfaces'
 
 
 @Injectable()
@@ -14,11 +14,11 @@ export class PriceService {
   }
 
   getPrices(): Observable<Array<Price>> {
-    return this.http.get<Array<Price>>(ApiConstants.GET_PRICES);
+    return this.http.get<Array<Price>>(ApiConstants.GET_PRICES)
   }
 
   getLocations(): Observable<Array<Location>> {
-    return this.http.get<Array<Location>>(ApiConstants.GET_LOCATIONS);
+    return this.http.get<Array<Location>>(ApiConstants.GET_LOCATIONS)
   }
 
   postReservation(data: any, lang: string, token: string): Observable<any> {

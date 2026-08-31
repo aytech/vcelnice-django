@@ -1,8 +1,8 @@
 import { Component, OnInit, Input } from '@angular/core'
-import { HttpErrorResponse } from '@angular/common/http';
-import { NgbModal, NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { PriceService, LanguageService } from 'services';
-import { Culture, Price } from 'interfaces';
+import { HttpErrorResponse } from '@angular/common/http'
+import { NgbModal, NgbActiveModal } from '@ng-bootstrap/ng-bootstrap'
+import { PriceService, LanguageService } from '@services'
+import { Culture, Price } from '@interfaces'
 
 @Component({
   selector: 'app-prices',

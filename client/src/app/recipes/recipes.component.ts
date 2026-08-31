@@ -1,7 +1,7 @@
-import { Component, OnInit } from '@angular/core';
-import { HttpErrorResponse } from '@angular/common/http';
-import { RecipeService } from 'services';
-import { Recipe } from 'interfaces';
+import { Component, OnInit } from '@angular/core'
+import { HttpErrorResponse } from '@angular/common/http'
+import { RecipeService } from '@services'
+import { Recipe } from '@interfaces'
 
 @Component({
     selector: 'app-recipees',

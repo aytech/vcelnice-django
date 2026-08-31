@@ -1,8 +1,8 @@
-import { Component, OnInit } from '@angular/core';
-import { HttpErrorResponse } from '@angular/common/http';
-import { CertificateService, LanguageService } from 'services';
-import { FileConstants } from 'config';
-import { Certificate, Culture } from 'interfaces';
+import { Component, OnInit } from '@angular/core'
+import { HttpErrorResponse } from '@angular/common/http'
+import { CertificateService, LanguageService } from '@services'
+import { FileConstants } from '@config'
+import { Certificate, Culture } from '@interfaces'
 
 @Component({
     selector: 'app-certificates',
@@ -12,9 +12,9 @@ import { Certificate, Culture } from 'interfaces';
 })
 export class CertificatesComponent implements OnInit {
 
-  public certificates: Array<Certificate>;
-  public cultures: Culture;
-  public loading: boolean;
+  public certificates: Array<Certificate>
+  public cultures: Culture
+  public loading: boolean
 
   constructor(
     private certificateService: CertificateService,

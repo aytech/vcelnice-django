@@ -1,7 +1,7 @@
-import { Component, OnInit } from '@angular/core';
-import { HttpErrorResponse } from '@angular/common/http';
-import { PhotoService } from 'services';
-import { Photo } from 'interfaces';
+import { Component, OnInit } from '@angular/core'
+import { HttpErrorResponse } from '@angular/common/http'
+import { PhotoService } from '@services'
+import { Photo } from '@interfaces'
 
 @Component({
     selector: 'app-photo',

@@ -31,7 +31,7 @@ import {
   PriceService,
   RecipeService,
   VideoService
-} from 'services'
+} from '@services'
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome'
 
 @NgModule({ declarations: [
