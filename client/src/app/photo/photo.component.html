@@ -2,24 +2,33 @@
   <div class="jumbotron">
     <h2 class="text-center web-color">Foto</h2>
     <hr>
+
+    @if (photosResource.hasValue()) {
+      @let photos = photosResource.value();
+
       @if (photos.length) {
         <div class="row">
-          @for (photo of photos; track photo; let i = $index) {
-            <div class="col-12 col-sm-12 col-md-6 col-lg-4 col-xl-3 card-container"
-              >
+          @for (photo of photos; track photo.id) {
+            <div class="col-12 col-sm-12 col-md-6 col-lg-4 col-xl-3 card-container">
               <div class="card">
                 <!--suppress HtmlUnknownTarget -->
                 @if (!photo.thumb) {
-                  <img class="card-img-top default"
-                    src="/assets/images/default.png" alt="{{ photo.caption }}">
-                  }
+                  <img
+                    class="card-img-top default"
+                    src="/assets/images/default.png"
+                    alt="{{ photo.caption }}">
+                } @else {
                   <a
                     class="thumbnail"
                     data-fancybox="gallery"
                     [attr.data-caption]="photo.caption"
                     href="{{ photo.image }}">
-                  <img src="{{ photo.thumb }}" alt="" class="card-img-top default">
-                </a>
+                    <img
+                      src="{{ photo.thumb }}"
+                      alt="{{ photo.caption }}"
+                      class="card-img-top default">
+                  </a>
+                }
                 <div class="card-body">
                   <h5 class="card-title text-center">{{ photo.caption }}</h5>
                 </div>
@@ -27,21 +36,20 @@
             </div>
           }
         </div>
-      }
-      @if (!photos.length) {
-        <div class="col-12">
-          @if (loading) {
-            <div class="spinner">
-              <!--suppress HtmlUnknownTarget -->
-              <img src="/assets/spinner_horizontal.svg" alt="Loading...">
-            </div>
-          }
-          @if (!loading) {
-            <div class="alert alert-danger text-center" role="alert">
-              <strong>obrázky nenalezeny</strong>
-            </div>
-          }
+      } @else {
+        <div class="alert alert-danger text-center" role="alert">
+          <strong>obrázky nenalezeny</strong>
         </div>
       }
-    </div>
+    } @else if (photosResource.error()) {
+      <div class="alert alert-danger text-center" role="alert">
+        <strong>neočekávaná chyba</strong>
+      </div>
+    } @else {
+      <div class="spinner" role="status">
+        <!--suppress HtmlUnknownTarget -->
+        <img src="/assets/spinner_horizontal.svg" alt="Loading...">
+      </div>
+    }
   </div>
+</div>

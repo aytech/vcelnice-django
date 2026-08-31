@@ -1,32 +1,19 @@
-import { Component, OnInit } from '@angular/core'
-import { HttpErrorResponse } from '@angular/common/http'
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core'
+import { rxResource } from '@angular/core/rxjs-interop'
 import { RecipeService } from '@services'
-import { Recipe } from '@interfaces'
 
 @Component({
     selector: 'app-recipees',
     templateUrl: './recipes.component.html',
     styleUrls: ['./recipes.component.css'],
-    standalone: false
+    standalone: false,
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class RecipesComponent implements OnInit {
+export class RecipesComponent {
 
-  public recipes: Array<Recipe>;
-  public loading: boolean;
+  private readonly recipeService = inject(RecipeService)
 
-  constructor(private recipeService: RecipeService) {
-    this.loading = true;
-    this.recipes = [];
-  }
-
-  ngOnInit() {
-    this.recipeService.getRecipes()
-      .subscribe((response: Recipe[]) => {
-        this.loading = false;
-        this.recipes = response;
-      }, (error: HttpErrorResponse) => {
-        this.loading = false;
-        console.error('Error fetching data: ', error.statusText);
-      });
-  }
+  readonly recipesResource = rxResource({
+    stream: () => this.recipeService.getRecipes()
+  })
 }

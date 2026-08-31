@@ -16,7 +16,6 @@
     "@angular/core": "22.1.4",
     "@angular/forms": "22.1.4",
     "@angular/platform-browser": "22.1.4",
-    "@angular/platform-browser-dynamic": "22.1.4",
     "@angular/router": "22.1.4",
     "@fancyapps/fancybox": "3.5.7",
     "@fortawesome/angular-fontawesome": "5.1.0",
@@ -28,8 +27,7 @@
     "core-js": "^3.50.0",
     "font-awesome": "4.7.0",
     "jquery": "3.7.1",
-    "rxjs": "7.8.2",
-    "zone.js": "0.16.2"
+    "rxjs": "7.8.2"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "22.1.4",
@@ -48,6 +46,7 @@
     "karma-jasmine": "5.1.0",
     "karma-jasmine-html-reporter": "^2.3.0",
     "ts-node": "10.9.2",
-    "typescript": "^6.0.3"
+    "typescript": "^6.0.3",
+    "zone.js": "0.16.2"
   }
 }

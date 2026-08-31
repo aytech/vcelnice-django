@@ -1,18 +1,23 @@
 <div class="container">
-  <div class="news">
-    <div class="row">
-      @for (article of articles; track article; let i = $index) {
-        <div class="col-12 col-sm-6 col-md-6 col-lg-4 col-xl-3 card-container"
-          >
-          <div class="card" (click)="modal.open(article.title, article.text)">
-            <!--suppress HtmlUnknownTarget -->
-            @if (!article.icon) {
-              <img class="card-img-top default"
-                src="/assets/images/default-card.png" alt="{{ article.title }}">
-              }
-              @if (article.icon) {
-                <img class="card-img-top"
-                  src="{{ article.icon }}" alt="{{ article.title }}">
+  @if (pageResource.hasValue()) {
+    @let page = pageResource.value();
+
+    <div class="news">
+      <div class="row">
+        @for (article of page.articles; track article.id) {
+          <div class="col-12 col-sm-6 col-md-6 col-lg-4 col-xl-3 card-container">
+            <div class="card" (click)="modal.open(article.title, article.text)">
+              <!--suppress HtmlUnknownTarget -->
+              @if (!article.icon) {
+                <img
+                  class="card-img-top default"
+                  src="/assets/images/default-card.png"
+                  alt="{{ article.title }}">
+              } @else {
+                <img
+                  class="card-img-top"
+                  src="{{ article.icon }}"
+                  alt="{{ article.title }}">
               }
               <div class="card-body">
                 <h5 class="card-title">{{ article.title }}</h5>
@@ -23,33 +28,31 @@
         }
       </div>
     </div>
+
     <div class="jumbotron intro">
-      @if (home) {
-        <div>
-          <h1>{{ home.title }}</h1>
-          <div class="row">
-            <div class="col-12 col-md-6 col-lg-7 main-text" [innerHTML]="home.text"></div>
-            <div class="col-12 col-md-6 col-lg-5 text-center">
-              <img src="{{ home.icon }}" alt="" class="home-image">
-            </div>
-          </div>
+      <h1>{{ page.home.title }}</h1>
+      <div class="row">
+        <div class="col-12 col-md-6 col-lg-7 main-text" [innerHTML]="page.home.text"></div>
+        <div class="col-12 col-md-6 col-lg-5 text-center">
+          <img src="{{ page.home.icon }}" alt="" class="home-image">
         </div>
-      }
-      @if (loading) {
-        <div class="home">
-          @if (loading) {
-            <div class="spinner">
-              <!--suppress HtmlUnknownTarget -->
-              <img src="/assets/spinner_horizontal.svg" alt="Loading...">
-            </div>
-          }
-        </div>
-      }
-      @if (error) {
-        <div class="alert alert-danger text-center" role="alert">
-          <strong>neočekávaná chyba</strong>
-        </div>
-      }
+      </div>
     </div>
-  </div>
-  <app-modal #modal></app-modal>
+  } @else if (pageResource.error()) {
+    <div class="jumbotron intro">
+      <div class="alert alert-danger text-center" role="alert">
+        <strong>neočekávaná chyba</strong>
+      </div>
+    </div>
+  } @else {
+    <div class="jumbotron intro">
+      <div class="home">
+        <div class="spinner" role="status">
+          <!--suppress HtmlUnknownTarget -->
+          <img src="/assets/spinner_horizontal.svg" alt="Loading...">
+        </div>
+      </div>
+    </div>
+  }
+</div>
+<app-modal #modal></app-modal>

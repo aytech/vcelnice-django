@@ -1,41 +1,25 @@
-import { Component, OnInit } from '@angular/core'
-import { HttpErrorResponse } from '@angular/common/http'
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core'
+import { rxResource } from '@angular/core/rxjs-interop'
 import { CertificateService, LanguageService } from '@services'
 import { FileConstants } from '@config'
-import { Certificate, Culture } from '@interfaces'
+import { Certificate } from '@interfaces'
 
 @Component({
     selector: 'app-certificates',
     templateUrl: './certificates.component.html',
     styleUrls: ['./certificates.component.css'],
-    standalone: false
+    standalone: false,
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class CertificatesComponent implements OnInit {
+export class CertificatesComponent {
 
-  public certificates: Array<Certificate>
-  public cultures: Culture
-  public loading: boolean
+  private readonly certificateService = inject(CertificateService)
+  private readonly languageService = inject(LanguageService)
 
-  constructor(
-    private certificateService: CertificateService,
-    private languageService: LanguageService
-  ) {
-    this.loading = true;
-    this.certificates = [];
-  }
-
-  ngOnInit() {
-    this.cultures = this.languageService.cultures;
-    this.certificateService.getCertificates()
-      .subscribe((response: Certificate[]) => {
-          this.loading = false;
-          this.certificates = response;
-        },
-        (error: HttpErrorResponse) => {
-          this.loading = false;
-          console.error('Error fetching data: ', error.statusText);
-        });
-  }
+  readonly cultures = this.languageService.culturesSignal
+  readonly certificatesResource = rxResource({
+    stream: () => this.certificateService.getCertificates()
+  })
 
   isPdf(certificate: Certificate): boolean {
     return certificate.type === FileConstants.TYPE_PDF;

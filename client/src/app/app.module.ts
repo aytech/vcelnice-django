@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser'
 import { NgModule } from '@angular/core'
-import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http'
+import { provideHttpClient } from '@angular/common/http'
 import { FormsModule } from '@angular/forms'
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap'
 import { AppComponent } from './app.component'
@@ -70,7 +70,7 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome'
         PriceService,
         RecipeService,
         VideoService,
-        provideHttpClient(withInterceptorsFromDi())
+        provideHttpClient()
     ] })
 export class AppModule {
 }

@@ -1,33 +1,19 @@
-import { Component, OnInit } from '@angular/core'
-import { HttpErrorResponse } from '@angular/common/http'
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core'
+import { rxResource } from '@angular/core/rxjs-interop'
 import { NewsService } from '@services'
-import { Article } from '@interfaces'
 
 @Component({
     selector: 'app-news',
     templateUrl: './news.component.html',
     styleUrls: ['./news.component.css'],
-    standalone: false
+    standalone: false,
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class NewsComponent implements OnInit {
+export class NewsComponent {
 
-  public articles: Array<Article>;
-  public loading: boolean;
+  private readonly newsService = inject(NewsService)
 
-  constructor(private newsService: NewsService) {
-    this.loading = true;
-    this.articles = [];
-  }
-
-  ngOnInit() {
-    this.newsService.getNews()
-      .subscribe((response: Article[]) => {
-          this.loading = false;
-          this.articles = response;
-        },
-        (error: HttpErrorResponse) => {
-          this.loading = false;
-          console.error('Error fetching data: ', error.statusText);
-        });
-  }
+  readonly articlesResource = rxResource({
+    stream: () => this.newsService.getNews()
+  })
 }

@@ -1,46 +1,48 @@
 <div class="container">
   <div class="jumbotron">
     <h2 class="text-center web-color title">
-      {{cultures.price_list}}
+      {{ cultures().price_list }}
     </h2>
     <hr>
+
+    @if (pricesResource.hasValue()) {
+      @let prices = pricesResource.value();
+
       @if (prices.length) {
         <div class="recipes">
-          @for (price of prices; track price; let i = $index) {
+          @for (price of prices; track price.id) {
             <div class="row">
               <div class="col-4 text-center image">
-                <img class="align-self-start me-3 img-thumbnail" src="{{ price.image }}" alt="{{ price.title }}">
+                <img
+                  class="align-self-start me-3 img-thumbnail"
+                  src="{{ price.image }}"
+                  alt="{{ price.title }}">
               </div>
               <div class="col-8">
                 <ul class="list-group">
                   <li class="list-group-item text-center">
-                    <strong>
-                      {{ price.title }}
-                    </strong>
+                    <strong>{{ price.title }}</strong>
                   </li>
                   <li class="list-group-item">
                     <span class="align-middle strong">
-                      {{ price.price }} {{cultures.czk}}
+                      {{ price.price }} {{ cultures().czk }}
                       @if (price.weight) {
-                        <span>
-                          ({{ price.weight }})
-                        </span>
+                        <span>({{ price.weight }})</span>
                       }
                     </span>
                     @if (price.in_store > 0) {
                       <button
                         type="button"
                         class="btn btn-warning float-end"
-                        (click)="openReservationForm(i)">
-                        {{cultures.reserve}}
+                        (click)="openReservationForm(price)">
+                        {{ cultures().reserve }}
                       </button>
-                    }
-                    @if (price.in_store <= 0) {
+                    } @else {
                       <button
                         type="button"
                         class="btn btn-outline-secondary float-end"
                         disabled>
-                        {{cultures.not_in_store}}
+                        {{ cultures().not_in_store }}
                       </button>
                     }
                   </li>
@@ -49,21 +51,22 @@
             </div>
           }
         </div>
-      }
-      @if (!prices.length) {
-        <div class="col-12">
-          @if (loading) {
-            <div class="spinner">
-              <!--suppress HtmlUnknownTarget -->
-              <img src="/assets/spinner_horizontal.svg" alt="{{cultures.loading}}...">
-            </div>
-          }
-          @if (!loading) {
-            <div class="alert alert-danger text-center" role="alert">
-              <strong>{{cultures.prices_not_found}}</strong>
-            </div>
-          }
+      } @else {
+        <div class="alert alert-danger text-center" role="alert">
+          <strong>{{ cultures().prices_not_found }}</strong>
         </div>
       }
-    </div>
+    } @else if (pricesResource.error()) {
+      <div class="alert alert-danger text-center" role="alert">
+        <strong>neočekávaná chyba</strong>
+      </div>
+    } @else {
+      <div class="spinner" role="status">
+        <!--suppress HtmlUnknownTarget -->
+        <img
+          src="/assets/spinner_horizontal.svg"
+          alt="{{ cultures().loading }}...">
+      </div>
+    }
   </div>
+</div>

@@ -26,8 +26,8 @@
               routerLink="/"
               routerLinkActive="active"
               [routerLinkActiveOptions]="{exact: true}"
-              [queryParams]="{locale: locale}">
-              {{cultures.home}}
+              [queryParams]="{locale: locale()}">
+              {{ cultures().home }}
             </a>
           </li>
           <li class="nav-item">
@@ -35,8 +35,8 @@
               class="nav-link"
               routerLink="/foto"
               routerLinkActive="active"
-              [queryParams]="{locale: locale}">
-              {{cultures.photo}}
+              [queryParams]="{locale: locale()}">
+              {{ cultures().photo }}
             </a>
           </li>
           <li class="nav-item">
@@ -44,8 +44,8 @@
               class="nav-link"
               routerLink="/video"
               routerLinkActive="active"
-              [queryParams]="{locale: locale}">
-              {{cultures.video}}
+              [queryParams]="{locale: locale()}">
+              {{ cultures().video }}
             </a>
           </li>
           <li class="nav-item">
@@ -53,8 +53,8 @@
               class="nav-link"
               routerLink="/certifikaty"
               routerLinkActive="active"
-              [queryParams]="{locale: locale}">
-              {{cultures.certificates}}
+              [queryParams]="{locale: locale()}">
+              {{ cultures().certificates }}
             </a>
           </li>
           <li class="nav-item">
@@ -62,8 +62,8 @@
               class="nav-link"
               routerLink="/region"
               routerLinkActive="active"
-              [queryParams]="{locale: locale}">
-              {{cultures.region}}
+              [queryParams]="{locale: locale()}">
+              {{ cultures().region }}
             </a>
           </li>
           <li class="nav-item">
@@ -71,8 +71,8 @@
               class="nav-link"
               routerLink="/novinky"
               routerLinkActive="active"
-              [queryParams]="{locale: locale}">
-              {{cultures.news}}
+              [queryParams]="{locale: locale()}">
+              {{ cultures().news }}
             </a>
           </li>
           <li class="nav-item">
@@ -80,8 +80,8 @@
               class="nav-link"
               routerLink="/recepty"
               routerLinkActive="active"
-              [queryParams]="{locale: locale}">
-              {{cultures.recipes}}
+              [queryParams]="{locale: locale()}">
+              {{ cultures().recipes }}
             </a>
           </li>
           <!-- <li class="nav-item">
@@ -89,8 +89,8 @@
               class="nav-link"
               routerLink="/cenik"
               routerLinkActive="active"
-              [queryParams]="{locale: locale}">
-              {{cultures.price_list}}
+              [queryParams]="{locale: locale()}">
+              {{ cultures().price_list }}
             </a>
           </li> -->
           <li class="nav-item">
@@ -98,8 +98,8 @@
               class="nav-link"
               routerLink="/kontakt"
               routerLinkActive="active"
-              [queryParams]="{locale: locale}">
-              {{cultures.contact}}
+              [queryParams]="{locale: locale()}">
+              {{ cultures().contact }}
             </a>
           </li>
         </ul>

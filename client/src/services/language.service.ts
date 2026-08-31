@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, signal } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
 import { ApiConstants } from '../config';
 import { HttpClient } from '@angular/common/http';
@@ -7,9 +7,17 @@ import { Culture } from '../interfaces';
 @Injectable()
 export class LanguageService {
 
-  constructor(private http: HttpClient) {
-    this._cultures = LanguageService.getCultures();
-  }
+  private readonly _language = new Subject<string>();
+  private readonly _default_locale = 'cs';
+  private readonly _locale = signal('cs');
+  private readonly _supported_locales = ['cs', 'en'];
+  private readonly _cultures = signal<Culture>(LanguageService.getCultures());
+  private languageRequestId = 0;
+
+  readonly localeSignal = this._locale.asReadonly();
+  readonly culturesSignal = this._cultures.asReadonly();
+
+  constructor(private http: HttpClient) { }
 
   get language(): Observable<string> {
     return this._language.asObservable();
@@ -20,20 +28,14 @@ export class LanguageService {
   }
 
   get locale(): string {
-    return this._locale;
+    return this._locale();
   }
 
   get cultures(): Culture {
-    return this._cultures;
+    return this._cultures();
   }
 
-  private _language: Subject<string> = new Subject<string>();
-  private _default_locale = 'cs';
-  private _locale = 'cs';
-  private _supported_locales = ['cs', 'en'];
-  private _cultures: Culture;
-
-  private static getCultures() {
+  private static getCultures(): Culture {
     // noinspection SpellCheckingInspection
     return {
       amount_description: 'Počet sklenic',
@@ -58,12 +60,18 @@ export class LanguageService {
 
   setLanguage(locale: string) {
     if (this._supported_locales.indexOf(locale) >= 0) {
-      this._locale = locale;
+      this._locale.set(locale);
     }
-    const url = `${ ApiConstants.GET_CULTURES }?locale=${ this._locale }`;
+    const requestedLocale = this.locale;
+    const requestId = ++this.languageRequestId;
+    const url = `${ ApiConstants.GET_CULTURES }?locale=${ requestedLocale }`;
+
     this.http.get<Culture>(url).subscribe(cultures => {
-      this._cultures = {...this.cultures, ...cultures};
-      this._language.next(this._locale);
+      if (requestId !== this.languageRequestId || requestedLocale !== this.locale) {
+        return;
+      }
+      this._cultures.update(current => ({...current, ...cultures}));
+      this._language.next(requestedLocale);
     });
   }
 }

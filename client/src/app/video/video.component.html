@@ -2,11 +2,14 @@
   <div class="jumbotron">
     <h2 class="text-center web-color">Video</h2>
     <hr>
+
+    @if (videosResource.hasValue()) {
+      @let videos = videosResource.value();
+
       @if (videos.length) {
         <div class="row">
-          @for (video of videos; track video; let i = $index) {
-            <div class="col-12 col-sm-12 col-md-6 col-lg-4 col-xl-3 card-container"
-              >
+          @for (video of videos; track video.id) {
+            <div class="col-12 col-sm-12 col-md-6 col-lg-4 col-xl-3 card-container">
               <div class="card">
                 <a
                   data-fancybox
@@ -15,10 +18,11 @@
                   title="{{ video.caption }}"
                   target="_blank">
                   @if (video.thumb) {
-                    <img class="card-img-top default"
-                      src="{{ video.thumb }}" alt="{{ video.caption }}">
-                  }
-                  @if (!video.thumb) {
+                    <img
+                      class="card-img-top default"
+                      src="{{ video.thumb }}"
+                      alt="{{ video.caption }}">
+                  } @else {
                     <span class="fa-stack fa-lg fa-4x">
                       <i class="fa fa-square-o fa-stack-2x web-color"></i>
                       <i class="fa fa-youtube fa-stack-1x text-danger"></i>
@@ -32,21 +36,20 @@
             </div>
           }
         </div>
-      }
-      @if (!videos.length) {
-        <div class="col-12">
-          @if (loading) {
-            <div class="spinner">
-              <!--suppress HtmlUnknownTarget -->
-              <img src="/assets/spinner_horizontal.svg" alt="Loading...">
-            </div>
-          }
-          @if (!loading) {
-            <div class="alert alert-danger text-center" role="alert">
-              <strong>videa nenalezeny</strong>
-            </div>
-          }
+      } @else {
+        <div class="alert alert-danger text-center" role="alert">
+          <strong>videa nenalezena</strong>
         </div>
       }
-    </div>
+    } @else if (videosResource.error()) {
+      <div class="alert alert-danger text-center" role="alert">
+        <strong>neočekávaná chyba</strong>
+      </div>
+    } @else {
+      <div class="spinner" role="status">
+        <!--suppress HtmlUnknownTarget -->
+        <img src="/assets/spinner_horizontal.svg" alt="Loading...">
+      </div>
+    }
   </div>
+</div>

@@ -2,45 +2,47 @@
   <div class="jumbotron">
     <h2 class="text-center web-color">Recepty</h2>
     <hr>
+
+    @if (recipesResource.hasValue()) {
+      @let recipes = recipesResource.value();
+
       @if (recipes.length) {
         <div class="row recipes">
-          @for (recipe of recipes; track recipe; let i = $index) {
-            <div class="col-12 col-sm-12 col-md-6 col-lg-4 col-xl-3 card-container"
-              >
+          @for (recipe of recipes; track recipe.id) {
+            <div class="col-12 col-sm-12 col-md-6 col-lg-4 col-xl-3 card-container">
               <div class="card" (click)="modal.open(recipe.title, recipe.text)">
                 <!--suppress HtmlUnknownTarget -->
                 @if (!recipe.thumb) {
-                  <img class="card-img-top default"
-                    src="/assets/images/default.png" alt="{{ recipe.title }}">
-                  }
-                  @if (recipe.thumb) {
-                    <img class="card-img-top"
-                      src="{{ recipe.thumb }}" alt="{{ recipe.title }}">
-                  }
-                  <div class="card-body">
-                    <h5 class="card-title">{{ recipe.title }}</h5>
-                    <p class="card-text" [innerHTML]="recipe.preview"></p>
-                  </div>
+                  <img
+                    class="card-img-top default"
+                    src="/assets/images/default.png"
+                    alt="{{ recipe.title }}">
+                } @else {
+                  <img class="card-img-top" src="{{ recipe.thumb }}" alt="{{ recipe.title }}">
+                }
+                <div class="card-body">
+                  <h5 class="card-title">{{ recipe.title }}</h5>
+                  <p class="card-text" [innerHTML]="recipe.preview"></p>
                 </div>
               </div>
-            }
-          </div>
-        }
-        @if (!recipes.length) {
-          <div class="col-12">
-            @if (loading) {
-              <div class="spinner">
-                <!--suppress HtmlUnknownTarget -->
-                <img src="/assets/spinner_horizontal.svg" alt="Loading...">
-              </div>
-            }
-            @if (!loading) {
-              <div class="alert alert-danger text-center" role="alert">
-                <strong>recepty nenalezeny</strong>
-              </div>
-            }
-          </div>
-        }
+            </div>
+          }
+        </div>
+      } @else {
+        <div class="alert alert-danger text-center" role="alert">
+          <strong>recepty nenalezeny</strong>
+        </div>
+      }
+    } @else if (recipesResource.error()) {
+      <div class="alert alert-danger text-center" role="alert">
+        <strong>neočekávaná chyba</strong>
       </div>
-    </div>
-    <app-modal #modal></app-modal>
+    } @else {
+      <div class="spinner" role="status">
+        <!--suppress HtmlUnknownTarget -->
+        <img src="/assets/spinner_horizontal.svg" alt="Loading...">
+      </div>
+    }
+  </div>
+</div>
+<app-modal #modal></app-modal>

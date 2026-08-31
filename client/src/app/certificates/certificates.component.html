@@ -1,12 +1,14 @@
 <div class="container">
   <div class="jumbotron">
-    <h2 class="text-center web-color">
-      {{cultures.certificates}}
-    </h2>
+    <h2 class="text-center web-color">{{ cultures().certificates }}</h2>
     <hr>
+
+    @if (certificatesResource.hasValue()) {
+      @let certificates = certificatesResource.value();
+
       @if (certificates.length) {
         <div class="row">
-          @for (certificate of certificates; track certificate) {
+          @for (certificate of certificates; track certificate.id) {
             <div class="col-12 col-sm-12 col-md-6 col-lg-4 col-xl-3 card-container">
               <div class="card">
                 <a
@@ -27,21 +29,20 @@
             </div>
           }
         </div>
-      }
-      @if (!certificates.length) {
-        <div class="col-12">
-          @if (loading) {
-            <div class="spinner">
-              <!--suppress HtmlUnknownTarget -->
-              <img src="/assets/spinner_horizontal.svg" alt="Loading...">
-            </div>
-          }
-          @if (!loading) {
-            <div class="alert alert-danger text-center" role="alert">
-              <strong>certifikáty nenalezeny</strong>
-            </div>
-          }
+      } @else {
+        <div class="alert alert-danger text-center" role="alert">
+          <strong>certifikáty nenalezeny</strong>
         </div>
       }
-    </div>
+    } @else if (certificatesResource.error()) {
+      <div class="alert alert-danger text-center" role="alert">
+        <strong>neočekávaná chyba</strong>
+      </div>
+    } @else {
+      <div class="spinner" role="status">
+        <!--suppress HtmlUnknownTarget -->
+        <img src="/assets/spinner_horizontal.svg" alt="Loading...">
+      </div>
+    }
   </div>
+</div>
