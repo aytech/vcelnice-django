@@ -1,28 +1,138 @@
-#content {
-  margin-top: -70px;
+:host {
+  display: flex;
+  flex: 1 0 auto;
+  min-width: 0;
+}
+
+.not-found {
+  align-items: center;
+  display: flex;
+  flex: 1 0 auto;
+  isolation: isolate;
+  min-height: 30rem;
+  overflow: hidden;
+  padding: clamp(3rem, 8vw, 6rem) 0;
   position: relative;
+  width: 100%;
 }
 
-#title {
+.not-found__image,
+.not-found__overlay {
+  inset: 0;
   position: absolute;
-  top: 70px;
-  text-align: center;
-  width: 100%;
 }
 
-@font-face { 
-  font-family: 'Geo';
-  /*noinspection CssUnknownTarget*/
-  src: url('/assets/fonts/Geo-Regular.ttf') format('truetype')
-}
-
-#title h3 {
-  color: #fff;
-  font-family: 'Geo', sans-serif;
-  font-weight: 500;
-}
-
-video {
-  width: 100%;
+.not-found__image {
   height: 100%;
+  object-fit: cover;
+  object-position: 62% center;
+  width: 100%;
+  z-index: -2;
+}
+
+.not-found__overlay {
+  background:
+    linear-gradient(90deg, rgba(9, 10, 12, .9) 0%, rgba(9, 10, 12, .72) 44%, rgba(9, 10, 12, .22) 78%),
+    linear-gradient(0deg, rgba(9, 10, 12, .42), transparent 52%);
+  z-index: -1;
+}
+
+.not-found__content {
+  width: 100%;
+}
+
+.not-found__panel {
+  backdrop-filter: blur(8px);
+  background: rgba(23, 24, 23, .76);
+  border: 1px solid rgba(243, 188, 105, .34);
+  border-radius: 1rem;
+  box-shadow: 0 1.5rem 4rem rgba(0, 0, 0, .38);
+  max-width: 38rem;
+  padding: clamp(1.75rem, 5vw, 3rem);
+}
+
+.not-found__code {
+  color: #f3bc69;
+  font-size: clamp(3.5rem, 10vw, 6.5rem);
+  font-weight: 800;
+  letter-spacing: -.06em;
+  line-height: .82;
+  margin: 0 0 1.25rem;
+}
+
+.not-found__eyebrow {
+  color: #f3bc69;
+  font-size: .75rem;
+  font-weight: 700;
+  letter-spacing: .14em;
+  margin: 0 0 .65rem;
+  text-transform: uppercase;
+}
+
+.not-found h1 {
+  color: #fff;
+  font-size: clamp(2rem, 5vw, 3.25rem);
+  font-weight: 700;
+  letter-spacing: -.035em;
+  line-height: 1.08;
+  margin: 0;
+}
+
+.not-found__message {
+  color: rgba(255, 255, 255, .8);
+  font-size: 1rem;
+  line-height: 1.65;
+  margin: 1.1rem 0 1.75rem;
+  max-width: 31rem;
+}
+
+.not-found__action {
+  align-items: center;
+  background: #ee9c22;
+  border: 1px solid #b6720e;
+  border-radius: .4rem;
+  color: #231805;
+  display: inline-flex;
+  font-weight: 700;
+  gap: .55rem;
+  padding: .75rem 1rem;
+  text-decoration: none;
+  transition: background-color .18s ease, color .18s ease, transform .18s ease;
+}
+
+.not-found__action:hover,
+.not-found__action:focus {
+  background: #f3bc69;
+  color: #231805;
+  transform: translateY(-2px);
+}
+
+.not-found__action:focus-visible {
+  outline: 3px solid rgba(255, 255, 255, .8);
+  outline-offset: 3px;
+}
+
+@media (max-width: 575.98px) {
+  .not-found {
+    padding: 2rem 0;
+  }
+
+  .not-found__image {
+    object-position: 66% center;
+  }
+
+  .not-found__overlay {
+    background: rgba(9, 10, 12, .58);
+  }
+
+  .not-found__panel {
+    backdrop-filter: blur(5px);
+    background: rgba(23, 24, 23, .82);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .not-found__action {
+    transition: none;
+  }
 }

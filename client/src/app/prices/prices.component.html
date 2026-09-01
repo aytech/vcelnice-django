@@ -1,54 +1,52 @@
 <div class="container">
   <div class="jumbotron">
-    <h2 class="text-center web-color title">
-      {{ cultures().price_list }}
-    </h2>
-    <hr>
+    <header class="section-heading">
+      <p class="section-eyebrow">Včelnice</p>
+      <h2>{{ cultures().price_list }}</h2>
+    </header>
 
     @if (pricesResource.hasValue()) {
       @let prices = pricesResource.value();
 
       @if (prices.length) {
-        <div class="recipes">
+        <div class="price-grid">
           @for (price of prices; track price.id) {
-            <div class="row">
-              <div class="col-4 text-center image">
+            <article class="price-card">
+              <div class="price-image-wrap">
                 <img
-                  class="align-self-start me-3 img-thumbnail"
-                  src="{{ price.image }}"
+                  class="price-image"
+                  [src]="price.image"
                   alt="{{ price.title }}">
               </div>
-              <div class="col-8">
-                <ul class="list-group">
-                  <li class="list-group-item text-center">
-                    <strong>{{ price.title }}</strong>
-                  </li>
-                  <li class="list-group-item">
-                    <span class="align-middle strong">
-                      {{ price.price }} {{ cultures().czk }}
-                      @if (price.weight) {
-                        <span>({{ price.weight }})</span>
-                      }
-                    </span>
-                    @if (price.in_store > 0) {
-                      <button
-                        type="button"
-                        class="btn btn-warning float-end"
-                        (click)="openReservationForm(price)">
-                        {{ cultures().reserve }}
-                      </button>
-                    } @else {
-                      <button
-                        type="button"
-                        class="btn btn-outline-secondary float-end"
-                        disabled>
-                        {{ cultures().not_in_store }}
-                      </button>
-                    }
-                  </li>
-                </ul>
+              <div class="price-card-body">
+                <h3 class="price-title">{{ price.title }}</h3>
+                <p class="price-value">
+                  {{ price.price }} <span>{{ cultures().czk }}</span>
+                </p>
+                @if (price.weight) {
+                  <p class="price-weight">{{ price.weight }}</p>
+                }
               </div>
-            </div>
+              <footer class="price-card-footer">
+                @if (price.in_store > 0) {
+                  <span class="price-availability">Skladem</span>
+                  <button
+                    type="button"
+                    class="btn price-action"
+                    (click)="openReservationForm(price)">
+                    {{ cultures().reserve }}
+                  </button>
+                } @else {
+                  <span class="price-availability price-unavailable">{{ cultures().not_in_store }}</span>
+                  <button
+                    type="button"
+                    class="btn price-action"
+                    disabled>
+                    {{ cultures().not_in_store }}
+                  </button>
+                }
+              </footer>
+            </article>
           }
         </div>
       } @else {

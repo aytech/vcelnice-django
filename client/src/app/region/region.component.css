@@ -1,7 +1,237 @@
-.jumbotron img {
-  margin-bottom: 1rem;
+.region-section {
+  background: linear-gradient(145deg, rgba(255, 255, 255, .98), #fffaf0);
+  border: 1px solid #eadbbd;
+  border-radius: .75rem;
+  box-shadow: 0 1rem 2.5rem rgba(46, 35, 15, .1);
+  overflow: hidden;
+  padding: clamp(1.5rem, 4vw, 3rem);
+  position: relative;
 }
 
-.row .link {
-  margin-bottom: 1rem;
+.region-section::before {
+  background-image: radial-gradient(rgba(182, 114, 14, .2) 1.5px, transparent 1.5px);
+  background-size: 18px 18px;
+  content: '';
+  height: 11rem;
+  opacity: .55;
+  pointer-events: none;
+  position: absolute;
+  right: -2.5rem;
+  top: -2.5rem;
+  width: 11rem;
+}
+
+.section-heading,
+.region-layout {
+  position: relative;
+}
+
+.region-layout {
+  align-items: stretch;
+  display: grid;
+  gap: clamp(1.75rem, 4vw, 3.5rem);
+  grid-template-columns: minmax(14rem, 17rem) minmax(0, 1fr);
+}
+
+.region-visual {
+  align-items: center;
+  background: linear-gradient(155deg, #454037, #24241f);
+  border-radius: .75rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin: 0;
+  min-width: 0;
+  overflow: hidden;
+  padding: 2rem 1.5rem;
+  position: relative;
+  text-align: center;
+}
+
+.region-visual::before {
+  background: radial-gradient(circle, rgba(238, 156, 34, .32), transparent 68%);
+  content: '';
+  height: 18rem;
+  pointer-events: none;
+  position: absolute;
+  right: -7rem;
+  top: -8rem;
+  width: 18rem;
+}
+
+.region-image-frame {
+  background: #f3bc69;
+  border: 1px solid rgba(255, 255, 255, .38);
+  border-radius: .65rem;
+  box-shadow: 0 1rem 2.25rem rgba(0, 0, 0, .35);
+  max-width: 13.5rem;
+  padding: .45rem;
+  position: relative;
+  width: 100%;
+}
+
+.region-image-frame img {
+  border-radius: .35rem;
+  display: block;
+  height: auto;
+  width: 100%;
+}
+
+.region-visual figcaption {
+  color: #fff;
+  font-size: 1rem;
+  font-weight: 700;
+  letter-spacing: .02em;
+  margin-top: 1.4rem;
+  position: relative;
+}
+
+.region-visual figcaption span {
+  color: rgba(255, 255, 255, .62);
+  display: block;
+  font-size: .72rem;
+  font-weight: 600;
+  letter-spacing: .1em;
+  margin-top: .3rem;
+  text-transform: uppercase;
+}
+
+.region-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-width: 0;
+}
+
+.region-kicker {
+  color: #b6720e;
+  font-size: .75rem;
+  font-weight: 700;
+  letter-spacing: .12em;
+  margin: 0 0 .55rem;
+  text-transform: uppercase;
+}
+
+.region-content h3 {
+  color: #25211b;
+  font-size: clamp(1.65rem, 3vw, 2.25rem);
+  font-weight: 700;
+  letter-spacing: -.025em;
+  line-height: 1.1;
+  margin: 0;
+}
+
+.region-lead {
+  color: #514b40;
+  font-size: 1.08rem;
+  line-height: 1.65;
+  margin: .85rem 0 1.4rem;
+  max-width: 58ch;
+}
+
+.region-facts {
+  display: grid;
+  gap: .7rem;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  margin: 0 0 1.5rem;
+}
+
+.region-fact {
+  background: #fff;
+  border: 1px solid #f2dfb8;
+  border-left: 3px solid #ee9c22;
+  border-radius: .35rem;
+  min-width: 0;
+  padding: .85rem .9rem;
+}
+
+.region-fact dt {
+  color: #6e4708;
+  font-size: 1.05rem;
+  font-weight: 800;
+  line-height: 1.25;
+}
+
+.region-fact dd {
+  color: #756d60;
+  font-size: .78rem;
+  line-height: 1.35;
+  margin: .25rem 0 0;
+}
+
+.region-copy {
+  color: #514b40;
+  line-height: 1.72;
+  max-width: 65ch;
+}
+
+.region-copy p {
+  margin: 0 0 1rem;
+}
+
+.region-copy p:last-child {
+  margin-bottom: 0;
+}
+
+.region-note {
+  background: #f7e9ca;
+  border-left: 3px solid #ee9c22;
+  border-radius: 0 .35rem .35rem 0;
+  color: #51401f;
+  padding: .85rem 1rem;
+}
+
+.region-note span {
+  color: #8b5709;
+  display: block;
+  font-size: .7rem;
+  font-weight: 800;
+  letter-spacing: .1em;
+  margin-bottom: .25rem;
+  text-transform: uppercase;
+}
+
+.region-links {
+  margin-top: 1.5rem;
+}
+
+.region-links .fa {
+  font-size: .75rem;
+  margin-left: .25rem;
+}
+
+@media (max-width: 767.98px) {
+  .region-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .region-visual {
+    padding: 2rem 1.5rem;
+  }
+
+  .region-content {
+    justify-content: flex-start;
+  }
+}
+
+@media (max-width: 575.98px) {
+  .region-section {
+    padding: 1.25rem;
+  }
+
+  .region-facts {
+    grid-template-columns: 1fr;
+  }
+
+  .region-fact {
+    align-items: baseline;
+    display: flex;
+    gap: 1rem;
+    justify-content: space-between;
+  }
+
+  .region-fact dd {
+    margin-top: 0;
+    text-align: right;
+  }
 }

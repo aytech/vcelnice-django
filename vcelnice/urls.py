@@ -22,7 +22,7 @@ urlpatterns = [
 
     # API routes
     path("api/v1/", include("vcelnice.api_urls")),
-    path("api/v1/", include("prices.urls")),
+    # path("api/v1/", include("prices.urls")),
 
     # Media
     path("media/<path:path>", serve, {

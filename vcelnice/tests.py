@@ -1,7 +1,7 @@
 import os
 
 from django.test import SimpleTestCase
-from django.urls import resolve
+from django.urls import NoReverseMatch, resolve, reverse
 
 
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "vcelnice.settings.development")
@@ -20,3 +20,25 @@ class ApiRoutingTests(SimpleTestCase):
 
         self.assertEqual(views.home_text.__module__, "vcelnice.api.views")
         self.assertEqual(views.video_list.__module__, "vcelnice.api.views")
+
+
+class ClientRoutingTests(SimpleTestCase):
+    def test_removed_prices_page_uses_the_spa_fallback(self):
+        for path in ("/cenik", "/cenik/"):
+            with self.subTest(path=path):
+                match = resolve(path)
+
+                self.assertEqual(match.url_name, "spa-catch-all")
+
+        with self.assertRaises(NoReverseMatch):
+            reverse("prices")
+
+    def test_removed_contact_page_uses_the_spa_fallback(self):
+        for path in ("/kontakt", "/kontakt/"):
+            with self.subTest(path=path):
+                match = resolve(path)
+
+                self.assertEqual(match.url_name, "spa-catch-all")
+
+        with self.assertRaises(NoReverseMatch):
+            reverse("contact")

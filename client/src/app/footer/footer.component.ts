@@ -1,5 +1,6 @@
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core'
-import { LanguageService } from '@services'
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap'
+import { PrivacyComponent } from '../privacy/privacy.component'
 
 @Component({
   selector: 'app-footer',
@@ -9,6 +10,30 @@ import { LanguageService } from '@services'
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class FooterComponent {
+  private readonly modalService = inject(NgbModal)
 
-  readonly language = inject(LanguageService).localeSignal
+  openPrivacy(event: MouseEvent): void {
+    if (
+      event.defaultPrevented
+      || event.button !== 0
+      || event.ctrlKey
+      || event.metaKey
+      || event.shiftKey
+      || event.altKey
+    ) {
+      return
+    }
+
+    event.preventDefault()
+    this.modalService.open(PrivacyComponent, {
+      ariaDescribedBy: 'privacy-modal-intro',
+      ariaLabelledBy: 'privacy-modal-title',
+      backdropClass: 'privacy-modal-backdrop',
+      centered: true,
+      fullscreen: 'sm',
+      scrollable: true,
+      size: 'lg',
+      windowClass: 'privacy-modal'
+    })
+  }
 }

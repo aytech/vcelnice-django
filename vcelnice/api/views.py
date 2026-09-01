@@ -9,6 +9,7 @@ from documents.models import Document
 from home.models import Home
 from news.models import Article
 from photo.models import Photo
+from prices.models import Price
 from recipe.models import Recipe
 from vcelnice.common.email import Email, EmailException
 from django.conf import settings
@@ -19,6 +20,7 @@ from vcelnice.serializers import (
     HomeSerializer,
     NewsSerializer,
     PhotoSerializer,
+    PriceSerializer,
     RecipeSerializer,
     ReservationSerializer,
     VideoSerializer,
@@ -54,6 +56,15 @@ def photo_list(request):
         news = Photo.objects.order_by("-created").all()
         serializer = PhotoSerializer(news, many=True)
         return Response(serializer.data)
+    return Response(None, status=status.HTTP_400_BAD_REQUEST)
+
+@api_view(['GET'])
+def prices_list(request):
+    if request.method == 'GET':
+        prices = Price.objects.all()
+        print('Prices: ', prices)
+        serializer = PriceSerializer(prices, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
     return Response(None, status=status.HTTP_400_BAD_REQUEST)
 
 

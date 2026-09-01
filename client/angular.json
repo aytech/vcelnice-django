@@ -10,6 +10,7 @@
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
+          "defaultConfiguration": "production",
           "options": {
             "outputPath": "dist",
             "index": "src/index.html",

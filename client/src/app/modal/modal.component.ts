@@ -4,7 +4,6 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 @Component({
     selector: 'app-modal',
     templateUrl: './modal.component.html',
-    styleUrls: ['./modal.component.css'],
     standalone: false
 })
 export class ModalComponent {

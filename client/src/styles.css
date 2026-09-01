@@ -15,51 +15,6 @@
   min-width: 290px;
 }
 
-.navbar-brand {
-  padding: 0 15px;
-}
-
-.navbar {
-  background-color: #ee9c22;
-  background-color: rgba(238, 156, 34, .9);
-  border-color: #ee9c22;
-  font-size: 1rem;
-  font-weight: 500;
-}
-
-.navbar .navbar-nav > li > a {
-  color: #fff;
-}
-
-.navbar .navbar-nav > li {
-  padding-left: 2px;
-}
-
-.navbar-dark .navbar-nav .nav-link:active,
-.navbar-dark .navbar-nav .nav-link:focus,
-.navbar-dark .navbar-nav .nav-link:hover {
-  background-color: #ee9c22;
-  color: rgba(255, 255, 255, 1);
-}
-.navbar button.navbar-toggler {
-  outline: none;
-}
-.navbar .navbar-toggler:hover,
-.navbar .navbar-toggler:focus {
-  background-color: #f3bc69;
-}
-
-.navbar .navbar-collapse {
-  border-color: #ee9c22;
-}
-.navbar .navbar-collapse > ul > li > a {
-  text-align: center;
-}
-
-.navbar-dark .navbar-nav .nav-link {
-  color: rgba(255, 255, 255, .8);
-}
-
 .button-striped {
   background-image: -webkit-gradient(linear, 0 100%, 100% 0, color-stop(0.25, rgba(255, 255, 255, 0.15)), color-stop(0.25, transparent), color-stop(0.5, transparent), color-stop(0.5, rgba(255, 255, 255, 0.15)), color-stop(0.75, rgba(255, 255, 255, 0.15)), color-stop(0.75, transparent), to(transparent));
   background-image: -webkit-linear-gradient(-90deg, rgba(255, 255, 255, 0.15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.15) 50%, rgba(255, 255, 255, 0.15) 75%, transparent 75%, transparent);
@@ -89,12 +44,34 @@ html {
 
 body {
   background: url('/assets/images/pozadi.jpg') repeat-x #090a0c;
-  margin: 4rem auto;
-  padding-bottom: 3rem;
+  margin: 4rem 0 0;
+  padding-bottom: 0;
 }
 
 h2.title {
   margin-bottom: 1.5rem;
+}
+
+.section-heading {
+  margin-bottom: 1.75rem;
+}
+
+.section-eyebrow {
+  color: #b6720e;
+  font-size: .75rem;
+  font-weight: 700;
+  letter-spacing: .12em;
+  margin: 0 0 .6rem;
+  text-transform: uppercase;
+}
+
+.section-heading h2 {
+  color: #514b40;
+  font-size: clamp(1.65rem, 3vw, 2.25rem);
+  font-weight: 700;
+  letter-spacing: -.03em;
+  line-height: 1.1;
+  margin: 0;
 }
 
 .jumbotron {
@@ -112,6 +89,36 @@ h2.title {
   color: #ee9c22;
 }
 
+.web-link {
+  background: #f7e9ca;
+  border-radius: .3rem;
+  color: #6e4708;
+  font-size: .875rem;
+  font-weight: 700;
+  padding: .58rem .85rem;
+  text-decoration: none;
+  transition: background-color .18s ease, color .18s ease, transform .18s ease;
+}
+
+.web-link:hover,
+.web-link:focus {
+  background: #ee9c22;
+  color: #fff;
+  transform: translateY(-2px);
+}
+
+.web-link:focus-visible {
+  outline: 3px solid rgba(238, 156, 34, .4);
+  outline-offset: 2px;
+}
+
+.links-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .55rem;
+  margin-top: 2rem;
+}
+
 .spinner {
   display: flex;
   height: 40px;
@@ -127,9 +134,23 @@ h2.title {
   text-overflow: ellipsis;
 }
 
-@media (min-width: 768px) {
-  .navbar .navbar-collapse {
-    height: 20px;
+.privacy-modal .modal-content {
+  background: #fffaf0;
+  border: 0;
+  border-radius: 1rem;
+  box-shadow: 0 1.5rem 4rem rgba(0, 0, 0, .5);
+  overflow: hidden;
+}
+
+.privacy-modal-backdrop.show {
+  backdrop-filter: blur(3px);
+  background-color: #15110b;
+  opacity: .78;
+}
+
+@media (max-width: 575.98px) {
+  .privacy-modal .modal-content {
+    border-radius: 0;
   }
 }
 
@@ -142,5 +163,11 @@ h2.title {
 @media (max-width: 314px) {
   .jumbotron {
     margin-bottom: 5rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .web-link {
+    transition: none;
   }
 }

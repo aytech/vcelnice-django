@@ -13,6 +13,8 @@ export class PhotoComponent {
 
   private readonly photoService = inject(PhotoService)
 
+  readonly previewLimit = 8
+
   readonly photosResource = rxResource({
     stream: () => this.photoService.getPhotos()
   })

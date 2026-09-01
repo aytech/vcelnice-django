@@ -34,9 +34,20 @@ describe('AppComponent', () => {
   it('should render the application shell', () => {
     const fixture = TestBed.createComponent(AppComponent);
     fixture.detectChanges();
-    const compiled = fixture.debugElement.nativeElement;
+    const compiled: HTMLElement = fixture.debugElement.nativeElement;
+    const main = compiled.querySelector<HTMLElement>('.app-main');
+
     expect(compiled.querySelector('app-navbar')).not.toBeNull();
-    expect(compiled.querySelector('router-outlet')).not.toBeNull();
+    expect(main).not.toBeNull();
+    expect(main?.querySelector('router-outlet')).not.toBeNull();
     expect(compiled.querySelector('app-footer')).not.toBeNull();
+    expect(Array.from(compiled.children).map(element => element.tagName)).toEqual([
+      'APP-NAVBAR',
+      'MAIN',
+      'APP-FOOTER'
+    ]);
+    expect(getComputedStyle(compiled).display).toBe('flex');
+    expect(getComputedStyle(compiled).flexDirection).toBe('column');
+    expect(getComputedStyle(main!).flexGrow).toBe('1');
   });
 });

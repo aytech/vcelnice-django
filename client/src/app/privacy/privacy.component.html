@@ -1,97 +1,120 @@
-<div class="container">
-  <div class="jumbotron">
-    <h1 class="display-4">Website Privacy Statement</h1>
-    <div class="table-responsive">
-      <table class="table">
-        <tbody>
-        <tr>
-          <td>
-            <p class="lead">Commitment to Privacy</p>
-          </td>
-          <td>
-            <p>
-              We at <a href="/">vcelnicerudna.cz</a> are committed to providing access to services and information online
-              in a manner that respects and protects your privacy. This statement describes our information collection
-              practices and explains how we use and protect your personal information.
-            </p>
-          </td>
-        </tr>
-        <tr>
-          <td>
-            <p class="lead">Scope</p>
-          </td>
-          <td>
-            <p>This statement applies only to information collected by this web site.</p>
-          </td>
-        </tr>
-        <tr>
-          <td>
-            <p class="lead">What we collect and why</p>
-          </td>
-          <td>
-            <p>
-              We collect the following types of information:
-            </p>
-            <ul>
-              <li>
-                <strong>Auto-collected information (web logs).</strong>
-                Our web server automatically recognizes the Internet domain and IP address from which you accessed our web site,
-                the date and time of your visit, and the pages you visited on our site, as well as information automatically forwarded by your browser.
-                This information is used to help us understand aggregate uses of our site, track usage trends, and improve our services.
-                Web logs may also be used for system problem monitoring and maintenance.
-              </li>
-            </ul>
-          </td>
-        </tr>
-        <tr>
-          <td>
-            <p class="lead">Cookies</p>
-          </td>
-          <td>
-            <p>Our web site does not use cookie technology.</p>
-          </td>
-        </tr>
-        <tr>
-          <td>
-            <p class="lead">Sharing your information</p>
-          </td>
-          <td>
-            <p>
-              We will not share any information with third parties.
-            </p>
-          </td>
-        </tr>
-        <tr>
-          <td>
-            <p class="lead">Links to other web sites</p>
-          </td>
-          <td>
-            This site may contain links to other web sites not affiliated with us.
-            We are not responsible for the privacy practices of these other sites.
-            We encourage you to read the privacy statements of other sites for assurance that their practices safeguard your privacy.
-          </td>
-        </tr>
-        <tr>
-          <td>
-            <p class="lead">Changes to Statement</p>
-          </td>
-          <td>
-            <p>We reserve the right to modify this privacy statement at any time and will post the changes on this site.</p>
-          </td>
-        </tr>
-        <tr>
-          <td>
-            <p class="lead">Contact Us</p>
-          </td>
-          <td>
-            <p>
-              We welcome suggestions and questions about our privacy statement.
-              Please <a routerLink="/kontakt">contact us</a> in case you have any.
-            </p>
-          </td>
-        </tr>
-        </tbody>
-      </table>
+<article
+  class="privacy-document"
+  [class.privacy-document--modal]="isModal"
+  [attr.aria-labelledby]="titleId">
+  <header class="privacy-header" [class.modal-header]="isModal">
+    <div class="privacy-header-copy">
+      <p class="privacy-eyebrow">Včelnice Rudná</p>
+      <h1 [id]="titleId">Zásady ochrany soukromí</h1>
+      <p class="privacy-intro" [id]="introId">
+        Na webu vcelnicerudna.cz respektujeme vaše soukromí. Níže vysvětlujeme, jaké informace
+        při návštěvě webu shromažďujeme, proč je používáme a jak je chráníme.
+      </p>
+    </div>
+
+    @if (isModal) {
+      <button
+        type="button"
+        class="btn-close"
+        aria-label="Zavřít"
+        (click)="dismissModal()"></button>
+    }
+  </header>
+
+  <div class="privacy-body" [class.modal-body]="isModal">
+    <ul class="privacy-highlights" aria-label="Stručný přehled zásad">
+      <li>
+        <i class="fa fa-file-text-o" aria-hidden="true"></i>
+        <span>Serverové logy</span>
+      </li>
+      <li>
+        <i class="fa fa-ban" aria-hidden="true"></i>
+        <span>Bez souborů cookie</span>
+      </li>
+      <li>
+        <i class="fa fa-lock" aria-hidden="true"></i>
+        <span>Bez předávání údajů</span>
+      </li>
+    </ul>
+
+    <div class="privacy-sections">
+      <section class="privacy-section privacy-section--wide">
+        <h2>Náš závazek k ochraně soukromí</h2>
+        <p>
+          Web <a routerLink="/">vcelnicerudna.cz</a> poskytuje služby a informace online způsobem,
+          který respektuje a chrání vaše soukromí. Tyto zásady popisují způsob shromažďování
+          informací a vysvětlují, jak vaše osobní údaje používáme a chráníme.
+        </p>
+      </section>
+
+      <section class="privacy-section">
+        <h2>Rozsah</h2>
+        <p>Tyto zásady se vztahují pouze na informace shromážděné prostřednictvím tohoto webu.</p>
+      </section>
+
+      <section class="privacy-section">
+        <h2>Soubory cookie</h2>
+        <p>Tento web nepoužívá soubory cookie.</p>
+      </section>
+
+      <section class="privacy-section privacy-section--wide">
+        <h2>Jaké údaje shromažďujeme a proč</h2>
+        <p>
+          <strong>Automaticky shromažďované údaje (protokoly webového serveru).</strong>
+          Náš webový server automaticky zaznamenává internetovou doménu a IP adresu, ze které
+          jste na náš web přistoupili, datum a čas vaší návštěvy, stránky, které jste navštívili,
+          a také informace automaticky předávané vaším prohlížečem. Tyto údaje používáme
+          k porozumění souhrnnému způsobu používání webu, sledování trendů návštěvnosti
+          a zlepšování našich služeb. Protokoly webového serveru mohou být použity také
+          ke sledování technických problémů a údržbě systému.
+        </p>
+      </section>
+
+      <section class="privacy-section">
+        <h2>Sdílení vašich údajů</h2>
+        <p>Žádné informace nepředáváme třetím stranám.</p>
+      </section>
+
+      <section class="privacy-section">
+        <h2>Změny těchto zásad</h2>
+        <p>
+          Vyhrazujeme si právo tyto zásady ochrany soukromí kdykoli změnit. Případné změny
+          zveřejníme na tomto webu.
+        </p>
+      </section>
+
+      <section class="privacy-section privacy-section--wide">
+        <h2>Odkazy na jiné webové stránky</h2>
+        <p>
+          Tento web může obsahovat odkazy na jiné webové stránky, které s námi nejsou spojeny.
+          Za postupy těchto webů při ochraně soukromí neodpovídáme. Doporučujeme seznámit se
+          s jejich zásadami ochrany soukromí a ověřit si, že dostatečně chrání vaše soukromí.
+        </p>
+      </section>
+
+      <section class="privacy-section privacy-section--contact privacy-section--wide">
+        <div class="privacy-contact-icon" aria-hidden="true">
+          <i class="fa fa-envelope-o"></i>
+        </div>
+        <div>
+          <h2>Kontaktujte nás</h2>
+          <p>
+            Uvítáme vaše podněty a dotazy k těmto zásadám ochrany soukromí. Máte-li podnět
+            nebo dotaz,
+            <a
+              routerLink="/"
+              fragment="kontakt"
+              queryParamsHandling="preserve"
+              (click)="closeForNavigation()">kontaktujte nás</a>.
+          </p>
+        </div>
+      </section>
     </div>
   </div>
-</div>
+
+  @if (isModal) {
+    <footer class="modal-footer privacy-footer">
+      <button type="button" class="btn privacy-close-button" (click)="closeModal()">Zavřít</button>
+    </footer>
+  }
+</article>

@@ -11,6 +11,7 @@ describe('PricesComponent', () => {
   let priceResponse: Subject<Price[]>
   let priceService: jasmine.SpyObj<PriceService>
   let modalService: jasmine.SpyObj<NgbModal>
+  let activeModal: jasmine.SpyObj<NgbActiveModal>
 
   const cultures: Culture = {
     amount_description: 'Počet sklenic',
@@ -38,11 +39,12 @@ describe('PricesComponent', () => {
     priceService = jasmine.createSpyObj<PriceService>('PriceService', ['getPrices'])
     priceService.getPrices.and.returnValue(priceResponse)
     modalService = jasmine.createSpyObj<NgbModal>('NgbModal', ['open'])
+    activeModal = jasmine.createSpyObj<NgbActiveModal>('NgbActiveModal', ['close', 'dismiss'])
 
     await TestBed.configureTestingModule({
       declarations: [PricesComponent, ReservationModalComponent],
       providers: [
-        { provide: NgbActiveModal, useValue: jasmine.createSpyObj<NgbActiveModal>('NgbActiveModal', ['close', 'dismiss']) },
+        { provide: NgbActiveModal, useValue: activeModal },
         { provide: NgbModal, useValue: modalService },
         { provide: PriceService, useValue: priceService },
         {
@@ -108,5 +110,23 @@ describe('PricesComponent', () => {
 
     expect(reservation.title()).toBe('Květový med')
     expect(reservation.amountDescription()).toBe('')
+  })
+
+  it('uses the Bootstrap 5 close button and preserves reservation dismissal', () => {
+    const reservationFixture = TestBed.createComponent(ReservationModalComponent)
+    reservationFixture.detectChanges()
+
+    const closeButton = reservationFixture.nativeElement.querySelector(
+      'button[aria-label="Close"]'
+    ) as HTMLButtonElement | null
+
+    expect(closeButton).not.toBeNull()
+    expect(closeButton?.classList.contains('btn-close')).toBeTrue()
+    expect(closeButton?.classList.contains('close')).toBeFalse()
+    expect(closeButton?.querySelector('span')).toBeNull()
+
+    closeButton?.click()
+
+    expect(activeModal.dismiss).toHaveBeenCalledOnceWith('Cross click')
   })
 })
