@@ -1,4 +1,4 @@
-FROM python:3.12-slim
+FROM python:3.13-slim
 WORKDIR /app
 
 ENV VIRTUAL_ENV=/opt/venv
@@ -10,7 +10,7 @@ RUN apt update
 RUN apt -y upgrade
 RUN apt install -y zip
 RUN apt install -y curl
-RUN curl -fsSL https://deb.nodesource.com/setup_20.x | bash - && apt install -y nodejs
+RUN curl -fsSL https://deb.nodesource.com/setup_24.x | bash - && apt install -y nodejs
 RUN corepack enable
 RUN npm install -g @angular/cli
 

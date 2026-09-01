@@ -1,11 +1,10 @@
-version: "3.9"
 name: "vcelnice-builder"
 services:
   box:
     build:
-      context: .
-      dockerfile: Dockerfile
+      context: ..
+      dockerfile: ./docker/Dockerfile
     volumes:
-      - .:/app
+      - ..:/app
     environment:
       - DJANGO_SETTINGS_MODULE=vcelnice.settings.production
