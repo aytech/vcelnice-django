@@ -1,44 +1,17 @@
 <div class="container">
-  @if (pageResource.hasValue()) {
-    @let page = pageResource.value();
-
-    <div class="news">
-      <div class="row">
-        @for (article of page.articles; track article.id) {
-          <div class="col-12 col-sm-6 col-md-6 col-lg-4 col-xl-3 card-container">
-            <div class="card" (click)="modal.open(article.title, article.text)">
-              <!--suppress HtmlUnknownTarget -->
-              @if (!article.icon) {
-                <img
-                  class="card-img-top default"
-                  src="/assets/images/default-card.png"
-                  alt="{{ article.title }}">
-              } @else {
-                <img
-                  class="card-img-top"
-                  src="{{ article.icon }}"
-                  alt="{{ article.title }}">
-              }
-              <div class="card-body">
-                <h5 class="card-title">{{ article.title }}</h5>
-                <p class="card-text" [innerHTML]="article.text"></p>
-              </div>
-            </div>
-          </div>
-        }
-      </div>
-    </div>
+  @if (homeResource.hasValue()) {
+    @let home = homeResource.value();
 
     <div class="jumbotron intro">
-      <h1>{{ page.home.title }}</h1>
+      <h1>{{ home.title }}</h1>
       <div class="row">
-        <div class="col-12 col-md-6 col-lg-7 main-text" [innerHTML]="page.home.text"></div>
+        <div class="col-12 col-md-6 col-lg-7 main-text" [innerHTML]="home.text"></div>
         <div class="col-12 col-md-6 col-lg-5 text-center">
-          <img src="{{ page.home.icon }}" alt="" class="home-image">
+          <img src="{{ home.icon }}" alt="" class="home-image">
         </div>
       </div>
     </div>
-  } @else if (pageResource.error()) {
+  } @else if (homeResource.error()) {
     <div class="jumbotron intro">
       <div class="alert alert-danger text-center" role="alert">
         <strong>neočekávaná chyba</strong>
@@ -55,4 +28,10 @@
     </div>
   }
 </div>
-<app-modal #modal></app-modal>
+
+<section
+  id="novinky"
+  class="landing-news"
+  aria-label="Novinky">
+  <app-news></app-news>
+</section>

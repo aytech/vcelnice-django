@@ -5,7 +5,6 @@ import { PhotoComponent } from './photo/photo.component';
 import { VideoComponent } from './video/video.component';
 import { CertificatesComponent } from './certificates/certificates.component';
 import { RegionComponent } from './region/region.component';
-import { NewsComponent } from './news/news.component';
 import { RecipesComponent } from './recipes/recipes.component';
 // import { PricesComponent } from './prices/prices.component';
 import { ContactComponent } from './contact/contact.component';
@@ -18,7 +17,6 @@ const routes: Routes = [
   { path: 'video', component: VideoComponent },
   { path: 'certifikaty', component: CertificatesComponent },
   { path: 'region', component: RegionComponent },
-  { path: 'novinky', component: NewsComponent },
   { path: 'recepty', component: RecipesComponent },
   // { path: 'cenik', component: PricesComponent },
   { path: 'kontakt', component: ContactComponent },
@@ -31,7 +29,10 @@ const routes: Routes = [
     RouterModule
   ],
   imports: [
-    RouterModule.forRoot(routes)
+    RouterModule.forRoot(routes, {
+      anchorScrolling: 'enabled',
+      scrollOffset: [0, 72]
+    })
   ]
 })
 export class AppRoutingModule { }

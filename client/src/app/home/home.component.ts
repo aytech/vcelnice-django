@@ -1,16 +1,6 @@
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core'
 import { rxResource } from '@angular/core/rxjs-interop'
-import { HomeService, NewsService } from '@services'
-import { forkJoin, map } from 'rxjs'
-import {
-  Article,
-  Home
-} from '@interfaces'
-
-interface HomePage {
-  home: Home
-  articles: Article[]
-}
+import { HomeService } from '@services'
 
 @Component({
     selector: 'app-home',
@@ -22,17 +12,8 @@ interface HomePage {
 export class HomeComponent {
 
   private readonly homeService = inject(HomeService)
-  private readonly newsService = inject(NewsService)
 
-  readonly pageResource = rxResource({
-    stream: () => forkJoin({
-      home: this.homeService.getText(),
-      articles: this.newsService.getNews()
-    }).pipe(
-      map(({home, articles}): HomePage => ({
-        home,
-        articles: articles.slice(0, 4)
-      }))
-    )
+  readonly homeResource = rxResource({
+    stream: () => this.homeService.getText()
   })
 }

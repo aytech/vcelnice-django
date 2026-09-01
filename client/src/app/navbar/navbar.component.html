@@ -25,9 +25,30 @@
               class="nav-link"
               routerLink="/"
               routerLinkActive="active"
-              [routerLinkActiveOptions]="{exact: true}"
+              [routerLinkActiveOptions]="{
+                paths: 'exact',
+                queryParams: 'ignored',
+                matrixParams: 'ignored',
+                fragment: 'exact'
+              }"
               [queryParams]="{locale: locale()}">
               {{ cultures().home }}
+            </a>
+          </li>
+          <li class="nav-item">
+            <a
+              class="nav-link"
+              routerLink="/"
+              fragment="novinky"
+              routerLinkActive="active"
+              [routerLinkActiveOptions]="{
+                paths: 'exact',
+                queryParams: 'ignored',
+                matrixParams: 'ignored',
+                fragment: 'exact'
+              }"
+              [queryParams]="{locale: locale()}">
+              {{ cultures().news }}
             </a>
           </li>
           <li class="nav-item">
@@ -64,15 +85,6 @@
               routerLinkActive="active"
               [queryParams]="{locale: locale()}">
               {{ cultures().region }}
-            </a>
-          </li>
-          <li class="nav-item">
-            <a
-              class="nav-link"
-              routerLink="/novinky"
-              routerLinkActive="active"
-              [queryParams]="{locale: locale()}">
-              {{ cultures().news }}
             </a>
           </li>
           <li class="nav-item">
