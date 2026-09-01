@@ -70,8 +70,15 @@
           <li class="nav-item">
             <a
               class="nav-link"
-              routerLink="/foto"
+              routerLink="/"
+              fragment="foto"
               routerLinkActive="active"
+              [routerLinkActiveOptions]="{
+                paths: 'exact',
+                queryParams: 'ignored',
+                matrixParams: 'ignored',
+                fragment: 'exact'
+              }"
               [queryParams]="{locale: locale()}">
               {{ cultures().photo }}
             </a>

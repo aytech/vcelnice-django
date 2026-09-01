@@ -8,27 +8,28 @@
 
       @if (photos.length) {
         <div class="row">
-          @for (photo of photos; track photo.id) {
+          @for (photo of photos.slice(0, previewLimit); track photo.id) {
             <div class="col-12 col-sm-12 col-md-6 col-lg-4 col-xl-3 card-container">
               <div class="card">
                 <!--suppress HtmlUnknownTarget -->
-                @if (!photo.thumb) {
-                  <img
-                    class="card-img-top default"
-                    src="/assets/images/default.png"
-                    alt="{{ photo.caption }}">
-                } @else {
-                  <a
-                    class="thumbnail"
-                    data-fancybox="gallery"
-                    [attr.data-caption]="photo.caption"
-                    href="{{ photo.image }}">
+                <a
+                  class="thumbnail"
+                  data-fancybox="photo-gallery"
+                  [attr.data-caption]="photo.caption"
+                  [attr.data-thumb]="photo.thumb || '/assets/images/default.png'"
+                  [href]="photo.image">
+                  @if (!photo.thumb) {
                     <img
-                      src="{{ photo.thumb }}"
+                      class="card-img-top default"
+                      src="/assets/images/default.png"
+                      alt="{{ photo.caption }}">
+                  } @else {
+                    <img
+                      [src]="photo.thumb"
                       alt="{{ photo.caption }}"
                       class="card-img-top default">
-                  </a>
-                }
+                  }
+                </a>
                 <div class="card-body">
                   <h5 class="card-title text-center">{{ photo.caption }}</h5>
                 </div>
@@ -36,6 +37,17 @@
             </div>
           }
         </div>
+
+        @for (photo of photos.slice(previewLimit); track photo.id) {
+          <a
+            hidden
+            tabindex="-1"
+            aria-hidden="true"
+            data-fancybox="photo-gallery"
+            [attr.data-caption]="photo.caption"
+            [attr.data-thumb]="photo.thumb || '/assets/images/default.png'"
+            [href]="photo.image"></a>
+        }
       } @else {
         <div class="alert alert-danger text-center" role="alert">
           <strong>obrázky nenalezeny</strong>
