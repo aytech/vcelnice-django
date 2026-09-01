@@ -16,6 +16,7 @@ img.home-image {
 
 .landing-region,
 .landing-news,
-.landing-photo {
+.landing-photo,
+.landing-recipes {
   scroll-margin-top: 4.5rem;
 }

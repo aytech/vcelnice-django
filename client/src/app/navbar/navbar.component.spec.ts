@@ -52,18 +52,22 @@ describe('NavbarComponent', () => {
       .toContain('locale=en')
   })
 
-  it('links landing sections in Home, Region, Novinky and Foto order', () => {
+  it('links landing sections in Home, Region, Novinky, Foto and Recepty order', () => {
     const links = navLinks()
     const photoUrl = new URL(links[3].href)
+    const recipesUrl = new URL(links[4].href)
 
-    expect(links.slice(0, 4).map(link => link.textContent?.trim()))
-      .toEqual(['Domů', 'Region', 'Novinky', 'Foto'])
+    expect(links.slice(0, 5).map(link => link.textContent?.trim()))
+      .toEqual(['Domů', 'Region', 'Novinky', 'Foto', 'Recepty'])
     expect(links[1].getAttribute('href')).toContain('locale=cs')
     expect(links[1].getAttribute('href')).toContain('#region')
     expect(links[2].getAttribute('href')).toContain('#novinky')
     expect(photoUrl.pathname).toBe('/')
     expect(photoUrl.searchParams.get('locale')).toBe('cs')
     expect(photoUrl.hash).toBe('#foto')
+    expect(recipesUrl.pathname).toBe('/')
+    expect(recipesUrl.searchParams.get('locale')).toBe('cs')
+    expect(recipesUrl.hash).toBe('#recepty')
   })
 
   function navLabels(): string[] {

@@ -32,6 +32,13 @@ class NewsStubComponent { }
 })
 class PhotoStubComponent { }
 
+@Component({
+  selector: 'app-recipees',
+  template: '<div class="recipes-stub">Recepty</div>',
+  standalone: false
+})
+class RecipesStubComponent { }
+
 describe('HomeComponent', () => {
   const home: Home = {
     id: 1,
@@ -49,7 +56,8 @@ describe('HomeComponent', () => {
         HomeComponent,
         RegionStubComponent,
         NewsStubComponent,
-        PhotoStubComponent
+        PhotoStubComponent,
+        RecipesStubComponent
       ],
       providers: [
         HomeService,
@@ -79,7 +87,7 @@ describe('HomeComponent', () => {
     await stabilizeFixture();
   });
 
-  it('renders Region, Novinky and Foto in the expected landing-page order', async () => {
+  it('renders Region, Novinky, Foto and Recepty in the expected landing-page order', async () => {
     const request = expectHomeRequest();
 
     request.flush(home);
@@ -89,6 +97,7 @@ describe('HomeComponent', () => {
     const region = element.querySelector<HTMLElement>('#region');
     const news = element.querySelector<HTMLElement>('#novinky');
     const photo = element.querySelector<HTMLElement>('#foto');
+    const recipes = element.querySelector<HTMLElement>('#recepty');
 
     expect(component.homeResource.hasValue()).toBeTrue();
     expect(component.homeResource.isLoading()).toBeFalse();
@@ -99,9 +108,11 @@ describe('HomeComponent', () => {
     expect(region?.previousElementSibling?.classList.contains('container')).toBeTrue();
     expect(region?.nextElementSibling).toBe(news);
     expect(news?.nextElementSibling).toBe(photo);
+    expect(photo?.nextElementSibling).toBe(recipes);
     expect(region?.querySelector('.region-stub')).not.toBeNull();
     expect(news?.querySelector('.news-stub')).not.toBeNull();
     expect(photo?.querySelector('.photo-stub')).not.toBeNull();
+    expect(recipes?.querySelector('.recipes-stub')).not.toBeNull();
     expect(element.querySelector('.spinner')).toBeNull();
     expect(element.querySelector('[role="alert"]')).toBeNull();
   });
