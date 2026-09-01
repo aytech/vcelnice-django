@@ -52,11 +52,23 @@ describe('NavbarComponent', () => {
       .toContain('locale=en')
   })
 
+  it('links Region immediately after Home and before Novinky', () => {
+    const links = navLinks()
+
+    expect(links.slice(0, 3).map(link => link.textContent?.trim()))
+      .toEqual(['Domů', 'Region', 'Novinky'])
+    expect(links[1].getAttribute('href')).toContain('locale=cs')
+    expect(links[1].getAttribute('href')).toContain('#region')
+    expect(links[2].getAttribute('href')).toContain('#novinky')
+  })
+
   function navLabels(): string[] {
+    return navLinks().map(link => link.textContent?.trim() ?? '')
+  }
+
+  function navLinks(): HTMLAnchorElement[] {
     const element: HTMLElement = fixture.nativeElement
 
-    return Array.from(
-      element.querySelectorAll<HTMLAnchorElement>('a.nav-link')
-    ).map(link => link.textContent?.trim() ?? '')
+    return Array.from(element.querySelectorAll<HTMLAnchorElement>('a.nav-link'))
   }
 })

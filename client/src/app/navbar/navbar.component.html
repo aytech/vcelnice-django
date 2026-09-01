@@ -39,6 +39,22 @@
             <a
               class="nav-link"
               routerLink="/"
+              fragment="region"
+              routerLinkActive="active"
+              [routerLinkActiveOptions]="{
+                paths: 'exact',
+                queryParams: 'ignored',
+                matrixParams: 'ignored',
+                fragment: 'exact'
+              }"
+              [queryParams]="{locale: locale()}">
+              {{ cultures().region }}
+            </a>
+          </li>
+          <li class="nav-item">
+            <a
+              class="nav-link"
+              routerLink="/"
               fragment="novinky"
               routerLinkActive="active"
               [routerLinkActiveOptions]="{
@@ -76,15 +92,6 @@
               routerLinkActive="active"
               [queryParams]="{locale: locale()}">
               {{ cultures().certificates }}
-            </a>
-          </li>
-          <li class="nav-item">
-            <a
-              class="nav-link"
-              routerLink="/region"
-              routerLinkActive="active"
-              [queryParams]="{locale: locale()}">
-              {{ cultures().region }}
             </a>
           </li>
           <li class="nav-item">

@@ -4,7 +4,6 @@ import { HomeComponent } from './home/home.component';
 import { PhotoComponent } from './photo/photo.component';
 import { VideoComponent } from './video/video.component';
 import { CertificatesComponent } from './certificates/certificates.component';
-import { RegionComponent } from './region/region.component';
 import { RecipesComponent } from './recipes/recipes.component';
 // import { PricesComponent } from './prices/prices.component';
 import { ContactComponent } from './contact/contact.component';
@@ -16,7 +15,6 @@ const routes: Routes = [
   { path: 'foto', component: PhotoComponent },
   { path: 'video', component: VideoComponent },
   { path: 'certifikaty', component: CertificatesComponent },
-  { path: 'region', component: RegionComponent },
   { path: 'recepty', component: RecipesComponent },
   // { path: 'cenik', component: PricesComponent },
   { path: 'kontakt', component: ContactComponent },
