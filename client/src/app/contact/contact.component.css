@@ -10,11 +10,3 @@
   overflow: hidden;
   text-overflow: ellipsis;
 }
-
-.portrait {
-  padding-bottom: 10px;
-}
-
-img {
-  width: 100%;
-}

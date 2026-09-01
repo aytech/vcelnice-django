@@ -1,5 +1,4 @@
-import { ChangeDetectionStrategy, Component, inject } from '@angular/core'
-import { LanguageService } from '@services'
+import { ChangeDetectionStrategy, Component } from '@angular/core'
 
 @Component({
   selector: 'app-footer',
@@ -9,6 +8,4 @@ import { LanguageService } from '@services'
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class FooterComponent {
-
-  readonly language = inject(LanguageService).localeSignal
 }

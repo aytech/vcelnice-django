@@ -52,14 +52,15 @@ describe('NavbarComponent', () => {
       .toContain('locale=en')
   })
 
-  it('links landing sections in Home, Region, Novinky, Foto, Recepty and Kontakt order', () => {
+  it('hides Kontakt and Video while preserving the remaining navigation order', () => {
     const links = navLinks()
     const photoUrl = new URL(links[3].href)
     const recipesUrl = new URL(links[4].href)
-    const contactUrl = new URL(links[5].href)
 
-    expect(links.slice(0, 6).map(link => link.textContent?.trim()))
-      .toEqual(['Domů', 'Region', 'Novinky', 'Foto', 'Recepty', 'Kontakt'])
+    expect(links.map(link => link.textContent?.trim()))
+      .toEqual(['Domů', 'Region', 'Novinky', 'Foto', 'Recepty', 'Certifikáty'])
+    expect(navLabels()).not.toContain('Kontakt')
+    expect(navLabels()).not.toContain('Video')
     expect(links[1].getAttribute('href')).toContain('locale=cs')
     expect(links[1].getAttribute('href')).toContain('#region')
     expect(links[2].getAttribute('href')).toContain('#novinky')
@@ -69,9 +70,6 @@ describe('NavbarComponent', () => {
     expect(recipesUrl.pathname).toBe('/')
     expect(recipesUrl.searchParams.get('locale')).toBe('cs')
     expect(recipesUrl.hash).toBe('#recepty')
-    expect(contactUrl.pathname).toBe('/')
-    expect(contactUrl.searchParams.get('locale')).toBe('cs')
-    expect(contactUrl.hash).toBe('#kontakt')
   })
 
   function navLabels(): string[] {
