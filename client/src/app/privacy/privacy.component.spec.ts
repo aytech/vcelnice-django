@@ -1,4 +1,5 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
+import { RouterModule } from '@angular/router';
 
 import { PrivacyComponent } from './privacy.component';
 
@@ -8,7 +9,8 @@ describe('PrivacyComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ PrivacyComponent ]
+      declarations: [ PrivacyComponent ],
+      imports: [RouterModule.forRoot([])]
     })
     .compileComponents();
   }));
@@ -21,5 +23,13 @@ describe('PrivacyComponent', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy();
+  });
+
+  it('links contact requests to the landing-page Kontakt section', () => {
+    const link: HTMLAnchorElement = fixture.nativeElement.querySelector('a[fragment="kontakt"]');
+    const url = new URL(link.href);
+
+    expect(url.pathname).toBe('/');
+    expect(url.hash).toBe('#kontakt');
   });
 });

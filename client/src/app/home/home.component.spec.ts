@@ -39,6 +39,13 @@ class PhotoStubComponent { }
 })
 class RecipesStubComponent { }
 
+@Component({
+  selector: 'app-contact',
+  template: '<div class="contact-stub">Kontakt</div>',
+  standalone: false
+})
+class ContactStubComponent { }
+
 describe('HomeComponent', () => {
   const home: Home = {
     id: 1,
@@ -57,7 +64,8 @@ describe('HomeComponent', () => {
         RegionStubComponent,
         NewsStubComponent,
         PhotoStubComponent,
-        RecipesStubComponent
+        RecipesStubComponent,
+        ContactStubComponent
       ],
       providers: [
         HomeService,
@@ -87,7 +95,7 @@ describe('HomeComponent', () => {
     await stabilizeFixture();
   });
 
-  it('renders Region, Novinky, Foto and Recepty in the expected landing-page order', async () => {
+  it('renders Region, Novinky, Foto, Recepty and Kontakt in the expected landing-page order', async () => {
     const request = expectHomeRequest();
 
     request.flush(home);
@@ -98,6 +106,7 @@ describe('HomeComponent', () => {
     const news = element.querySelector<HTMLElement>('#novinky');
     const photo = element.querySelector<HTMLElement>('#foto');
     const recipes = element.querySelector<HTMLElement>('#recepty');
+    const contact = element.querySelector<HTMLElement>('#kontakt');
 
     expect(component.homeResource.hasValue()).toBeTrue();
     expect(component.homeResource.isLoading()).toBeFalse();
@@ -109,10 +118,12 @@ describe('HomeComponent', () => {
     expect(region?.nextElementSibling).toBe(news);
     expect(news?.nextElementSibling).toBe(photo);
     expect(photo?.nextElementSibling).toBe(recipes);
+    expect(recipes?.nextElementSibling).toBe(contact);
     expect(region?.querySelector('.region-stub')).not.toBeNull();
     expect(news?.querySelector('.news-stub')).not.toBeNull();
     expect(photo?.querySelector('.photo-stub')).not.toBeNull();
     expect(recipes?.querySelector('.recipes-stub')).not.toBeNull();
+    expect(contact?.querySelector('.contact-stub')).not.toBeNull();
     expect(element.querySelector('.spinner')).toBeNull();
     expect(element.querySelector('[role="alert"]')).toBeNull();
   });
