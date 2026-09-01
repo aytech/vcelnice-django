@@ -102,10 +102,17 @@
           <li class="nav-item">
             <a
               class="nav-link"
-              routerLink="/certifikaty"
+              routerLink="/"
+              fragment="kontakt"
               routerLinkActive="active"
+              [routerLinkActiveOptions]="{
+                paths: 'exact',
+                queryParams: 'ignored',
+                matrixParams: 'ignored',
+                fragment: 'exact'
+              }"
               [queryParams]="{locale: locale()}">
-              {{ cultures().certificates }}
+              {{ cultures().contact }}
             </a>
           </li>
           <!-- <li class="nav-item">

@@ -15,9 +15,16 @@ describe('FooterComponent', () => {
 
   it('renders attribution without a Google Play link', () => {
     const element: HTMLElement = fixture.nativeElement
+    const content = element.querySelector<HTMLElement>('.footer-content')
 
     expect(element.querySelector('a[href*="play.google.com"]')).toBeNull()
     expect(element.querySelector('.play-logo')).toBeNull()
     expect(element.textContent).toContain('Jan Šaroch')
+    expect(content).not.toBeNull()
+
+    const rootFontSize = parseFloat(getComputedStyle(document.documentElement).fontSize)
+    const rightPadding = parseFloat(getComputedStyle(content!).paddingRight)
+
+    expect(rightPadding).toBeCloseTo(rootFontSize * 1.5, 5)
   })
 })

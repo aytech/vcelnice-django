@@ -22,4 +22,18 @@ describe('RegionComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it('keeps offset links within the Bootstrap grid width', () => {
+    const links: HTMLElement[] = Array.from(
+      fixture.nativeElement.querySelectorAll('.link')
+    );
+
+    expect(links.length).toBe(2);
+    links.forEach(link => {
+      expect(link.classList.contains('col-md-7')).toBeTrue();
+      expect(link.classList.contains('offset-md-5')).toBeTrue();
+      expect(link.classList.contains('col-lg-8')).toBeTrue();
+      expect(link.classList.contains('offset-lg-4')).toBeTrue();
+    });
+  });
 });

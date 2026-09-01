@@ -10,3 +10,7 @@
 .footer div {
   color: #FFFFFF;
 }
+
+.footer-content {
+  padding-inline: 1.5rem;
+}
