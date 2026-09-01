@@ -1,5 +1,5 @@
 import { TestBed } from '@angular/core/testing';
-import { Router } from '@angular/router';
+import { ROUTER_CONFIGURATION, Router } from '@angular/router';
 
 import { AppRoutingModule } from './app-routing.module';
 import { CertificatesComponent } from './certificates/certificates.component';
@@ -19,5 +19,13 @@ describe('AppRoutingModule', () => {
     expect(routes.find(route => route.path === 'certifikaty')?.component).toBe(CertificatesComponent);
     expect(routes.find(route => route.path === 'kontakt')?.component).toBe(ContactComponent);
     expect(routes.find(route => route.path === 'video')?.component).toBe(VideoComponent);
+  });
+
+  it('scrolls to sections and returns fragment-free navigation to the top', () => {
+    const options = TestBed.inject(ROUTER_CONFIGURATION);
+
+    expect(options.anchorScrolling).toBe('enabled');
+    expect(options.scrollPositionRestoration).toBe('enabled');
+    expect(options.scrollOffset).toEqual([0, 72]);
   });
 });
