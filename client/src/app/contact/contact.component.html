@@ -1,51 +1,38 @@
 <div class="container">
   <div class="jumbotron">
-    <h2 class="text-center web-color title">Kontakt</h2>
-    <div class="row">
-      <div class="col-12 contact-details">
-        <ul class="list-group">
-          <li class="list-group-item text-center"><strong>Jan Šaroch</strong></li>
-        </ul>
-        <ul class="list-group">
-          <li class="list-group-item">
-            <div class="row">
-              <div class="col-3 col-lg-2">
-                <strong>Telefon:</strong>
-              </div>
-              <div class="col-9 col-lg-10">
-                <a href="tel:+420724074845">+420 724 074 845</a>
-              </div>
-            </div>
-          </li>
-          <li class="list-group-item">
-            <div class="row">
-              <div class="col-3 col-md-12 col-lg-2">
-                <strong>Adresa:</strong>
-              </div>
-              <div class="col-9 col-md-12 col-lg-10 content">
-                <a
-                  data-fancybox
-                  href="https://www.google.com/maps/search/Riegrova+376,+252+19+Rudná/"
-                  class="btn btn-primary btn-web">
-                  Riegrova 376, Rudná
-                </a>
-              </div>
-            </div>
-          </li>
-          <li class="list-group-item">
-            <div class="row">
-              <div class="col-3 col-lg-2">
-                <strong>Email:</strong>
-              </div>
-              <div class="col-9 col-lg-10 content">
-                <button class="btn btn-primary btn-web" id="contact-trigger">
-                  <a href="mailto:jan.saroch@email.cz">jan.saroch&#64;email.cz</a>
-                </button>
-              </div>
-            </div>
-          </li>
-        </ul>
-      </div>
+    <header class="section-heading">
+      <p class="section-eyebrow">Včelnice</p>
+      <h2>Kontakt</h2>
+    </header>
+    <p class="contact-person">Jan Šaroch</p>
+
+    <div class="contact-grid">
+      <section class="contact-card" aria-labelledby="contact-phone">
+        <p id="contact-phone" class="contact-label">Telefon</p>
+        <p class="contact-value">+420 724 074 845</p>
+        <div class="links-container contact-actions">
+          <a href="tel:+420724074845" class="web-link">Zavolat</a>
+        </div>
+      </section>
+
+      <section class="contact-card" aria-labelledby="contact-email">
+        <p id="contact-email" class="contact-label">E-mail</p>
+        <p class="contact-value">jan.saroch&#64;email.cz</p>
+        <div class="links-container contact-actions">
+          <a href="mailto:jan.saroch@email.cz" class="web-link">Napsat e-mail</a>
+        </div>
+      </section>
+
+      <section class="contact-card" aria-labelledby="contact-address">
+        <p id="contact-address" class="contact-label">Adresa</p>
+        <p class="contact-value">Riegrova 376<br>252 19 Rudná</p>
+        <div class="links-container contact-actions">
+          <a
+            data-fancybox
+            href="https://www.google.com/maps/search/Riegrova+376,+252+19+Rudná/"
+            class="web-link">Zobrazit mapu</a>
+        </div>
+      </section>
     </div>
   </div>
 </div>

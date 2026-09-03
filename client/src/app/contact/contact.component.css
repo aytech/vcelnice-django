@@ -1,12 +1,55 @@
-.content {
-  overflow: hidden;
-  padding: 5px;
+.contact-person {
+  color: #25211b;
+  font-size: 1.3rem;
+  font-weight: 700;
+  margin: 0 0 1.5rem;
+  text-align: center;
 }
 
-.content a, .content > button {
-  color: #fff;
-  margin: auto 5px;
-  max-width: 100%;
-  overflow: hidden;
-  text-overflow: ellipsis;
+.contact-grid {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.contact-card {
+  background: #fffaf0;
+  border: 1px solid #f2dfb8;
+  border-radius: .3rem;
+  display: flex;
+  flex-direction: column;
+  min-height: 12rem;
+  padding: 1.35rem;
+}
+
+.contact-label {
+  color: #b6720e;
+  font-size: .75rem;
+  font-weight: 700;
+  letter-spacing: .1em;
+  margin: 0 0 .65rem;
+  text-transform: uppercase;
+}
+
+.contact-value {
+  color: #39342b;
+  font-size: 1.05rem;
+  line-height: 1.5;
+  margin: 0;
+  overflow-wrap: anywhere;
+}
+
+.links-container.contact-actions {
+  margin-top: auto;
+  padding-top: 1.25rem;
+}
+
+@media (max-width: 767.98px) {
+  .contact-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .contact-card {
+    min-height: auto;
+  }
 }

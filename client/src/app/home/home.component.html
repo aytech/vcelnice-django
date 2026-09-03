@@ -3,12 +3,26 @@
     @let home = homeResource.value();
 
     <div class="jumbotron intro">
-      <h1>{{ home.title }}</h1>
-      <div class="row">
-        <div class="col-12 col-md-6 col-lg-7 main-text" [innerHTML]="home.text"></div>
-        <div class="col-12 col-md-6 col-lg-5 text-center">
-          <img src="{{ home.icon }}" alt="" class="home-image">
+      <div class="intro-layout">
+        <div class="intro-content">
+          <!-- <p class="intro-eyebrow">Včelnice uprostřed Českého krasu</p> -->
+          <p class="intro-eyebrow">{{ home.title }}</p>
+          <!-- Včelařit jsem začal v roce 1991, kdy jsem si na zahradu postavil dva úly, Moravské univerzály. Dnes je do toho zapojena celá rodina. Včelaříme v 11 rámkových, nástavkových úlech rámkové míry 39x24. Celkem máme 42 včelstev rozmístěných do tří včelnic na Karlštejnsku. V našem okolí se vyskytují louky, pole a smíšené lesy, které jsou pro Karlštejnsko typické.
+Med máme převážně květový a smíšený. V omezeném množství nabízíme i med pastovaný. Naše roční produkce medu přesahuje 1 tunu.
+Od roku 2011 nás můžete potkat i na regionálních farmářských trzích.
+Osobně mám raději, když se zákazník staví pro svůj med u nás v Rudné. Má tak možnost nakouknout "pod pokličku" a odchází s pocitem, že ten med je skutečně od včelaře, což na farmářských trzích není možné. Včelaři se zde míchají dohromady s překupníky a zákazník tak ztrácí záruku, že kupuje skutečný a nefalšovaný med.
+V dalších sekcích našich stránek můžete nahlédnout na fotografie spojené s naším včelařským provozem, získat recepty na vaření, kde med hraje jednu z hlavních rolí, dozvědět se něco více o medu nebo získat na nás kontakt, abyste si mohli dojet pro svou sklenici medu přímo od včelaře! -->
+          <div class="intro-copy" [innerHTML]="home.text"></div>
+
+          <nav class="links-container">
+            <a routerLink="/" fragment="kontakt" class="web-link">kontaktovat včelaře</a>
+            <a data-fancybox href="https://www.google.com/maps/search/Riegrova+376,+252+19+Rudná/" class="web-link">zobrazit mapu</a>
+          </nav>
         </div>
+
+        <figure class="intro-visual">
+          <img [src]="home.icon" alt="Včelnice">
+        </figure>
       </div>
     </div>
   } @else if (homeResource.error()) {

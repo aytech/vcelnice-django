@@ -1,17 +1,91 @@
-.jumbotron {
-  font-size: 18px;
+.intro {
+  font-size: 1.0625rem;
+  overflow: hidden;
+  padding: 0;
 }
 
-.jumbotron.intro img {
-  max-width: 100%;
+.intro-layout {
+  align-items: stretch;
+  display: grid;
+  grid-template-columns: minmax(0, 1.1fr) minmax(18rem, .9fr);
 }
 
-.main-text {
-  margin-bottom: 20px;
+.intro-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: clamp(2rem, 5vw, 4.25rem);
 }
 
-img.home-image {
-  border-radius: .5rem;
+.intro-eyebrow {
+  color: #b6720e;
+  font-size: .75rem;
+  font-weight: 700;
+  letter-spacing: .12em;
+  margin: 0 0 .75rem;
+  text-transform: uppercase;
+}
+
+.intro h1 {
+  color: #25211b;
+  font-size: clamp(2rem, 4vw, 3.25rem);
+  font-weight: 700;
+  letter-spacing: -.035em;
+  line-height: 1.05;
+  margin-bottom: 1.25rem;
+}
+
+.intro-copy {
+  color: #514b40;
+  line-height: 1.7;
+  max-width: 38rem;
+}
+
+.intro-copy ::ng-deep p {
+  margin-bottom: 1rem;
+}
+
+.intro-copy ::ng-deep p:last-child {
+  margin-bottom: 0;
+}
+
+.intro-visual {
+  background: #e7c56e;
+  margin: 0;
+  min-height: 19rem;
+  overflow: hidden;
+  position: relative;
+}
+
+.intro-visual::after {
+  background: linear-gradient(135deg, rgba(82, 52, 5, .02), rgba(82, 52, 5, .22));
+  content: '';
+  inset: 0;
+  pointer-events: none;
+  position: absolute;
+}
+
+.intro-visual img {
+  display: block;
+  height: 100%;
+  min-height: 19rem;
+  object-fit: cover;
+  width: 100%;
+}
+
+@media (max-width: 767.98px) {
+  .intro-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .intro-content {
+    padding: 2rem 1.5rem;
+  }
+
+  .intro-visual,
+  .intro-visual img {
+    min-height: 15rem;
+  }
 }
 
 .landing-region,

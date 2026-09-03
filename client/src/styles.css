@@ -97,6 +97,28 @@ h2.title {
   margin-bottom: 1.5rem;
 }
 
+.section-heading {
+  margin-bottom: 1.75rem;
+}
+
+.section-eyebrow {
+  color: #b6720e;
+  font-size: .75rem;
+  font-weight: 700;
+  letter-spacing: .12em;
+  margin: 0 0 .6rem;
+  text-transform: uppercase;
+}
+
+.section-heading h2 {
+  color: #514b40;
+  font-size: clamp(1.65rem, 3vw, 2.25rem);
+  font-weight: 700;
+  letter-spacing: -.03em;
+  line-height: 1.1;
+  margin: 0;
+}
+
 .jumbotron {
   background-color: rgba(248, 249, 250, 0.95);
   border-radius: 0.3rem;
@@ -110,6 +132,36 @@ h2.title {
 
 .web-color {
   color: #ee9c22;
+}
+
+.web-link {
+  background: #f7e9ca;
+  border-radius: .3rem;
+  color: #6e4708;
+  font-size: .875rem;
+  font-weight: 700;
+  padding: .58rem .85rem;
+  text-decoration: none;
+  transition: background-color .18s ease, color .18s ease, transform .18s ease;
+}
+
+.web-link:hover,
+.web-link:focus {
+  background: #ee9c22;
+  color: #fff;
+  transform: translateY(-2px);
+}
+
+.web-link:focus-visible {
+  outline: 3px solid rgba(238, 156, 34, .4);
+  outline-offset: 2px;
+}
+
+.links-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .55rem;
+  margin-top: 2rem;
 }
 
 .spinner {
@@ -142,5 +194,11 @@ h2.title {
 @media (max-width: 314px) {
   .jumbotron {
     margin-bottom: 5rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .web-link {
+    transition: none;
   }
 }

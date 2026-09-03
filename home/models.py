@@ -16,7 +16,7 @@ class Home(models.Model):
     def save(self, force_insert=False, force_update=False, using=None, update_fields=None):
         if self.icon and hasattr(self.icon.file, 'content_type'):
             uploader = ImageUploader(self.icon, 'png')
-            image_handle = uploader.save(300, 300)
+            image_handle = uploader.save(1200, 1200)
 
             image_field = SimpleUploadedFile(self.icon.name, image_handle.read(),
                                              content_type=self.icon.file.content_type)
