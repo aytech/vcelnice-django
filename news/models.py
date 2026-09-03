@@ -27,7 +27,12 @@ class Article(models.Model):
                 image_field = SimpleUploadedFile(self.icon.name, image_handle.read(),
                                                  content_type=self.icon.file.content_type)
                 self.icon.save("%s.%s" % (os.path.splitext(self.icon.name)[0], "jpg"), image_field, save=False)
-        super(Article, self).save(force_insert, force_update, using, update_fields)
+        super().save(
+            force_insert=force_insert,
+            force_update=force_update,
+            using=using,
+            update_fields=update_fields
+        )
 
     class Meta:
         verbose_name = _("News article")

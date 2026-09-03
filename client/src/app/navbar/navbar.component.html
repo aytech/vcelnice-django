@@ -39,6 +39,22 @@
             <a
               class="nav-link"
               routerLink="/"
+              fragment="cenik"
+              routerLinkActive="active"
+              [routerLinkActiveOptions]="{
+                paths: 'exact',
+                queryParams: 'ignored',
+                matrixParams: 'ignored',
+                fragment: 'exact'
+              }"
+              [queryParams]="{locale: locale()}">
+              {{ cultures().price_list }}
+            </a>
+          </li>
+          <li class="nav-item">
+            <a
+              class="nav-link"
+              routerLink="/"
               fragment="region"
               routerLinkActive="active"
               [routerLinkActiveOptions]="{
@@ -115,15 +131,6 @@
               {{ cultures().contact }}
             </a>
           </li>
-          <!-- <li class="nav-item">
-            <a
-              class="nav-link"
-              routerLink="/cenik"
-              routerLinkActive="active"
-              [queryParams]="{locale: locale()}">
-              {{ cultures().price_list }}
-            </a>
-          </li> -->
         </ul>
       </div>
     </div>

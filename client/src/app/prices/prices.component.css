@@ -1,3 +1,112 @@
-.recipes img {
-  margin-bottom: 15px;
+.price-grid {
+  display: grid;
+  gap: 1.25rem;
+  grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
+}
+
+.price-card {
+  background: #fffaf0;
+  border: 1px solid #f2dfb8;
+  border-radius: .4rem;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  overflow: hidden;
+  transition: box-shadow .2s ease, transform .2s ease;
+}
+
+.price-card:hover {
+  box-shadow: 0 .7rem 1.6rem rgba(72, 52, 18, .13);
+  transform: translateY(-3px);
+}
+
+.price-image-wrap {
+  background: #f6e2b2;
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+}
+
+.price-image {
+  display: block;
+  height: 100%;
+  object-fit: cover;
+  width: 100%;
+}
+
+.price-card-body {
+  padding: 1.25rem 1.25rem 1rem;
+}
+
+.price-title {
+  color: #39342b;
+  font-size: 1.15rem;
+  font-weight: 700;
+  line-height: 1.3;
+  margin: 0 0 .75rem;
+}
+
+.price-value {
+  color: #b6720e;
+  font-size: 1.7rem;
+  font-weight: 700;
+  line-height: 1;
+  margin: 0;
+}
+
+.price-value span {
+  font-size: 1rem;
+}
+
+.price-weight {
+  color: #6f675a;
+  font-size: .875rem;
+  margin: .55rem 0 0;
+}
+
+.price-card-footer {
+  align-items: center;
+  border-top: 1px solid #f2dfb8;
+  display: flex;
+  gap: .75rem;
+  justify-content: space-between;
+  margin-top: auto;
+  padding: 1rem 1.25rem;
+}
+
+.price-availability {
+  color: #5c741d;
+  font-size: .8rem;
+  font-weight: 700;
+}
+
+.price-unavailable {
+  color: #877d70;
+}
+
+.price-action {
+  background: #ee9c22;
+  border-color: #b6720e;
+  color: #fff;
+  font-size: .875rem;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.price-action:hover,
+.price-action:focus {
+  background: #d88a16;
+  border-color: #a6650c;
+  color: #fff;
+}
+
+.price-action:disabled {
+  background: #e5dfd4;
+  border-color: #d2c9bc;
+  color: #7d7467;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .price-card {
+    transition: none;
+  }
 }
