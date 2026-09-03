@@ -1,7 +1,11 @@
-<nav class="navbar navbar-expand-md navbar-dark fixed-top">
-  <div class="container-fluid">
+<nav class="navbar navbar-expand-lg navbar-dark fixed-top" aria-label="Hlavní navigace">
+  <div class="container navbar-shell">
     <a class="navbar-brand" routerLink="/">
-      <img src="/assets/images/bee_news.png" alt="" title="" width="50" height="35">
+      <img src="/assets/images/bee_news.png" alt="" width="50" height="35">
+      <span class="navbar-brand-copy">
+        <span class="navbar-brand-title">Včelnice Rudná</span>
+        <span class="navbar-brand-subtitle">Jan Šaroch</span>
+      </span>
     </a>
     <button 
       #navbarToggle
@@ -18,121 +22,119 @@
         #menu
         class="collapse navbar-collapse"
         id="navbarCollapse">
-      <div class="container">
-        <ul class="navbar-nav me-auto">
-          <li class="nav-item">
-            <a
-              class="nav-link"
-              routerLink="/"
-              routerLinkActive="active"
-              [routerLinkActiveOptions]="{
-                paths: 'exact',
-                queryParams: 'ignored',
-                matrixParams: 'ignored',
-                fragment: 'exact'
-              }"
-              [queryParams]="{locale: locale()}">
-              {{ cultures().home }}
-            </a>
-          </li>
-          <li class="nav-item">
-            <a
-              class="nav-link"
-              routerLink="/"
-              fragment="cenik"
-              routerLinkActive="active"
-              [routerLinkActiveOptions]="{
-                paths: 'exact',
-                queryParams: 'ignored',
-                matrixParams: 'ignored',
-                fragment: 'exact'
-              }"
-              [queryParams]="{locale: locale()}">
-              {{ cultures().price_list }}
-            </a>
-          </li>
-          <li class="nav-item">
-            <a
-              class="nav-link"
-              routerLink="/"
-              fragment="region"
-              routerLinkActive="active"
-              [routerLinkActiveOptions]="{
-                paths: 'exact',
-                queryParams: 'ignored',
-                matrixParams: 'ignored',
-                fragment: 'exact'
-              }"
-              [queryParams]="{locale: locale()}">
-              {{ cultures().region }}
-            </a>
-          </li>
-          <li class="nav-item">
-            <a
-              class="nav-link"
-              routerLink="/"
-              fragment="novinky"
-              routerLinkActive="active"
-              [routerLinkActiveOptions]="{
-                paths: 'exact',
-                queryParams: 'ignored',
-                matrixParams: 'ignored',
-                fragment: 'exact'
-              }"
-              [queryParams]="{locale: locale()}">
-              {{ cultures().news }}
-            </a>
-          </li>
-          <li class="nav-item">
-            <a
-              class="nav-link"
-              routerLink="/"
-              fragment="foto"
-              routerLinkActive="active"
-              [routerLinkActiveOptions]="{
-                paths: 'exact',
-                queryParams: 'ignored',
-                matrixParams: 'ignored',
-                fragment: 'exact'
-              }"
-              [queryParams]="{locale: locale()}">
-              {{ cultures().photo }}
-            </a>
-          </li>
-          <li class="nav-item">
-            <a
-              class="nav-link"
-              routerLink="/"
-              fragment="recepty"
-              routerLinkActive="active"
-              [routerLinkActiveOptions]="{
-                paths: 'exact',
-                queryParams: 'ignored',
-                matrixParams: 'ignored',
-                fragment: 'exact'
-              }"
-              [queryParams]="{locale: locale()}">
-              {{ cultures().recipes }}
-            </a>
-          </li>
-          <li class="nav-item">
-            <a
-              class="nav-link"
-              routerLink="/"
-              fragment="kontakt"
-              routerLinkActive="active"
-              [routerLinkActiveOptions]="{
-                paths: 'exact',
-                queryParams: 'ignored',
-                matrixParams: 'ignored',
-                fragment: 'exact'
-              }"
-              [queryParams]="{locale: locale()}">
-              {{ cultures().contact }}
-            </a>
-          </li>
-        </ul>
-      </div>
+      <ul class="navbar-nav ms-auto">
+        <li class="nav-item">
+          <a
+            class="nav-link"
+            routerLink="/"
+            routerLinkActive="active"
+            [routerLinkActiveOptions]="{
+              paths: 'exact',
+              queryParams: 'ignored',
+              matrixParams: 'ignored',
+              fragment: 'exact'
+            }"
+            [queryParams]="{locale: locale()}">
+            {{ cultures().home }}
+          </a>
+        </li>
+        <li class="nav-item">
+          <a
+            class="nav-link"
+            routerLink="/"
+            fragment="cenik"
+            routerLinkActive="active"
+            [routerLinkActiveOptions]="{
+              paths: 'exact',
+              queryParams: 'ignored',
+              matrixParams: 'ignored',
+              fragment: 'exact'
+            }"
+            [queryParams]="{locale: locale()}">
+            {{ cultures().price_list }}
+          </a>
+        </li>
+        <li class="nav-item">
+          <a
+            class="nav-link"
+            routerLink="/"
+            fragment="region"
+            routerLinkActive="active"
+            [routerLinkActiveOptions]="{
+              paths: 'exact',
+              queryParams: 'ignored',
+              matrixParams: 'ignored',
+              fragment: 'exact'
+            }"
+            [queryParams]="{locale: locale()}">
+            {{ cultures().region }}
+          </a>
+        </li>
+        <li class="nav-item">
+          <a
+            class="nav-link"
+            routerLink="/"
+            fragment="novinky"
+            routerLinkActive="active"
+            [routerLinkActiveOptions]="{
+              paths: 'exact',
+              queryParams: 'ignored',
+              matrixParams: 'ignored',
+              fragment: 'exact'
+            }"
+            [queryParams]="{locale: locale()}">
+            {{ cultures().news }}
+          </a>
+        </li>
+        <li class="nav-item">
+          <a
+            class="nav-link"
+            routerLink="/"
+            fragment="foto"
+            routerLinkActive="active"
+            [routerLinkActiveOptions]="{
+              paths: 'exact',
+              queryParams: 'ignored',
+              matrixParams: 'ignored',
+              fragment: 'exact'
+            }"
+            [queryParams]="{locale: locale()}">
+            {{ cultures().photo }}
+          </a>
+        </li>
+        <li class="nav-item">
+          <a
+            class="nav-link"
+            routerLink="/"
+            fragment="recepty"
+            routerLinkActive="active"
+            [routerLinkActiveOptions]="{
+              paths: 'exact',
+              queryParams: 'ignored',
+              matrixParams: 'ignored',
+              fragment: 'exact'
+            }"
+            [queryParams]="{locale: locale()}">
+            {{ cultures().recipes }}
+          </a>
+        </li>
+        <li class="nav-item">
+          <a
+            class="nav-link"
+            routerLink="/"
+            fragment="kontakt"
+            routerLinkActive="active"
+            [routerLinkActiveOptions]="{
+              paths: 'exact',
+              queryParams: 'ignored',
+              matrixParams: 'ignored',
+              fragment: 'exact'
+            }"
+            [queryParams]="{locale: locale()}">
+            {{ cultures().contact }}
+          </a>
+        </li>
+      </ul>
     </div>
   </div>
 </nav>

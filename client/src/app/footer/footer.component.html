@@ -1,18 +1,25 @@
 <footer class="footer">
-  <div class="container-fluid">
-    <div class="row">
-      <div class="col-12 footer-content text-center text-sm-end">
-        <div class="row">
-          <div class="col-12 col-md-12">
-            <i class="fa fa-copyright"></i>&nbsp;
-            <a href="http://www.vcelnicerudna.cz" target="_self">Jan Šaroch</a>
-          </div>
-          <div class="col-12 col-md-12">
-            <i class="fa fa-code"></i>&nbsp;Web Design:
-            <a href="mailto:oyapparov@gmail.com">Oleg</a>
-          </div>
+  <div class="container">
+    <div class="footer-main">
+      <div class="footer-brand">
+        <img src="/assets/images/bee_news.png" alt="" width="50" height="35">
+        <div>
+          <a routerLink="/" class="footer-brand-name">Včelnice Rudná</a>
+          <p>Jan Šaroch</p>
         </div>
       </div>
+
+      <nav class="footer-nav" aria-label="Rychlé odkazy">
+        <a routerLink="/" fragment="cenik">Ceník</a>
+        <a routerLink="/" fragment="region">Region</a>
+        <a routerLink="/" fragment="kontakt">Kontakt</a>
+        <!-- <a routerLink="/privacy">Ochrana soukromí</a> -->
+      </nav>
+    </div>
+
+    <div class="footer-bottom">
+      <p><i class="fa fa-copyright" aria-hidden="true"></i> <a routerLink="/">Jan Šaroch</a></p>
+      <p><i class="fa fa-code" aria-hidden="true"></i> Web Design: <a href="mailto:oyapparov@gmail.com">Oleg</a></p>
     </div>
   </div>
 </footer>
