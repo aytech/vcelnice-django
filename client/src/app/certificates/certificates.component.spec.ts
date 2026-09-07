@@ -49,10 +49,9 @@ describe('CertificatesComponent', () => {
 
   it('replaces the loading indicator with API data when the resource resolves', async () => {
     const certificate: Certificate = {
-      id: 1,
       file: '/media/certificate.pdf',
       description: 'Český med',
-      type: 'pdf'
+      type: 'application/pdf'
     }
 
     expect(fixture.nativeElement.querySelector('.spinner')).not.toBeNull()
@@ -62,7 +61,27 @@ describe('CertificatesComponent', () => {
     await fixture.whenStable()
 
     expect(fixture.nativeElement.querySelector('.spinner')).toBeNull()
-    expect(fixture.nativeElement.querySelector('.card-title')?.textContent).toContain(certificate.description)
+    const certificateLink = fixture.nativeElement.querySelector('.certificate-link') as HTMLAnchorElement
+
+    expect(fixture.nativeElement.querySelector('.certificate-title')?.textContent).toContain(certificate.description)
+    expect(fixture.nativeElement.querySelector('.section-heading h2')?.textContent).toContain(cultures.certificates)
+    expect(fixture.nativeElement.querySelector('.certificate-format')?.textContent).toContain('PDF')
+    expect(certificateLink.getAttribute('href')).toBe(certificate.file)
+    expect(certificateLink.target).toBe('_blank')
+    expect(certificateLink.rel).toContain('noopener')
+  })
+
+  it('uses a generic file presentation for non-PDF documents', async () => {
+    certificateResponse.next([{
+      file: '/media/certificate.jpg',
+      description: 'Výsledek vyšetření',
+      type: 'image/jpeg'
+    }])
+    certificateResponse.complete()
+    await fixture.whenStable()
+
+    expect(fixture.nativeElement.querySelector('.certificate-icon .fa-file-o')).not.toBeNull()
+    expect(fixture.nativeElement.querySelector('.certificate-format')?.textContent).toContain('Soubor')
   })
 
   it('replaces the loading indicator with an error state when the resource fails', async () => {

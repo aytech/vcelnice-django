@@ -1,47 +1,72 @@
 <div class="container">
-  <div class="jumbotron">
-    <h2 class="text-center web-color">{{ cultures().certificates }}</h2>
-    <hr>
+  <div class="jumbotron certificates-section">
+    <header class="section-heading certificates-heading">
+      <div>
+        <p class="section-eyebrow">Včelnice</p>
+        <h2>{{ cultures().certificates }}</h2>
+      </div>
+      <p class="certificates-intro">
+        Prohlédněte si certifikáty a další dokumenty naší včelnice.
+        Každý soubor se otevře v samostatném okně.
+      </p>
+    </header>
 
     @if (certificatesResource.hasValue()) {
       @let certificates = certificatesResource.value();
 
       @if (certificates.length) {
-        <div class="row">
-          @for (certificate of certificates; track certificate.id) {
-            <div class="col-12 col-sm-12 col-md-6 col-lg-4 col-xl-3 card-container">
-              <div class="card">
-                <a
-                  href="{{ certificate.file }}"
-                  class="text-center"
-                  title="{{ certificate.description }}"
-                  target="_blank">
+        <div class="certificates-list">
+          @for (certificate of certificates; track certificate.file) {
+            <article class="certificate-card">
+              <a
+                [href]="certificate.file"
+                class="certificate-link"
+                target="_blank"
+                rel="noopener noreferrer">
+                <div class="certificate-preview" aria-hidden="true">
                   @if (isPdf(certificate)) {
-                    <span class="fa-stack fa-lg fa-4x">
-                      <i class="fa fa-file-pdf-o fa-stack-1x text-danger"></i>
+                    <span class="certificate-icon certificate-icon-pdf">
+                      <i class="fa fa-file-pdf-o"></i>
+                    </span>
+                  } @else {
+                    <span class="certificate-icon">
+                      <i class="fa fa-file-o"></i>
                     </span>
                   }
-                </a>
-                <div class="card-body">
-                  <h5 class="card-title text-center">{{ certificate.description }}</h5>
                 </div>
-              </div>
-            </div>
+
+                <div class="certificate-card-body">
+                  <p class="certificate-kind">
+                    <span class="certificate-format">
+                      @if (isPdf(certificate)) { PDF } @else { Soubor }
+                    </span>
+                    Dokument včelnice
+                  </p>
+                  <h3 class="certificate-title">{{ certificate.description }}</h3>
+                </div>
+
+                <span class="certificate-action">
+                  Otevřít dokument
+                  <i class="fa fa-external-link" aria-hidden="true"></i>
+                  <span class="visually-hidden">(otevře se v novém okně)</span>
+                </span>
+              </a>
+            </article>
           }
         </div>
       } @else {
-        <div class="alert alert-danger text-center" role="alert">
-          <strong>certifikáty nenalezeny</strong>
+        <div class="certificate-state certificate-empty" role="status">
+          <strong>Certifikáty nebyly nalezeny.</strong>
         </div>
       }
     } @else if (certificatesResource.error()) {
-      <div class="alert alert-danger text-center" role="alert">
-        <strong>neočekávaná chyba</strong>
+      <div class="alert alert-danger text-center certificate-state" role="alert">
+        <strong>Certifikáty se nepodařilo načíst.</strong>
       </div>
     } @else {
-      <div class="spinner" role="status">
+      <div class="spinner certificate-state" role="status">
         <!--suppress HtmlUnknownTarget -->
-        <img src="/assets/spinner_horizontal.svg" alt="Loading...">
+        <img src="/assets/spinner_horizontal.svg" alt="{{ cultures().loading }}...">
       </div>
     }
   </div>

@@ -23,22 +23,63 @@ describe('VideoComponent', () => {
     fixture.autoDetectChanges()
   })
 
-  it('replaces the loading indicator with API data when the resource resolves', async () => {
-    const video: Video = {
-      id: 1,
-      youtube_id: 'abc123',
-      caption: 'Vytáčení medu',
-      thumb: '/media/extraction.jpg'
-    }
+  it('renders accessible video cards after the resource resolves', async () => {
+    const videos: Video[] = [
+      {
+        youtube_id: 'abc123',
+        caption: 'Vytáčení medu',
+        description: 'Odebírání medových rámků ze včel.',
+        thumb: '/media/extraction.jpg'
+      },
+      {
+        youtube_id: 'def456',
+        caption: 'Včely na česně',
+        description: null,
+        thumb: null
+      }
+    ]
 
     expect(fixture.nativeElement.querySelector('.spinner')).not.toBeNull()
 
-    videoResponse.next([video])
+    videoResponse.next(videos)
     videoResponse.complete()
     await fixture.whenStable()
 
+    const element = fixture.nativeElement as HTMLElement
+    const cards = element.querySelectorAll<HTMLElement>('article.video-card')
+    const links = element.querySelectorAll<HTMLAnchorElement>('.video-link')
+    const thumbnail = element.querySelector<HTMLImageElement>('.video-thumbnail')
+
     expect(fixture.nativeElement.querySelector('.spinner')).toBeNull()
-    expect(fixture.nativeElement.querySelector('.card-title')?.textContent).toContain(video.caption)
+    expect(element.querySelector('.section-eyebrow')?.textContent).toContain('Včelnice')
+    expect(element.querySelector('.section-heading h2')?.textContent).toContain('Video')
+    expect(cards.length).toBe(2)
+    expect(links.length).toBe(2)
+    expect(links[0].getAttribute('href')).toBe('https://youtu.be/abc123')
+    expect(links[0].hasAttribute('data-fancybox')).toBeTrue()
+    expect(links[0].target).toBe('_blank')
+    expect(links[0].rel).toContain('noopener')
+    expect(links[0].getAttribute('aria-label')).toContain(videos[0].caption)
+    expect(thumbnail?.getAttribute('src')).toBe(videos[0].thumb)
+    expect(thumbnail?.alt).toBe(videos[0].caption)
+    expect(thumbnail?.loading).toBe('lazy')
+    expect(thumbnail?.decoding).toBe('async')
+    expect(element.querySelector('.video-description')?.textContent)
+      .toContain(videos[0].description as string)
+    expect(element.querySelector('.video-placeholder')).not.toBeNull()
+  })
+
+  it('uses a neutral status when no videos are available', async () => {
+    videoResponse.next([])
+    videoResponse.complete()
+    await fixture.whenStable()
+
+    const emptyState = fixture.nativeElement.querySelector('.video-empty') as HTMLElement
+
+    expect(fixture.nativeElement.querySelector('.spinner')).toBeNull()
+    expect(emptyState).not.toBeNull()
+    expect(emptyState.getAttribute('role')).toBe('status')
+    expect(fixture.nativeElement.querySelector('[role="alert"]')).toBeNull()
   })
 
   it('replaces the loading indicator with an error state when the resource fails', async () => {

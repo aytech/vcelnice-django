@@ -3,6 +3,9 @@ from .base import *
 
 ALLOWED_HOSTS = [".vcelnicerudna.cz", ".pythonanywhere.com"]
 
+# YouTube embeds require an origin-level Referer for player identification.
+SECURE_REFERRER_POLICY = "strict-origin-when-cross-origin"
+
 # Enable in HTTPS connection
 # CSRF_COOKIE_SECURE = True
 

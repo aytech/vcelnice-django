@@ -1,54 +1,78 @@
 <div class="container">
-  <div class="jumbotron">
-    <h2 class="text-center web-color">Video</h2>
-    <hr>
+  <div class="jumbotron video-section" aria-labelledby="video-section-title">
+    <header class="section-heading video-heading">
+      <div>
+        <p class="section-eyebrow">Včelnice</p>
+        <h2 id="video-section-title">Video</h2>
+      </div>
+      <p class="video-intro">
+        Objevte videa ze světa včel a nahlédněte do každodenní práce ve včelnici.
+      </p>
+    </header>
 
     @if (videosResource.hasValue()) {
       @let videos = videosResource.value();
 
       @if (videos.length) {
-        <div class="row">
-          @for (video of videos; track video.id) {
-            <div class="col-12 col-sm-12 col-md-6 col-lg-4 col-xl-3 card-container">
-              <div class="card">
-                <a
-                  data-fancybox
-                  href="https://youtu.be/{{ video.youtube_id }}"
-                  class="text-center"
-                  title="{{ video.caption }}"
-                  target="_blank">
+        <div class="video-grid">
+          @for (video of videos; track video.youtube_id) {
+            <article class="video-card">
+              <a
+                data-fancybox
+                [href]="'https://youtu.be/' + video.youtube_id"
+                class="video-link"
+                [title]="video.caption"
+                target="_blank"
+                rel="noopener noreferrer"
+                [attr.aria-label]="'Přehrát video: ' + video.caption">
+                <div class="video-preview">
                   @if (video.thumb) {
                     <img
-                      class="card-img-top default"
-                      src="{{ video.thumb }}"
-                      alt="{{ video.caption }}">
+                      class="video-thumbnail"
+                      [src]="video.thumb"
+                      [alt]="video.caption"
+                      loading="lazy"
+                      decoding="async">
                   } @else {
-                    <span class="fa-stack fa-lg fa-4x">
-                      <i class="fa fa-square-o fa-stack-2x web-color"></i>
-                      <i class="fa fa-youtube fa-stack-1x text-danger"></i>
-                    </span>
+                    <div class="video-placeholder" aria-hidden="true">
+                      <i class="fa fa-youtube"></i>
+                    </div>
                   }
-                </a>
-                <div class="card-body">
-                  <h5 class="card-title text-center">{{ video.caption }}</h5>
+
+                  <span class="video-badge" aria-hidden="true">Video</span>
+                  <span class="video-play" aria-hidden="true">
+                    <i class="fa fa-play"></i>
+                  </span>
                 </div>
-              </div>
-            </div>
+
+                <div class="video-card-body">
+                  <p class="video-kicker">Ze světa včel</p>
+                  <h3 class="video-title">{{ video.caption }}</h3>
+                  @if (video.description) {
+                    <p class="video-description">{{ video.description }}</p>
+                  }
+                  <span class="video-action">
+                    Spustit video
+                    <i class="fa fa-arrow-right" aria-hidden="true"></i>
+                  </span>
+                </div>
+              </a>
+            </article>
           }
         </div>
       } @else {
-        <div class="alert alert-danger text-center" role="alert">
-          <strong>videa nenalezena</strong>
+        <div class="video-state video-empty" role="status">
+          <strong>Videa nebyla nalezena.</strong>
         </div>
       }
     } @else if (videosResource.error()) {
-      <div class="alert alert-danger text-center" role="alert">
-        <strong>neočekávaná chyba</strong>
+      <div class="alert alert-danger text-center video-state" role="alert">
+        <strong>Videa se nepodařilo načíst.</strong>
       </div>
     } @else {
-      <div class="spinner" role="status">
+      <div class="spinner video-state" role="status">
         <!--suppress HtmlUnknownTarget -->
-        <img src="/assets/spinner_horizontal.svg" alt="Loading...">
+        <img src="/assets/spinner_horizontal.svg" alt="Načítání videí...">
       </div>
     }
   </div>

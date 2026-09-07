@@ -19,6 +19,13 @@ import { HomeComponent } from './home.component';
 class PricesStubComponent { }
 
 @Component({
+  selector: 'app-certificates',
+  template: '<div class="certificates-stub">Certifikáty</div>',
+  standalone: false
+})
+class CertificatesStubComponent { }
+
+@Component({
   selector: 'app-region',
   template: '<div class="region-stub">Region</div>',
   standalone: false
@@ -38,6 +45,13 @@ class NewsStubComponent { }
   standalone: false
 })
 class PhotoStubComponent { }
+
+@Component({
+  selector: 'app-video',
+  template: '<div class="video-stub">Video</div>',
+  standalone: false
+})
+class VideoStubComponent { }
 
 @Component({
   selector: 'app-recipees',
@@ -69,9 +83,11 @@ describe('HomeComponent', () => {
       declarations: [
         HomeComponent,
         PricesStubComponent,
+        CertificatesStubComponent,
         RegionStubComponent,
         NewsStubComponent,
         PhotoStubComponent,
+        VideoStubComponent,
         RecipesStubComponent,
         ContactStubComponent
       ],
@@ -103,7 +119,7 @@ describe('HomeComponent', () => {
     await stabilizeFixture();
   });
 
-  it('renders Ceník, Region, Novinky, Foto, Recepty and Kontakt in the expected order', async () => {
+  it('renders landing-page sections in the expected order', async () => {
     const request = expectHomeRequest();
 
     request.flush(home);
@@ -111,9 +127,11 @@ describe('HomeComponent', () => {
 
     const element: HTMLElement = fixture.nativeElement;
     const prices = element.querySelector<HTMLElement>('#cenik');
+    const certificates = element.querySelector<HTMLElement>('#certifikaty');
     const region = element.querySelector<HTMLElement>('#region');
     const news = element.querySelector<HTMLElement>('#novinky');
     const photo = element.querySelector<HTMLElement>('#foto');
+    const video = element.querySelector<HTMLElement>('#video');
     const recipes = element.querySelector<HTMLElement>('#recepty');
     const contact = element.querySelector<HTMLElement>('#kontakt');
 
@@ -124,15 +142,19 @@ describe('HomeComponent', () => {
       'Poctivý med přímo od včelaře.'
     );
     expect(prices?.previousElementSibling?.classList.contains('container')).toBeTrue();
-    expect(prices?.nextElementSibling).toBe(region);
+    expect(prices?.nextElementSibling).toBe(certificates);
+    expect(certificates?.nextElementSibling).toBe(region);
     expect(region?.nextElementSibling).toBe(news);
     expect(news?.nextElementSibling).toBe(photo);
-    expect(photo?.nextElementSibling).toBe(recipes);
+    expect(photo?.nextElementSibling).toBe(video);
+    expect(video?.nextElementSibling).toBe(recipes);
     expect(recipes?.nextElementSibling).toBe(contact);
     expect(prices?.querySelector('.prices-stub')).not.toBeNull();
+    expect(certificates?.querySelector('.certificates-stub')).not.toBeNull();
     expect(region?.querySelector('.region-stub')).not.toBeNull();
     expect(news?.querySelector('.news-stub')).not.toBeNull();
     expect(photo?.querySelector('.photo-stub')).not.toBeNull();
+    expect(video?.querySelector('.video-stub')).not.toBeNull();
     expect(recipes?.querySelector('.recipes-stub')).not.toBeNull();
     expect(contact?.querySelector('.contact-stub')).not.toBeNull();
     expect(element.querySelector('.spinner')).toBeNull();
