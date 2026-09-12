@@ -2,6 +2,37 @@
   background-color: #ee9c22;
   border-color: #b6720e;
 }
+
+/* GLightbox's external slides need a non-growing caption beside the iframe. */
+.glightbox-container .ginner-container:has(> .gslide-external) > .gslide-description {
+  flex: 0 0 auto;
+  position: static;
+  padding: 0;
+  background: #fff;
+}
+
+.glightbox-container .ginner-container:has(> .gslide-external) .gdesc-inner {
+  padding: .75rem 1rem;
+}
+
+.glightbox-container .ginner-container:has(> .gslide-external) .gslide-title {
+  color: #333;
+  margin: 0;
+}
+
+.glightbox-container .gslide-external {
+  flex: 0 0 auto;
+  min-height: 0;
+}
+
+.glightbox-container .gslide-external iframe {
+  min-height: 0;
+}
+
+/* Override the clean skin's more-specific button display rule for single items. */
+.glightbox-container .gbtn.glightbox-button-hidden {
+  display: none;
+}
 .btn-web:active:hover,
 .btn-web:active:focus,
 .btn-web:focus,

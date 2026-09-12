@@ -1,22 +1,29 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
+import { By } from '@angular/platform-browser'
 import { Subject } from 'rxjs'
 import { Video } from '@interfaces'
 import { VideoService } from '@services'
+import { LightboxService } from '../shared/lightbox/lightbox.service'
 import { VideoComponent } from './video.component'
 
 describe('VideoComponent', () => {
   let fixture: ComponentFixture<VideoComponent>
   let videoResponse: Subject<Video[]>
   let videoService: jasmine.SpyObj<VideoService>
+  let lightbox: jasmine.SpyObj<LightboxService>
 
   beforeEach(async () => {
     videoResponse = new Subject<Video[]>()
     videoService = jasmine.createSpyObj<VideoService>('VideoService', ['getVideos'])
     videoService.getVideos.and.returnValue(videoResponse)
+    lightbox = jasmine.createSpyObj<LightboxService>('LightboxService', ['openVideo'])
 
     await TestBed.configureTestingModule({
       declarations: [VideoComponent],
-      providers: [{ provide: VideoService, useValue: videoService }]
+      providers: [
+        { provide: VideoService, useValue: videoService },
+        { provide: LightboxService, useValue: lightbox }
+      ]
     }).compileComponents()
 
     fixture = TestBed.createComponent(VideoComponent)
@@ -56,7 +63,6 @@ describe('VideoComponent', () => {
     expect(cards.length).toBe(2)
     expect(links.length).toBe(2)
     expect(links[0].getAttribute('href')).toBe('https://youtu.be/abc123')
-    expect(links[0].hasAttribute('data-fancybox')).toBeTrue()
     expect(links[0].target).toBe('_blank')
     expect(links[0].rel).toContain('noopener')
     expect(links[0].getAttribute('aria-label')).toContain(videos[0].caption)
@@ -67,6 +73,11 @@ describe('VideoComponent', () => {
     expect(element.querySelector('.video-description')?.textContent)
       .toContain(videos[0].description as string)
     expect(element.querySelector('.video-placeholder')).not.toBeNull()
+
+    const event = new MouseEvent('click', { button: 0, cancelable: true })
+    fixture.debugElement.queryAll(By.css('.video-link'))[1].triggerEventHandler('click', event)
+
+    expect(lightbox.openVideo).toHaveBeenCalledOnceWith(event, videos[1])
   })
 
   it('uses a neutral status when no videos are available', async () => {

@@ -1,22 +1,29 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
+import { By } from '@angular/platform-browser'
 import { Subject } from 'rxjs'
 import { Photo } from '@interfaces'
 import { PhotoService } from '@services'
+import { LightboxService } from '../shared/lightbox/lightbox.service'
 import { PhotoComponent } from './photo.component'
 
 describe('PhotoComponent', () => {
   let fixture: ComponentFixture<PhotoComponent>
   let photoResponse: Subject<Photo[]>
   let photoService: jasmine.SpyObj<PhotoService>
+  let lightbox: jasmine.SpyObj<LightboxService>
 
   beforeEach(async () => {
     photoResponse = new Subject<Photo[]>()
     photoService = jasmine.createSpyObj<PhotoService>('PhotoService', ['getPhotos'])
     photoService.getPhotos.and.returnValue(photoResponse)
+    lightbox = jasmine.createSpyObj<LightboxService>('LightboxService', ['openPhotos'])
 
     await TestBed.configureTestingModule({
       declarations: [PhotoComponent],
-      providers: [{ provide: PhotoService, useValue: photoService }]
+      providers: [
+        { provide: PhotoService, useValue: photoService },
+        { provide: LightboxService, useValue: lightbox }
+      ]
     }).compileComponents()
 
     fixture = TestBed.createComponent(PhotoComponent)
@@ -41,7 +48,7 @@ describe('PhotoComponent', () => {
     expect(fixture.nativeElement.querySelector('.card-title')?.textContent).toContain(photo.caption)
   })
 
-  it('shows eight previews while registering every photo in the gallery', async () => {
+  it('shows eight previews and opens the complete gallery at the selected photo', async () => {
     const photos: Photo[] = Array.from({length: 12}, (_, index) => ({
       id: index + 1,
       image: `/media/photo-${index + 1}.jpg`,
@@ -58,24 +65,24 @@ describe('PhotoComponent', () => {
       element.querySelectorAll<HTMLElement>('.card-container')
     )
     const galleryLinks = Array.from(
-      element.querySelectorAll<HTMLAnchorElement>(
-        'a[data-fancybox="photo-gallery"]'
-      )
+      element.querySelectorAll<HTMLAnchorElement>('a.thumbnail')
     )
-    const hiddenGalleryLinks = galleryLinks.filter(link => link.hidden)
 
     expect(previews).toHaveSize(8)
     expect(previews.map(preview => preview.querySelector('.card-title')?.textContent?.trim()))
       .toEqual(photos.slice(0, 8).map(photo => photo.caption))
-    expect(galleryLinks).toHaveSize(photos.length)
+    expect(galleryLinks).toHaveSize(8)
     expect(galleryLinks.map(link => link.getAttribute('href')))
-      .toEqual(photos.map(photo => photo.image))
-    expect(galleryLinks.map(link => link.getAttribute('data-caption')))
-      .toEqual(photos.map(photo => photo.caption))
-    expect(hiddenGalleryLinks).toHaveSize(photos.length - 8)
-    expect(hiddenGalleryLinks.every(link => link.tabIndex === -1)).toBeTrue()
-    expect(hiddenGalleryLinks.every(link => link.getAttribute('aria-hidden') === 'true'))
-      .toBeTrue()
+      .toEqual(photos.slice(0, 8).map(photo => photo.image))
+    expect(galleryLinks[2].querySelector('img')?.getAttribute('src'))
+      .toBe('/assets/images/default.png')
+    expect(galleryLinks[2].querySelector('img')?.alt).toBe(photos[2].caption)
+    expect(element.querySelector('a[hidden]')).toBeNull()
+
+    const event = new MouseEvent('click', { button: 0, cancelable: true })
+    fixture.debugElement.queryAll(By.css('a.thumbnail'))[5].triggerEventHandler('click', event)
+
+    expect(lightbox.openPhotos).toHaveBeenCalledOnceWith(event, photos, 5)
   })
 
   it('replaces the loading indicator with an error state when the resource fails', async () => {

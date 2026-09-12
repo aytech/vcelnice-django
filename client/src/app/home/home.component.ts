@@ -2,6 +2,7 @@ import { ChangeDetectionStrategy, Component, inject, OnInit } from '@angular/cor
 import { rxResource } from '@angular/core/rxjs-interop'
 import { NgbModal, NgbModalConfig } from '@ng-bootstrap/ng-bootstrap'
 import { HomeService } from '@services'
+import { LightboxService } from '../shared/lightbox/lightbox.service'
 
 @Component({
     selector: 'app-home',
@@ -14,6 +15,8 @@ import { HomeService } from '@services'
 export class HomeComponent implements OnInit {
 
   private readonly homeService = inject(HomeService)
+
+  readonly lightbox = inject(LightboxService)
 
   readonly homeResource = rxResource({
     stream: () => this.homeService.getText()

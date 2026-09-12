@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core'
+import { Component, inject, OnInit } from '@angular/core'
 import { NgbModal, NgbModalConfig } from '@ng-bootstrap/ng-bootstrap'
+import { LightboxService } from '../shared/lightbox/lightbox.service'
 
 @Component({
     selector: 'app-contact',
@@ -9,6 +10,8 @@ import { NgbModal, NgbModalConfig } from '@ng-bootstrap/ng-bootstrap'
     standalone: false
 })
 export class ContactComponent implements OnInit {
+
+  readonly lightbox = inject(LightboxService)
 
   constructor(config: NgbModalConfig) {
     config.backdrop = 'static'

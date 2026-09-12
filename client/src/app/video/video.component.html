@@ -18,7 +18,7 @@
           @for (video of videos; track video.youtube_id) {
             <article class="video-card">
               <a
-                data-fancybox
+                (click)="lightbox.openVideo($event, video)"
                 [href]="'https://youtu.be/' + video.youtube_id"
                 class="video-link"
                 [title]="video.caption"
