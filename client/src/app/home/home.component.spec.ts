@@ -5,10 +5,12 @@ import {
   provideHttpClientTesting
 } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { By } from '@angular/platform-browser';
 
 import { ApiConstants } from '@config';
 import { Home } from '@interfaces';
 import { HomeService } from '@services';
+import { LightboxService } from '../shared/lightbox/lightbox.service';
 import { HomeComponent } from './home.component';
 
 @Component({
@@ -77,8 +79,11 @@ describe('HomeComponent', () => {
   let fixture: ComponentFixture<HomeComponent>;
   let component: HomeComponent;
   let httpTesting: HttpTestingController;
+  let lightbox: jasmine.SpyObj<LightboxService>;
 
   beforeEach(async () => {
+    lightbox = jasmine.createSpyObj<LightboxService>('LightboxService', ['openMap']);
+
     await TestBed.configureTestingModule({
       declarations: [
         HomeComponent,
@@ -93,6 +98,7 @@ describe('HomeComponent', () => {
       ],
       providers: [
         HomeService,
+        { provide: LightboxService, useValue: lightbox },
         provideHttpClient(),
         provideHttpClientTesting()
       ]
@@ -178,6 +184,21 @@ describe('HomeComponent', () => {
     expect(element.querySelector('[role="alert"]')?.textContent).toContain(
       'neočekávaná chyba'
     );
+  });
+
+  it('opens the map through the lightbox while retaining the original link', async () => {
+    expectHomeRequest().flush(home);
+    await stabilizeFixture();
+
+    const mapLink = fixture.debugElement.query(By.css('a[href^="https://www.google.com/maps/"]'));
+    const event = new MouseEvent('click', { button: 0, cancelable: true });
+
+    expect(mapLink.nativeElement.getAttribute('href')).toBe(
+      'https://www.google.com/maps/search/Riegrova+376,+252+19+Rudná/'
+    );
+    mapLink.triggerEventHandler('click', event);
+
+    expect(lightbox.openMap).toHaveBeenCalledOnceWith(event);
   });
 
   function expectHomeRequest() {

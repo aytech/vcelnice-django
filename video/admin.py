@@ -16,16 +16,15 @@ class VideoAdmin(admin.ModelAdmin):
 
     @staticmethod
     def youtube(obj):
-        if obj.id is None:
-            return format_html('<strong>%s</strong>' % _('Not ready'))
         if obj.youtube_status == settings.YOUTUBE_STATUS_UPLOADED:
-            return format_html('<strong>%s</strong>' % _('Uploaded'))
+            return format_html('<strong>{}</strong>', _('Uploaded'))
         if obj.youtube_status == settings.YOUTUBE_STATUS_PENDING_UPDATE:
-            return format_html('<strong>%s</strong>' % _('Scheduled for update'))
+            return format_html('<strong>{}</strong>', _('Scheduled for update'))
         if obj.youtube_status == settings.YOUTUBE_STATUS_PENDING_UPLOAD:
-            return format_html('<strong>%s</strong>' % _('Scheduled for upload'))
+            return format_html('<strong>{}</strong>', _('Scheduled for upload'))
         if obj.youtube_status == settings.YOUTUBE_STATUS_PENDING_DELETE:
-            return format_html('<strong>%s</strong>' % _('Scheduled for deletion'))
+            return format_html('<strong>{}</strong>', _('Scheduled for deletion'))
+        return format_html('<strong>{}</strong>', _('Not ready'))
 
     def delete_model(self, request, obj):
         not_deleted = obj.youtube_status != settings.YOUTUBE_STATUS_DELETED

@@ -16,9 +16,7 @@
                 <!--suppress HtmlUnknownTarget -->
                 <a
                   class="thumbnail"
-                  data-fancybox="photo-gallery"
-                  [attr.data-caption]="photo.caption"
-                  [attr.data-thumb]="photo.thumb || '/assets/images/default.png'"
+                  (click)="lightbox.openPhotos($event, photos, $index)"
                   [href]="photo.image">
                   @if (!photo.thumb) {
                     <img
@@ -39,17 +37,6 @@
             </div>
           }
         </div>
-
-        @for (photo of photos.slice(previewLimit); track photo.id) {
-          <a
-            hidden
-            tabindex="-1"
-            aria-hidden="true"
-            data-fancybox="photo-gallery"
-            [attr.data-caption]="photo.caption"
-            [attr.data-thumb]="photo.thumb || '/assets/images/default.png'"
-            [href]="photo.image"></a>
-        }
       } @else {
         <div class="alert alert-danger text-center" role="alert">
           <strong>obrázky nenalezeny</strong>
