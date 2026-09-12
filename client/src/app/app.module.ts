@@ -32,7 +32,6 @@ import {
   RecipeService,
   VideoService
 } from '@services'
-import { FontAwesomeModule } from '@fortawesome/angular-fontawesome'
 
 @NgModule({ declarations: [
         AppComponent,
@@ -55,7 +54,7 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome'
     bootstrap: [
         AppComponent
     ],
-    exports: [PrivacyComponent], imports: [FontAwesomeModule,
+    exports: [PrivacyComponent], imports: [
         FormsModule,
         BrowserModule,
         AppRoutingModule,
