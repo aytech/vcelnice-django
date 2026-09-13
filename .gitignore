@@ -16,6 +16,10 @@ vcelnice/logs
 vcelnice/media
 vcelnice/static_root
 
+# Retired YouTube uploader credentials must not be reintroduced.
+video/management/commands/client_secret.json
+video/management/commands/youtube-oauth2.json
+
 # Virtual environments
 .venv
 

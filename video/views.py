@@ -7,11 +7,11 @@ from .models import Video
 
 
 def home(request):
-    videos = Video.objects.filter(youtube_status__gt=settings.YOUTUBE_STATUS_PENDING_UPLOAD)
+    videos = Video.objects.exclude(youtube_id__isnull=True).exclude(youtube_id="")
 
     for video in videos:
-        thumb_path = os.path.join(settings.MEDIA_ROOT, video.thumb.name)
-        if not os.path.exists(thumb_path):
+        thumb_path = os.path.join(settings.MEDIA_ROOT, video.thumb.name) if video.thumb else None
+        if not thumb_path or not os.path.isfile(thumb_path):
             video.thumb = settings.FALLBACK_IMAGES_NATURE_URL
         else:
             video.thumb = os.path.join(settings.MEDIA_URL, video.thumb.name)

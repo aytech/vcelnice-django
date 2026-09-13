@@ -11,10 +11,7 @@ class VideoSerializer(serializers.ModelSerializer):
             "description",
             "file",
             "thumb",
-            "category",
-            "tags",
             "created",
             "updated",
             "youtube_id",
-            "youtube_status",
         )

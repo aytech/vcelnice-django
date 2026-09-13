@@ -2,14 +2,13 @@ import os
 import tempfile
 from io import BytesIO
 
-from django.conf import settings
+from django.core.exceptions import ValidationError
 from django.core.files.uploadedfile import SimpleUploadedFile
 from django.test import TestCase
 from django.test.utils import override_settings
 from PIL import Image
 
 from video.models import Video
-from video.models import VideoCategory
 
 
 class VideoTestCase(TestCase):
@@ -17,9 +16,6 @@ class VideoTestCase(TestCase):
         self.media_root = tempfile.TemporaryDirectory()
         self.override = override_settings(MEDIA_ROOT=self.media_root.name)
         self.override.enable()
-
-        VideoCategory.objects.create(category_id="1", title="Category 1")
-        VideoCategory.objects.create(category_id="2", title="Category 2")
 
     def tearDown(self):
         self.override.disable()
@@ -40,39 +36,56 @@ class VideoTestCase(TestCase):
         data = {
             "caption": "Testing Video",
             "description": "Testing Video description",
-            "category": "1",
-            "tags": "vcelnice, vcelka, med",
+            "youtube_id": "qH6i5JsntCw",
             "file": self.make_video_file(),
             "thumb": self.make_thumb(),
         }
         data.update(overrides)
         return Video.objects.create(**data)
 
-    def test_video_created_defaults_to_pending_upload(self):
+    def test_optional_media_uploads_keep_existing_processing(self):
         video = self.create_video()
 
-        self.assertEqual(settings.YOUTUBE_STATUS_PENDING_UPLOAD, video.youtube_status)
+        self.assertEqual("qH6i5JsntCw", video.youtube_id)
         self.assertTrue(video.file.name.endswith(".wmv"))
         self.assertNotIn(" ", os.path.basename(video.file.name))
         self.assertTrue(video.thumb.name.endswith(".jpg"))
 
-    def test_uploaded_video_is_marked_for_update_on_save(self):
-        video = self.create_video(youtube_status=settings.YOUTUBE_STATUS_UPLOADED)
-
-        self.assertEqual(settings.YOUTUBE_STATUS_PENDING_UPDATE, video.youtube_status)
-
-    def test_delete_pending_upload_video_removes_record(self):
-        video = self.create_video()
-        video_id = video.id
-
-        video.delete()
-
-        self.assertFalse(Video.objects.filter(id=video_id).exists())
-
-    def test_delete_uploaded_video_marks_pending_delete(self):
-        video = self.create_video(youtube_status=settings.YOUTUBE_STATUS_UPLOADED)
-
-        video.delete()
-
+    def test_video_can_be_created_without_uploading_files(self):
+        video = Video(caption="Manual YouTube video", youtube_id="qH6i5JsntCw")
+        video.full_clean()
+        video.save()
         video.refresh_from_db()
-        self.assertEqual(settings.YOUTUBE_STATUS_PENDING_DELETE, video.youtube_status)
+
+        self.assertEqual("qH6i5JsntCw", video.youtube_id)
+        self.assertFalse(video.file)
+        self.assertFalse(video.thumb)
+
+    def test_metadata_update_keeps_manual_youtube_id(self):
+        video = self.create_video()
+        video.caption = "Updated caption"
+        video.save()
+        video.refresh_from_db()
+
+        self.assertEqual("Updated caption", video.caption)
+        self.assertEqual("qH6i5JsntCw", video.youtube_id)
+
+    def test_delete_video_removes_record_immediately(self):
+        for youtube_id in (None, "", "qH6i5JsntCw"):
+            with self.subTest(youtube_id=youtube_id):
+                video = self.create_video(youtube_id=youtube_id)
+                video_id = video.id
+                video.delete()
+                self.assertFalse(Video.objects.filter(id=video_id).exists())
+
+    def test_model_instantiation_no_longer_queries_categories(self):
+        with self.assertNumQueries(0):
+            Video(caption="No category lookup")
+
+    def test_youtube_id_validation_rejects_full_urls_and_malformed_ids(self):
+        for youtube_id in ("short", "https://youtu.be/qH6i5JsntCw", "qH6i5JsntCw?x=1", "qH6i5JsntCw\n"):
+            with self.subTest(youtube_id=youtube_id):
+                video = Video(caption="Invalid ID", youtube_id=youtube_id)
+                with self.assertRaises(ValidationError) as error:
+                    video.full_clean()
+                self.assertIn("youtube_id", error.exception.message_dict)
