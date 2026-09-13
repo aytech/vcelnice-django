@@ -1,32 +1,31 @@
 import os
 
 from django.core.files.uploadedfile import SimpleUploadedFile
-from django.conf import settings
+from django.core.validators import RegexValidator
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 
 from vcelnice.common.image import ImageUploader
-from vcelnice.common.translit import Translit
 
 
 class Video(models.Model):
     objects = models.Manager()
-    CATEGORY_CHOICES = []
 
     caption = models.CharField(max_length=100, null=False, blank=False, verbose_name=_("Caption"))
-    category = models.CharField(max_length=100, null=True, blank=True, choices=CATEGORY_CHOICES,
-                                verbose_name=_("Category"))
     created = models.DateTimeField(auto_now_add=True, auto_now=False)
     description = models.TextField(null=True, blank=True, verbose_name=_("Description"))
-    file = models.FileField(upload_to="youtube", max_length=150, null=False, blank=False, verbose_name=_("File"))
     id = models.BigAutoField(primary_key=True)
     thumb = models.ImageField(upload_to="video", max_length=150, null=True, blank=True, verbose_name=_("Thumbnail"))
-    tags = models.CharField(max_length=100, null=True, blank=True,
-                            help_text=_("Add tags to the video, separated by commas"),
-                            verbose_name=_("Tags"))
     updated = models.DateTimeField(auto_now_add=False, auto_now=True)
-    youtube_id = models.CharField(max_length=150, null=True, blank=True)
-    youtube_status = models.IntegerField(default=settings.YOUTUBE_STATUS_PENDING_UPLOAD, null=True, blank=True)
+    youtube_id = models.CharField(
+        max_length=150, null=True, blank=True, verbose_name=_("YouTube video ID"),
+        help_text=_("Upload the video to YouTube manually and enter its 11-character ID, not the full URL. "
+                    "Leave blank to hide the video from the website."),
+        validators=[RegexValidator(
+            regex=r"\A[a-zA-Z0-9_-]{11}\Z",
+            message=_("Enter a valid 11-character YouTube video ID."),
+        )],
+    )
 
     def save(self, *args, **kwargs):
         if self.thumb:
@@ -44,34 +43,7 @@ class Video(models.Model):
                     image_field,
                     save=False,
                 )
-        self.file.name = Translit.translit(self.file.name)
-
-        if self.youtube_status > settings.YOUTUBE_STATUS_PENDING_UPLOAD:
-            self.youtube_status = settings.YOUTUBE_STATUS_PENDING_UPDATE
-
         super(Video, self).save(*args, **kwargs)
-
-    def save_upload_status(self, status):
-        self.youtube_status = status
-        super(Video, self).save()
-
-    def delete(self, using=None, keep_parents=False):
-        deleted = self.youtube_status == settings.YOUTUBE_STATUS_DELETED
-        not_uploaded = self.youtube_status == settings.YOUTUBE_STATUS_PENDING_UPLOAD
-        if deleted or not_uploaded:
-            super(Video, self).delete(using, keep_parents)
-        else:
-            self.youtube_status = settings.YOUTUBE_STATUS_PENDING_DELETE
-            super(Video, self).save()
-
-    def get_categories(self):
-        # noinspection PyUnresolvedReferences
-        for category in VideoCategory.objects.all():
-            self.CATEGORY_CHOICES.append((category.category_id, category.title))
-
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        self.get_categories()
 
     def __str__(self):
         return self.caption
@@ -79,9 +51,3 @@ class Video(models.Model):
     class Meta:
         verbose_name = _("Video")
         verbose_name_plural = _("Videos")
-
-
-class VideoCategory(models.Model):
-    category_id = models.CharField(max_length=10, null=False, blank=False)
-    id = models.BigAutoField(primary_key=True)
-    title = models.CharField(max_length=100, null=True, blank=True)

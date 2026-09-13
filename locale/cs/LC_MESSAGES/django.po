@@ -278,55 +278,22 @@ msgstr "Rezervovat"
 msgid "Video"
 msgstr "Video"
 
-#: video/admin.py:19
-msgid "Not ready"
-msgstr "Není připraveno"
-
-#: video/admin.py:21
-msgid "Uploaded"
-msgstr "Nahráno"
-
-#: video/admin.py:23
-msgid "Scheduled for update"
-msgstr "Ve frontě na aktualizaci"
-
-#: video/admin.py:25
-msgid "Scheduled for upload"
-msgstr "Ve frontě na nahrání"
-
-#: video/admin.py:27
-msgid "Scheduled for deletion"
-msgstr "Ve frontě na vymazání"
-
-#: video/admin.py:35
-msgid "Video deletion has been scheduled"
-msgstr "Video přidáno do fronty na vymazání"
-
-#: video/admin.py:43
-msgid ""
-"Only metadata will be updated on Youtube. To update video, remove and "
-"recreate the item"
-msgstr ""
-"Na Youtube budou aktualizovány pouze metadata. Pro nahrání nového videa je "
-"nutné vytvořit novou položku."
-
 #: video/apps.py:7 video/models.py:67
 msgid "Videos"
 msgstr "Videa"
 
-#: video/forms.py:19
-msgid "Invalid file, allowed files must have one of these extensions: "
+#: video/models.py
+msgid "YouTube video ID"
+msgstr "ID videa na YouTube"
+
+#: video/models.py
+msgid ""
+"Upload the video to YouTube manually and enter its 11-character ID, not the full URL. "
+"Leave blank to hide the video from the website."
 msgstr ""
-"Neplatný soubor, povoleny soubory musí mít jednu z následujících přípon: "
+"Video nahrajte na YouTube ručně a zadejte jeho 11znakové ID, nikoli celou adresu URL. "
+"Pokud pole ponecháte prázdné, video se na webu nezobrazí."
 
-#: video/models.py:14
-msgid "Category"
-msgstr "Kategorie"
-
-#: video/models.py:21
-msgid "Add tags to the video, separated by commas"
-msgstr "Tagy pro video, více tagů oddělit čárkami"
-
-#: video/models.py:22
-msgid "Tags"
-msgstr "Tagy"
+#: video/models.py
+msgid "Enter a valid 11-character YouTube video ID."
+msgstr "Zadejte platné 11znakové ID videa na YouTube."

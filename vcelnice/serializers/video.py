@@ -9,12 +9,8 @@ class VideoSerializer(serializers.ModelSerializer):
         fields = (
             "caption",
             "description",
-            "file",
             "thumb",
-            "category",
-            "tags",
             "created",
             "updated",
             "youtube_id",
-            "youtube_status",
         )
