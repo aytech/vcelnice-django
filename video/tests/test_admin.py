@@ -38,8 +38,10 @@ class VideoAdminTests(TestCase):
                 fields = response.context["adminform"].form.fields
                 self.assertIn("youtube_id", fields)
                 self.assertTrue(fields["youtube_id"].help_text)
+                self.assertNotContains(response, 'name="file"')
+                self.assertContains(response, 'name="thumb"')
                 self.assertTrue(
-                    {"category", "tags", "youtube_status", "youtube"}.isdisjoint(fields)
+                    {"file", "category", "tags", "youtube_status", "youtube"}.isdisjoint(fields)
                 )
 
     def test_add_video_with_manually_entered_youtube_id(self):

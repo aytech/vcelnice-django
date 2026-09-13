@@ -1,4 +1,3 @@
-import os
 import tempfile
 from io import BytesIO
 
@@ -28,27 +27,20 @@ class VideoTestCase(TestCase):
         image.save(buffer, format="JPEG")
         return SimpleUploadedFile(name, buffer.getvalue(), content_type="image/jpeg")
 
-    @staticmethod
-    def make_video_file(name="test video.wmv"):
-        return SimpleUploadedFile(name, b"video-bytes", content_type="video/x-ms-wmv")
-
     def create_video(self, **overrides):
         data = {
             "caption": "Testing Video",
             "description": "Testing Video description",
             "youtube_id": "qH6i5JsntCw",
-            "file": self.make_video_file(),
             "thumb": self.make_thumb(),
         }
         data.update(overrides)
         return Video.objects.create(**data)
 
-    def test_optional_media_uploads_keep_existing_processing(self):
+    def test_optional_thumbnail_keeps_existing_processing(self):
         video = self.create_video()
 
         self.assertEqual("qH6i5JsntCw", video.youtube_id)
-        self.assertTrue(video.file.name.endswith(".wmv"))
-        self.assertNotIn(" ", os.path.basename(video.file.name))
         self.assertTrue(video.thumb.name.endswith(".jpg"))
 
     def test_video_can_be_created_without_uploading_files(self):
@@ -58,7 +50,7 @@ class VideoTestCase(TestCase):
         video.refresh_from_db()
 
         self.assertEqual("qH6i5JsntCw", video.youtube_id)
-        self.assertFalse(video.file)
+        self.assertNotIn("file", {field.name for field in Video._meta.fields})
         self.assertFalse(video.thumb)
 
     def test_metadata_update_keeps_manual_youtube_id(self):

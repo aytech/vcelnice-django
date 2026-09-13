@@ -6,7 +6,6 @@ from django.db import models
 from django.utils.translation import gettext_lazy as _
 
 from vcelnice.common.image import ImageUploader
-from vcelnice.common.translit import Translit
 
 
 class Video(models.Model):
@@ -15,7 +14,6 @@ class Video(models.Model):
     caption = models.CharField(max_length=100, null=False, blank=False, verbose_name=_("Caption"))
     created = models.DateTimeField(auto_now_add=True, auto_now=False)
     description = models.TextField(null=True, blank=True, verbose_name=_("Description"))
-    file = models.FileField(upload_to="youtube", max_length=150, blank=True, verbose_name=_("File"))
     id = models.BigAutoField(primary_key=True)
     thumb = models.ImageField(upload_to="video", max_length=150, null=True, blank=True, verbose_name=_("Thumbnail"))
     updated = models.DateTimeField(auto_now_add=False, auto_now=True)
@@ -45,9 +43,6 @@ class Video(models.Model):
                     image_field,
                     save=False,
                 )
-        if self.file:
-            self.file.name = Translit.translit(self.file.name)
-
         super(Video, self).save(*args, **kwargs)
 
     def __str__(self):

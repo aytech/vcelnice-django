@@ -42,7 +42,7 @@ class VideoApiTests(TestCase):
                 {"caption", "description", "thumb", "created", "updated", "youtube_id"}
                 .issubset(video)
             )
-            self.assertTrue({"category", "tags", "youtube_status"}.isdisjoint(video))
+            self.assertTrue({"file", "category", "tags", "youtube_status"}.isdisjoint(video))
 
     def test_no_published_videos_returns_an_empty_list(self):
         Video.objects.create(caption="Draft video", youtube_id="")

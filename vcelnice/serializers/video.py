@@ -9,7 +9,6 @@ class VideoSerializer(serializers.ModelSerializer):
         fields = (
             "caption",
             "description",
-            "file",
             "thumb",
             "created",
             "updated",

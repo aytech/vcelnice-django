@@ -282,11 +282,6 @@ msgstr "Video"
 msgid "Videos"
 msgstr "Videa"
 
-#: video/forms.py:19
-msgid "Invalid file, allowed files must have one of these extensions: "
-msgstr ""
-"Neplatný soubor, povoleny soubory musí mít jednu z následujících přípon: "
-
 #: video/models.py
 msgid "YouTube video ID"
 msgstr "ID videa na YouTube"

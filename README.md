@@ -106,16 +106,16 @@ Deploying to PythonAnywhere:
 Upload videos through YouTube directly, then add a Video in Django admin with its
 caption, optional description/thumbnail and the 11-character **YouTube video ID**
 (for example, `qH6i5JsntCw`, not a full URL). Leave the ID blank to keep the record
-off the website. The original video file is an optional local attachment; it is
-never uploaded to YouTube by Django. Existing media paths are preserved.
+off the website. There is no original video-file upload control or field; playback
+uses only the YouTube ID. An optional thumbnail can still be uploaded.
 
 Saving or deleting a Video now changes only the local record. It never updates or
 deletes anything on YouTube. Manage the actual YouTube video manually. Django's
 normal deletion does not remove the original media files from storage.
 
 The public `/api/v1/videos/` endpoint still supplies `youtube_id`, `caption`,
-`description` and `thumb` for the current Angular player. The removed `category`,
-`tags` and `youtube_status` fields are no longer returned; there are no changes to
+`description` and `thumb` for the current Angular player. The removed `file`,
+`category`, `tags` and `youtube_status` fields are no longer returned; there are no changes to
 the Angular player or the production referrer policy.
 
 ### Deploying the upload-workflow removal
@@ -133,6 +133,11 @@ the Angular player or the production referrer policy.
    if it finds them, before removing any fields. After review, clear their ID to
    keep them hidden, or set the old status to uploaded (2) only if they should be
    public. The migration never clears IDs or publishes such drafts automatically.
+   The following migration, `video.0005_remove_video_file`, drops the original
+   file-path column. It preserves Video records, YouTube IDs, thumbnails and
+   timestamps, and does not delete any existing media files from storage. Back
+   up the database if you need to retain the old file-to-video associations;
+   reversing this migration cannot recover those paths.
 3. Deploy the updated code and dependencies, apply the migration, then reload
    Django. Do not serve the old code against the new schema. Using the appropriate
    environment settings, run:
@@ -153,6 +158,8 @@ the Angular player or the production referrer policy.
 5. Check Video admin add/edit/list/delete and `/api/v1/videos/`, then verify video
    playback in the UI. The Google API/HTTP dependencies used by Gmail remain;
    only the uploader-specific `google-auth-oauthlib` requirement was removed.
+   Removing the original-file field also removes the unused filename-normalization
+   helper and its `transliterate` dependency.
 
 The retired YouTube credential files were tracked in Git. Removing them from the
 current tree does not erase history or revoke access. Revoke the obsolete YouTube
