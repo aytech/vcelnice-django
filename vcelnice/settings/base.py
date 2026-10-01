@@ -37,7 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     # Third party
-    'django_wysiwyg',
+    'django_ckeditor_5',
     'rest_framework',
 
     # My apps
@@ -196,3 +196,29 @@ FALLBACK_IMAGES_NATURE_URL = 'http://lorempixel.com/200/200/nature'
 ADMIN_EMAIL_ADDRESS = 'Oleg Yapparov <oyapparov@gmail.com>'
 SENDER_EMAIL_ADDRESS = 'vcelnicerudna@gmail.com'
 SENDER_EMAIL_NAME = 'Včelnice Rudná'
+
+CKEDITOR_5_CONFIGS = {
+    "extends": {
+        "language": "cs",
+        "toolbar": [
+            "undo", "redo",
+            "|",
+            "bold", "italic", "underline",
+            "|",
+            "link",
+            "|",
+            "bulletedList", "numberedList",
+            "|",
+            "outdent", "indent",
+            "|",
+            "blockQuote",
+            "|",
+            "insertTable",
+            "|",
+            "alignment",
+            "|",
+            "removeFormat",
+        ],
+    },
+}
+CKEDITOR_5_FILE_UPLOAD_PERMISSION = "staff"

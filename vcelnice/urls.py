@@ -19,6 +19,7 @@ urlpatterns = [
 
     # Admin section
     path("admin/", admin.site.urls),
+    path("ckeditor5/", include("django_ckeditor_5.urls")),
 
     # API routes
     path("api/v1/", include("vcelnice.api_urls")),

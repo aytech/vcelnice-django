@@ -33,7 +33,7 @@ longer required. The Angular framework and CLI versions are unchanged by this
 builder migration.
 
 `outputPath` deliberately uses `{ "base": "dist", "browser": "" }`: Django's
-static-file settings and the root `build.sh` expect `dist/index.html` and bundles
+static-file settings and the docker build script expect `dist/index.html` and bundles
 directly in `dist`, not `dist/browser`. The packaging script rewrites the HTML's
 bundle and preload links to `/assets/`. Lazy JavaScript chunks resolve relative
 to those bundles, and generated font resources are stored in `dist/media`.
