@@ -7,7 +7,6 @@
 
     @if (pricesResource.hasValue()) {
       @let prices = pricesResource.value();
-
       @if (prices.length) {
         <div class="price-grid">
           @for (price of prices; track price.id) {

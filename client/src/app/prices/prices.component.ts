@@ -26,6 +26,9 @@ export class PricesComponent {
   readonly pricesResource = rxResource({
     stream: () => this.priceService.getPrices()
   })
+  readonly prices = this.priceService.getPrices().subscribe(response => {
+    console.log(response);
+  });
 
   openReservationForm(price: Price): void {
     const modalRef = this.modalService.open(ReservationModalComponent)
