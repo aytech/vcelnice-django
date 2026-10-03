@@ -13,10 +13,6 @@ https://docs.djangoproject.com/en/1.9/ref/settings/
 from time import strftime
 import os
 
-from vcelnice.settings_loader import load_project_env
-
-load_project_env()
-
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 APP_DIR = os.path.dirname(os.path.dirname(os.path.dirname(__file__)))

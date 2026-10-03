@@ -11,8 +11,6 @@ import os
 
 from django.core.wsgi import get_wsgi_application
 
-from vcelnice.settings_loader import DEFAULT_SERVER_SETTINGS_MODULE
-
-os.environ.setdefault("DJANGO_SETTINGS_MODULE", DEFAULT_SERVER_SETTINGS_MODULE)
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", "vcelnice.settings.production")
 
 application = get_wsgi_application()
