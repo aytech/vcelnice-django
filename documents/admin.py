@@ -1,6 +1,6 @@
 from django.contrib import admin
 from .forms import DocumentForm
-from .models import Document
+from .models import Certificate
 
 
 class DocumentAdmin(admin.ModelAdmin):
@@ -8,4 +8,4 @@ class DocumentAdmin(admin.ModelAdmin):
     list_display = ['description', 'file', 'type']
 
 
-admin.site.register(Document, DocumentAdmin)
+admin.site.register(Certificate, DocumentAdmin)

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core'
 import { HttpClient } from '@angular/common/http'
-import { Observable } from 'rxjs'
+import { map, Observable } from 'rxjs'
 import { ApiConstants } from '@config'
 import { Video } from '@interfaces'
 
@@ -14,6 +14,8 @@ export class VideoService {
   }
 
   getVideos(): Observable<Array<Video>> {
-    return this.http.get<Video[]>(ApiConstants.GET_VIDEOS);
+    return this.http
+      .get<{videos: Video[]}>(ApiConstants.GET_VIDEOS)
+      .pipe(map(response => response.videos))
   }
 }

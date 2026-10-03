@@ -1,9 +1,43 @@
-from django.shortcuts import render
-from .models import Document
+from rest_framework.permissions import AllowAny
+from rest_framework.response import Response
+from rest_framework.reverse import reverse
+from rest_framework.views import APIView
+
+from .models import Certificate
+from .serializers import CertificateSerializer
 
 
-def home(request):
-    context = {
-        'docs': Document.objects.all()
-    }
-    return render(request, 'documents.html', context)
+class PublicReadOnlyAPIView(APIView):
+    """
+    Base class for endpoints that intentionally expose public read-only data.
+    """
+    authentication_classes = []
+    permission_classes = [AllowAny]
+    http_method_names = ["get", "head", "options"]
+
+    def finalize_response(self, request, response, *args, **kwargs):
+        response = super().finalize_response(request, response, *args, **kwargs)
+
+        # Availability can change through Django Admin, so browsers
+        # and proxies should not retain a stale response
+        response["Cache-Control"] = "no-store"
+        return response
+
+
+class CertificatesAPIRootView(PublicReadOnlyAPIView):
+    @staticmethod
+    def get(request):
+        return Response({
+            "certificates": reverse(
+                "certificates-api:certificates-list",
+                request=request,
+            )
+        })
+
+
+class CertificatesAPIListView(PublicReadOnlyAPIView):
+    @staticmethod
+    def get(_):
+        certificates = Certificate.objects.all()
+        serializer = CertificateSerializer(certificates, many=True)
+        return Response({"certificates": serializer.data})

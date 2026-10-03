@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core'
 import { HttpClient } from '@angular/common/http'
-import { Observable } from 'rxjs'
+import { map, Observable } from 'rxjs'
 import { ApiConstants } from '@config'
 import { Photo } from '@interfaces'
 
@@ -13,6 +13,8 @@ export class PhotoService {
   }
 
   getPhotos(): Observable<Array<Photo>> {
-    return this.http.get<Photo[]>(ApiConstants.GET_PHOTOS);
+    return this.http
+      .get<{photos: Photo[]}>(ApiConstants.GET_PHOTOS)
+      .pipe(map(response => response.photos))
   }
 }

@@ -1,22 +1,11 @@
-from rest_framework import status
-from rest_framework.decorators import api_view
 from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 from rest_framework.reverse import reverse
 from rest_framework.views import APIView
 
-from contact.models import ContactAddress
 from .serializers import PricesSerializer
 from .models import Price
 
-
-# @api_view(["GET"])
-# def location_list(request):
-#     if request.method == "GET":
-#         locations = ContactAddress.objects.all()
-#         serializer = ContactAddressSerializer(locations, many=True)
-#         return Response(serializer.data, status=status.HTTP_200_OK)
-#     return Response(None, status=status.HTTP_400_BAD_REQUEST)
 
 class PublicReadOnlyAPIView(APIView):
     """
