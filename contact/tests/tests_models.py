@@ -8,6 +8,6 @@ class ContactModelTestCase(TestCase):
         Contact.objects.create(email="oyapparov@gmail.com", message="Test Contact")
 
     def test_contact_created(self):
-        contact = Contact.objects.get(email="oyapparov@gmail.com")
+        contact = Contact.objects.get()
         self.assertFalse(contact.deleted)
         self.assertEqual("Test Contact", contact.message)

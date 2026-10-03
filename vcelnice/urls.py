@@ -22,7 +22,8 @@ urlpatterns = [
     path("ckeditor5/", include("django_ckeditor_5.urls")),
 
     # API routes
-    path("api/v1/", include("vcelnice.api_urls")),
+    path("api/v1/home/", include("home.urls")),
+    # path("api/v1/", include("vcelnice.api_urls")),
     # path("api/v1/", include("prices.urls")),
 
     # Media

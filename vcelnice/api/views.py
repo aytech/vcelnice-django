@@ -1,4 +1,3 @@
-from django.core.exceptions import ObjectDoesNotExist
 from django.middleware.csrf import get_token
 from django.utils.translation import activate, gettext_lazy as _, deactivate
 from rest_framework import status
@@ -6,38 +5,20 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 
 from documents.models import Document
-from home.models import Home
 from news.models import Article
 from photo.models import Photo
 from prices.models import Price
 from recipe.models import Recipe
-from vcelnice.common.email import Email, EmailException
 
 from vcelnice.serializers import (
     CertificateSerializer,
-    ContactSerializer,
-    HomeSerializer,
     NewsSerializer,
     PhotoSerializer,
     PriceSerializer,
     RecipeSerializer,
-    ReservationSerializer,
     VideoSerializer,
 )
 from video.models import Video
-
-
-@api_view(["GET"])
-def home_text(request):
-    default_response = Response(HomeSerializer(Home(), many=False).data)
-    if request.method != "GET":
-        return default_response
-    try:
-        text = Home.objects.get()
-        serializer = HomeSerializer(text, many=False)
-        return Response(serializer.data)
-    except ObjectDoesNotExist:
-        return default_response
 
 
 @api_view(["GET"])
@@ -100,36 +81,6 @@ def video_list(request):
 def csrf_token(request):
     if request.method == "GET":
         return Response(get_token(request))
-    return Response(None, status=status.HTTP_400_BAD_REQUEST)
-
-
-@api_view(["POST"])
-def reserve(request):
-    if request.method == "POST":
-        serializer = ReservationSerializer(data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-            Email().send_reservation_email(serializer)
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-    return Response(None, status=status.HTTP_400_BAD_REQUEST)
-
-
-@api_view(["POST"])
-def contact(request):
-    if request.method == "POST":
-        serializer = ContactSerializer(data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-            try:
-                Email().send_contact_email(serializer)
-            except EmailException:
-                return Response(
-                    _("Failed to send email"),
-                    status=status.HTTP_500_INTERNAL_SERVER_ERROR,
-                )
-            return Response(serializer.data, status=status.HTTP_200_OK)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     return Response(None, status=status.HTTP_400_BAD_REQUEST)
 
 

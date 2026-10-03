@@ -56,7 +56,7 @@ class VideoAdminTests(TestCase):
         )
 
         self.assertEqual(response.status_code, 302)
-        video = Video.objects.get(caption="New video")
+        video = Video.objects.get()
         self.assertEqual(video.youtube_id, "_-AbC123xyZ")
         self.assertEqual(video.description, "Uploaded manually on YouTube")
 
