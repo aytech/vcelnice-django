@@ -4,7 +4,6 @@ import { RouterModule } from '@angular/router';
 import { PageNotFoundComponent } from './page-not-found.component';
 
 describe('PageNotFoundComponent', () => {
-  let component: PageNotFoundComponent;
   let fixture: ComponentFixture<PageNotFoundComponent>;
 
   beforeEach(waitForAsync(() => {
@@ -17,12 +16,7 @@ describe('PageNotFoundComponent', () => {
 
   beforeEach(() => {
     fixture = TestBed.createComponent(PageNotFoundComponent);
-    component = fixture.componentInstance;
     fixture.detectChanges();
-  });
-
-  it('should create', () => {
-    expect(component).toBeTruthy();
   });
 
   it('fills the available page with an accessible image-backed error view', () => {
@@ -33,7 +27,7 @@ describe('PageNotFoundComponent', () => {
 
     expect(section?.getAttribute('aria-labelledby')).toBe('not-found-title');
     expect(heading?.id).toBe('not-found-title');
-    expect(image?.getAttribute('src')).toBe('/assets/error.jpg');
+    expect(image?.getAttribute('src')).toBe('/static/client/assets/error.jpg');
     expect(image?.getAttribute('alt')).toBe('');
     expect(getComputedStyle(image!).objectFit).toBe('cover');
     expect(element.querySelector('video')).toBeNull();

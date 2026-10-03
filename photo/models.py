@@ -1,7 +1,7 @@
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 
-from vcelnice.common.image import ImageUploader
+from common.images import ImageUploader
 from django.core.files.uploadedfile import SimpleUploadedFile
 import os
 
@@ -43,7 +43,12 @@ class Photo(models.Model):
                                 save=False)
                 self.width = self.image.width
                 self.height = self.image.height
-        super(Photo, self).save(force_insert, force_update, using, update_fields)
+        super(Photo, self).save(
+            force_insert=force_insert,
+            force_update=force_update,
+            using=using,
+            update_fields=update_fields,
+        )
 
     def delete(self, using=None, keep_parents=False):
         ImageUploader.clean_image(image_path=self.thumb.__str__())

@@ -1,7 +1,7 @@
 from django.core.files.uploadedfile import SimpleUploadedFile
 from django.db import models
 from django.utils.translation import gettext_lazy as _
-from vcelnice.common.image import ImageUploader
+from common.images import ImageUploader
 import os
 
 
@@ -30,7 +30,12 @@ class Recipe(models.Model):
                 # noinspection PyUnresolvedReferences
                 self.thumb.save("%s.%s" % (os.path.splitext(self.thumb.name)[0], "jpg"), image_field, save=False)
 
-        super(Recipe, self).save(force_insert, force_update, using, update_fields)
+        super(Recipe, self).save(
+            force_insert=force_insert,
+            force_update=force_update,
+            using=using,
+            update_fields=update_fields,
+        )
 
     def __str__(self):
         return self.title

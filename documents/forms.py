@@ -1,11 +1,11 @@
 from django import forms
-from .models import Document
+from .models import Certificate
 import os
 
 
 class DocumentForm(forms.ModelForm):
     class Meta:
-        model = Document
+        model = Certificate
         fields = ['description', 'file']
 
     def clean_file(self):

@@ -1,20 +1,29 @@
 .idea
+.oca
 **/migrations/__pycache__
 **/migrations/*.pyc
 **/*__pycache__
 **/*.sqlite3
 
 Client files
+client/coverage
+.coverage
+htmlcov/
 **/*node_modules
 **/*dist
 **/*.angular
 
 # Django generated translations
 **/*.mo
+
 vcelnice/common/.credentials
-vcelnice/logs
-vcelnice/media
+logs
+media
 vcelnice/static_root
+logs/
+media/
+staticfiles/
+vcelnice.zip
 
 # Retired YouTube uploader credentials must not be reintroduced.
 video/management/commands/client_secret.json

@@ -20,8 +20,8 @@ services:
       - sh
       - -c
       - |
-        python -m pip install --disable-pip-version-check -r requirements.txt
-        exec python manage.py runserver 0.0.0.0:8888 --settings=vcelnice.settings.development
+        python -m pip install --disable-pip-version-check -r requirements-dev.txt
+        exec python manage.py runserver 0.0.0.0:8888 --settings=config.settings.development
 
     ports:
       - "127.0.0.1:8888:8888"

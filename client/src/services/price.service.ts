@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core'
 import { HttpClient, HttpHeaders } from '@angular/common/http'
-import { Observable } from 'rxjs'
+import { map, Observable } from 'rxjs'
 import { ApiConstants } from '@config'
 import { Location, Price } from '@interfaces'
 
@@ -13,8 +13,10 @@ export class PriceService {
   ) {
   }
 
-  getPrices(): Observable<Array<Price>> {
-    return this.http.get<Array<Price>>(ApiConstants.GET_PRICES)
+  getPrices(): Observable<Price[]> {
+    return this.http
+      .get<{prices: Price[]}>(ApiConstants.GET_PRICES)
+      .pipe(map(response => response.prices))
   }
 
   getLocations(): Observable<Array<Location>> {

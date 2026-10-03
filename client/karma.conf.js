@@ -17,7 +17,7 @@ module.exports = function (config) {
     coverageReporter: {
       dir: require('path').join(__dirname, 'coverage'),
       subdir: '.',
-      reporters: [{ type: 'html' }, { type: 'lcovonly' }]
+      reporters: [{ type: 'html' }, { type: 'lcovonly' }, { type: 'text-summary' }]
     },
     // Global CSS is served under /base; emitted fonts use the builder's /media path.
     proxies: {

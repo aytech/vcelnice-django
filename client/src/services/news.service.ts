@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http'
 import { Injectable } from '@angular/core'
-import { Observable } from 'rxjs'
+import { map, Observable, pipe } from 'rxjs'
 import { ApiConstants } from '@config'
 import { Article } from '@interfaces'
 
@@ -12,6 +12,8 @@ export class NewsService {
   }
 
   getNews(): Observable<Array<Article>> {
-    return this.http.get<Article[]>(ApiConstants.GET_NEWS);
+    return this.http
+      .get<{news: Article[]}>(ApiConstants.GET_NEWS)
+      .pipe(map(response => response.news))
   }
 }

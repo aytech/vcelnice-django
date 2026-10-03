@@ -1,7 +1,7 @@
 from django.core.files.uploadedfile import SimpleUploadedFile
 from django.db import models
 from django.utils.translation import gettext_lazy as _
-from vcelnice.common.image import ImageUploader
+from common.images import ImageUploader
 import os
 
 

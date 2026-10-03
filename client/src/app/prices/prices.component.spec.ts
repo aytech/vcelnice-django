@@ -110,6 +110,18 @@ describe('PricesComponent', () => {
 
     expect(reservation.title()).toBe('Květový med')
     expect(reservation.amountDescription()).toBe('')
+
+    fixture.componentInstance.openReservationForm({
+      amount_description: null as unknown as string,
+      id: 1,
+      image: '/media/honey.jpg',
+      in_store: 10,
+      price: '250',
+      title: 'Květový med',
+      weight: '950 g'
+    })
+
+    expect(reservation.amountDescription()).toBe(cultures.amount_description)
   })
 
   it('uses the Bootstrap 5 close button and preserves reservation dismissal', () => {

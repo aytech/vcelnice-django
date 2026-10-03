@@ -2,10 +2,8 @@
 import os
 import sys
 
-from vcelnice.settings_loader import DEFAULT_MANAGE_SETTINGS_MODULE
-
 if __name__ == "__main__":
-    os.environ.setdefault("DJANGO_SETTINGS_MODULE", DEFAULT_MANAGE_SETTINGS_MODULE)
+    os.environ.setdefault("DJANGO_SETTINGS_MODULE", "config.settings.development")
 
     from django.core.management import execute_from_command_line
 

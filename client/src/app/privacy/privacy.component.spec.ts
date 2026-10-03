@@ -81,4 +81,14 @@ describe('PrivacyComponent as a modal', () => {
     expect(activeModal.dismiss).toHaveBeenCalledOnceWith('Cross click')
     expect(activeModal.close).toHaveBeenCalledOnceWith('Close click')
   })
+
+  it('closes the modal before navigating to the contact section', () => {
+    const link = fixture.nativeElement.querySelector(
+      'a[fragment="kontakt"]'
+    ) as HTMLAnchorElement
+
+    link.click()
+
+    expect(activeModal.close).toHaveBeenCalledOnceWith('Contact link')
+  })
 })

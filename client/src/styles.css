@@ -74,7 +74,7 @@ html {
 }
 
 body {
-  background: url('/assets/images/pozadi.jpg') repeat-x #090a0c;
+  background: url('/static/client/assets/images/pozadi.jpg') repeat-x #090a0c;
   margin: 4rem 0 0;
   padding-bottom: 0;
 }

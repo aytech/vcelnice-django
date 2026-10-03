@@ -192,7 +192,7 @@ export class LightboxService {
       const title = image.closest('.gslide')?.querySelector('.gslide-title')
       if (title) title.textContent = `${title.textContent} — ${message}`
       // A bundled placeholder allows GLightbox to finish its normal loading lifecycle.
-      image.src = '/assets/images/default.png'
+      image.src = '/static/client/assets/images/default.png'
     }
     dialog.addEventListener('error', onImageError, true)
     this.release = (restoreFocus = true) => {

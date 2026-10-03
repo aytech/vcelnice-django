@@ -1,14 +1,20 @@
-import { ApplicationRef } from '@angular/core'
+import { ApplicationRef, Component } from '@angular/core'
 import { provideHttpClient } from '@angular/common/http'
 import {
   HttpTestingController,
   provideHttpClientTesting
 } from '@angular/common/http/testing'
 import { ComponentFixture, TestBed } from '@angular/core/testing'
-import { RouterModule } from '@angular/router'
+import { Router, RouterModule } from '@angular/router'
 import { ApiConstants } from '@config'
 import { LanguageService } from '@services'
 import { NavbarComponent } from './navbar.component'
+
+@Component({
+  template: '',
+  standalone: false
+})
+class TestRouteComponent {}
 
 describe('NavbarComponent', () => {
   let fixture: ComponentFixture<NavbarComponent>
@@ -17,8 +23,10 @@ describe('NavbarComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [NavbarComponent],
-      imports: [RouterModule.forRoot([])],
+      declarations: [NavbarComponent, TestRouteComponent],
+      imports: [RouterModule.forRoot([
+        { path: '**', component: TestRouteComponent }
+      ])],
       providers: [
         LanguageService,
         provideHttpClient(),
@@ -90,6 +98,36 @@ describe('NavbarComponent', () => {
       expect(styles.transitionProperty).toBe('none')
       expect(styles.transitionDuration).toBe('0s')
     })
+  })
+
+  it('closes an open mobile menu after navigation completes', async () => {
+    const element: HTMLElement = fixture.nativeElement
+    const toggle = element.querySelector('.navbar-toggler') as HTMLButtonElement
+    const menu = element.querySelector('.navbar-collapse') as HTMLElement
+    const click = spyOn(toggle, 'click')
+    Object.defineProperty(menu, 'offsetParent', {
+      configurable: true,
+      value: document.body
+    })
+
+    await TestBed.inject(Router).navigateByUrl('/destination')
+
+    expect(click).toHaveBeenCalledTimes(1)
+  })
+
+  it('leaves a closed mobile menu unchanged after navigation', async () => {
+    const element: HTMLElement = fixture.nativeElement
+    const toggle = element.querySelector('.navbar-toggler') as HTMLButtonElement
+    const menu = element.querySelector('.navbar-collapse') as HTMLElement
+    const click = spyOn(toggle, 'click')
+    Object.defineProperty(menu, 'offsetParent', {
+      configurable: true,
+      value: null
+    })
+
+    await TestBed.inject(Router).navigateByUrl('/destination')
+
+    expect(click).not.toHaveBeenCalled()
   })
 
   function navLabels(): string[] {

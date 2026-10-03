@@ -19,11 +19,11 @@ Run:
 
 3. Switch to the project directory, install dependencies:
     
-    `pip install -r requirements.txt`
+    `pip install -r requirements-dev.txt`
     
 4. Create folder for logs:
 
-    `mkdir -m 777 <project folder>/vcelnice/logs`
+    `mkdir -m 777 <project folder>/logs`
     
 5. Create administrator:
 
@@ -35,13 +35,35 @@ Run:
     
 7. Run server:
 
-    `python manage.py runserver 0.0.0.0:8888 --settings=vcelnice.settings.development`
+    `python manage.py runserver 0.0.0.0:8888 --settings=config.settings.development`
+
+Tests:
+
+1. Run Django tests with coverage:
+
+   `python -m pip install -r requirements-dev.txt`
+
+   `python -m coverage erase`
+
+   `python -m coverage run manage.py test --settings=config.settings.testing`
+
+   `python -m coverage report`
+
+   `python -m coverage html`
+
+2. Generate the Django HTML coverage report:
+
+    `coverage html`
+
+3. Run Angular tests with coverage from `client/`:
+
+    `npm run test:coverage`
     
 Client:
 
 1. Install Node.js:
 
-    `curl -sL https://deb.nodesource.com/setup_12.x | sudo -E bash -`
+    `curl -sL https://deb.nodesource.com/setup_24.x | sudo -E bash -`
     
     `sudo apt-get install -y nodejs`
 
@@ -81,6 +103,12 @@ Localizing:
 
     `django-admin makemessages -a` or `django-admin makemessages -l cs --ignore={node_modules,dist,static_root}`
     
+   In case gettext tools are missing:
+
+   `apt update`
+
+   `apt install -y gettext`
+
 4. After all strings are translated, compile:
 
     `django-admin compilemessages`
@@ -99,7 +127,10 @@ Deploying to PythonAnywhere:
 
    `unzip -o vcelnice.zip`
 
-4. Reload the app, if necessary. No need to collect static, as all directories are updated during build
+4. Set `DJANGO_SETTINGS_MODULE` in the PythonAnywhere WSGI configuration to
+   `config.settings.production`.
+
+5. Reload the app, if necessary. No need to collect static, as all directories are updated during build
 
 ## Video administration: manual YouTube links
 

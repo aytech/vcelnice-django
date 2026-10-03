@@ -150,7 +150,12 @@ describe('LightboxService', () => {
   })
 
   it('does not intercept unsafe photo URLs or invalid starting indices', async () => {
-    for (const image of ['javascript:alert(1)', 'data:image/svg+xml,<svg/>', 'file:///secret.jpg']) {
+    for (const image of [
+      'javascript:alert(1)',
+      'data:image/svg+xml,<svg/>',
+      'file:///secret.jpg',
+      'http://['
+    ]) {
       const event = new MouseEvent('click', { cancelable: true })
       service.openPhotos(event, [photos[0], { ...photos[1], image }], 0)
       expect(event.defaultPrevented).toBeFalse()
@@ -188,6 +193,13 @@ describe('LightboxService', () => {
     expect(frame.title).toBe(video.caption)
   })
 
+  it('uses a generic dialog label for a video without a caption', async () => {
+    service.openVideo(new MouseEvent('click'), { ...video, caption: '' })
+    await settle()
+
+    expect(dialog.getAttribute('aria-label')).toBe('Video')
+  })
+
   it('does not intercept malformed YouTube identifiers', async () => {
     for (const youtube_id of ['short', 'https://youtu.be/dQw4w9WgXcQ', '../bad?id=x']) {
       const event = new MouseEvent('click', { cancelable: true })
@@ -221,6 +233,31 @@ describe('LightboxService', () => {
     await settle()
 
     expect(factory).not.toHaveBeenCalled()
+    expect(document.getElementById('glightbox-body')).toBeNull()
+  })
+
+  it('ignores a pending lazy-load failure after SPA navigation', async () => {
+    let rejectLoad!: (error: Error) => void
+    const error = new Error('Late lightbox failure')
+    load.and.returnValue(new Promise<LightboxFactory>((_, reject) => {
+      rejectLoad = reject
+    }))
+
+    service.openPhotos(new MouseEvent('click'), photos, 0)
+    navigation.next(new NavigationStart(1, '/privacy'))
+    rejectLoad(error)
+    await settle()
+
+    expect(errorHandler.handleError).not.toHaveBeenCalled()
+  })
+
+  it('tolerates a lightbox opening before its dialog is attached', async () => {
+    lightbox.openAt.and.callFake(() => emit('open'))
+
+    service.openMap(new MouseEvent('click'))
+    await settle()
+
+    expect(lightbox.openAt).toHaveBeenCalledOnceWith(0)
     expect(document.getElementById('glightbox-body')).toBeNull()
   })
 
@@ -297,9 +334,37 @@ describe('LightboxService', () => {
     }))
     expect(document.activeElement).toBe(nextButton)
 
+    slide.tabIndex = -1
+    slide.focus()
+    dialog.dispatchEvent(new KeyboardEvent('keydown', {
+      key: 'Tab', bubbles: true, cancelable: true
+    }))
+    expect(document.activeElement).toBe(closeButton)
+
+    slide.focus()
+    dialog.dispatchEvent(new KeyboardEvent('keydown', {
+      key: 'Tab', shiftKey: true, bubbles: true, cancelable: true
+    }))
+    expect(document.activeElement).toBe(nextButton)
+
     dialog.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape', bubbles: true }))
     await settle()
     expect(lightbox.close).toHaveBeenCalledTimes(1)
+  })
+
+  it('ignores Tab when the dialog has no focusable controls', async () => {
+    closeButton.remove()
+    dialog.querySelector('.gprev')?.remove()
+    nextButton.remove()
+    service.openPhotos(new MouseEvent('click'), photos, 0)
+    await settle()
+    const event = new KeyboardEvent('keydown', {
+      key: 'Tab', bubbles: true, cancelable: true
+    })
+
+    dialog.dispatchEvent(event)
+
+    expect(event.defaultPrevented).toBeFalse()
   })
 
   it('hides inactive slides from keyboard and screen-reader navigation', async () => {
@@ -329,9 +394,10 @@ describe('LightboxService', () => {
     service.openPhotos(new MouseEvent('click'), photos, 0)
     await settle()
 
+    dialog.dispatchEvent(new Event('error'))
     image.dispatchEvent(new Event('error'))
 
-    expect(image.getAttribute('src')).toBe('/assets/images/default.png')
+    expect(image.getAttribute('src')).toBe('/static/client/assets/images/default.png')
     expect(image.alt).toBe('Fotografii se nepodařilo načíst.')
     expect(title.textContent).toContain('Fotografii se nepodařilo načíst.')
   })

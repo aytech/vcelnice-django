@@ -48,4 +48,16 @@ describe('ModalComponent', () => {
     expect(dismiss).toHaveBeenCalledOnceWith('Cross click')
     view.destroy()
   })
+
+  it('handles a dismissed modal result', async () => {
+    modalService.open.and.returnValue({
+      result: Promise.reject(new Error('Dismissed'))
+    } as any)
+
+    fixture.componentInstance.open('Dismissed title', 'Dismissed body')
+    await Promise.resolve()
+
+    expect(fixture.componentInstance.title).toBe('Dismissed title')
+    expect(fixture.componentInstance.body).toBe('Dismissed body')
+  })
 })

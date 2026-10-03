@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-12-30 15:34+0100\n"
+"POT-Creation-Date: 2026-10-03 21:41+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -16,11 +16,11 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
 
-#: contact/apps.py:7 contact/models.py:15 vcelnice/views.py:132
+#: contact/apps.py:7 contact/models.py:15 home/views.py:70
 msgid "Contact"
 msgstr "Kontakt"
 
-#: contact/forms.py:12 contact/forms.py:16 vcelnice/views.py:146
+#: contact/forms.py:12 contact/forms.py:16 home/views.py:84
 msgid "Your email address"
 msgstr "Vaše emailová adresa"
 
@@ -85,7 +85,7 @@ msgstr "telefonní číslo"
 msgid "Phone numbers"
 msgstr "telefonní čísla"
 
-#: documents/apps.py:7 documents/models.py:15
+#: documents/apps.py:7
 msgid "Documents"
 msgstr "Dokumenty"
 
@@ -93,7 +93,7 @@ msgstr "Dokumenty"
 msgid "Description"
 msgstr "Popis"
 
-#: documents/models.py:9 video/models.py:17
+#: documents/models.py:9
 msgid "File"
 msgstr "Soubor"
 
@@ -102,31 +102,103 @@ msgid "Type"
 msgstr "Typ"
 
 #: documents/models.py:14
-msgid "Document"
-msgstr "Dokument"
+#, fuzzy
+#| msgid "Certificates"
+msgid "Certificate"
+msgstr "Certifikáty"
+
+#: documents/models.py:15 home/views.py:68
+msgid "Certificates"
+msgstr "Certifikáty"
 
 #: home/apps.py:7
 msgid "Home app"
 msgstr "Hlavní strana"
 
-#: home/models.py:10 news/models.py:11 recipe/models.py:15 video/models.py:19
+#: home/models.py:14 news/models.py:11 recipe/models.py:15 video/models.py:18
 msgid "Thumbnail"
 msgstr "Miniatura"
 
-#: home/models.py:12 news/models.py:14 prices/models.py:14 prices/models.py:32
+#: home/models.py:16 news/models.py:14 prices/models.py:14 prices/models.py:32
 #: recipe/models.py:16
 msgid "Title"
 msgstr "Nadpis"
 
-#: home/models.py:13 news/models.py:13
+#: home/models.py:17 news/models.py:13
 msgid "Body"
 msgstr "Text"
 
-#: home/models.py:28 home/models.py:29
+#: home/models.py:27
+#, fuzzy
+#| msgid "Home text already exist. Update the existing record"
+msgid "Home text already exist. Update the existing record."
+msgstr "Text pro domovskou stránku již existuje. Aktualizujte stávající záznam"
+
+#: home/models.py:45 home/models.py:46
 msgid "Home text"
 msgstr "Text domovské stránky"
 
-#: news/apps.py:7 news/models.py:34
+#: home/views.py:67
+msgid "Number of glasses"
+msgstr "Počet sklenic"
+
+#: home/views.py:69
+msgid "Close"
+msgstr "Zavřít"
+
+#: home/views.py:71
+msgid "CZK"
+msgstr "Kč"
+
+#: home/views.py:72
+msgid "Home"
+msgstr "Domů"
+
+#: home/views.py:73
+msgid "Loading"
+msgstr "Načítám"
+
+#: home/views.py:74
+msgid "Not in store"
+msgstr "Není skladem"
+
+#: home/views.py:75
+msgid "Message was sent, thank you"
+msgstr "Zpráva byla odeslána, děkujeme"
+
+#: home/views.py:76 photo/apps.py:7 photo/models.py:57
+msgid "Photo"
+msgstr "Foto"
+
+#: home/views.py:77
+msgid "Price list"
+msgstr "Ceník"
+
+#: home/views.py:78
+msgid "Prices not found"
+msgstr "Ceníky nenalezeny"
+
+#: home/views.py:79 recipe/apps.py:7 recipe/models.py:40
+msgid "Recipes"
+msgstr "Recepty"
+
+#: home/views.py:80
+msgid "Region"
+msgstr "Region"
+
+#: home/views.py:81
+msgid "For reservation, please contact Jan Šaroch at"
+msgstr "Pro rezervaci kontaktujte prosím Jana Šarocha na e-mailové adrese"
+
+#: home/views.py:82
+msgid "Reserve"
+msgstr "Rezervovat"
+
+#: home/views.py:83 video/models.py:52
+msgid "Video"
+msgstr "Video"
+
+#: news/apps.py:7 news/models.py:39
 msgid "News"
 msgstr "Novinky"
 
@@ -134,15 +206,11 @@ msgstr "Novinky"
 msgid "Updated"
 msgstr "Aktualizováno"
 
-#: news/models.py:33
+#: news/models.py:38
 msgid "News article"
 msgstr "Novinka"
 
-#: photo/apps.py:7 photo/models.py:57 vcelnice/views.py:138
-msgid "Photo"
-msgstr "Foto"
-
-#: photo/models.py:19 video/models.py:12
+#: photo/models.py:19 video/models.py:14
 msgid "Caption"
 msgstr "Nadpis"
 
@@ -154,7 +222,7 @@ msgstr "Obrázek"
 msgid "Photos"
 msgstr "Fotografie"
 
-#: prices/apps.py:7 prices/models.py:51
+#: prices/apps.py:7 prices/models.py:56
 msgid "Prices"
 msgstr "Ceny"
 
@@ -186,17 +254,13 @@ msgstr "Popis množství pro rezervaci, např. Počet sklenic"
 msgid "In store"
 msgstr "Skladem"
 
-#: prices/models.py:31 prices/models.py:50
+#: prices/models.py:31 prices/models.py:55
 msgid "Price"
 msgstr "Cena"
 
 #: prices/models.py:34
 msgid "Weight"
 msgstr "Váha"
-
-#: recipe/apps.py:7 recipe/models.py:40 vcelnice/views.py:141
-msgid "Recipes"
-msgstr "Recepty"
 
 #: recipe/models.py:12
 msgid "Preview"
@@ -214,86 +278,29 @@ msgstr "Text receptu"
 msgid "Recipe"
 msgstr "Recept"
 
-#: vcelnice/urls.py:27
+#: config/urls.py:12
 msgid "Administration"
 msgstr "Správa"
 
-#: vcelnice/views.py:114
-msgid "Failed to send email"
-msgstr ""
-
-#: vcelnice/views.py:129
-msgid "Number of glasses"
-msgstr "Počet sklenic"
-
-#: vcelnice/views.py:130
-msgid "Certificates"
-msgstr "Certifikáty"
-
-#: vcelnice/views.py:131
-msgid "Close"
-msgstr "Zavřít"
-
-#: vcelnice/views.py:133
-msgid "CZK"
-msgstr "Kč"
-
-#: vcelnice/views.py:134
-msgid "Home"
-msgstr "Domů"
-
-#: vcelnice/views.py:135
-msgid "Loading"
-msgstr "Načítám"
-
-#: vcelnice/views.py:136
-msgid "Not in store"
-msgstr "Není skladem"
-
-#: vcelnice/views.py:137
-msgid "Message was sent, thank you"
-msgstr "Zpráva byla odeslána, děkujeme"
-
-#: vcelnice/views.py:139
-msgid "Price list"
-msgstr "Ceník"
-
-#: vcelnice/views.py:140
-msgid "Prices not found"
-msgstr "Ceníky nenalezeny"
-
-#: vcelnice/views.py:142
-msgid "Region"
-msgstr "Region"
-
-#: vcelnice/views.py:143
-msgid "For reservation, please contact Jan Šaroch at"
-msgstr "Pro rezervaci kontaktujte prosím Jana Šarocha na e-mailové adrese"
-
-#: vcelnice/views.py:144
-msgid "Reserve"
-msgstr "Rezervovat"
-
-#: vcelnice/views.py:145 video/models.py:66
-msgid "Video"
-msgstr "Video"
-
-#: video/apps.py:7 video/models.py:67
+#: video/apps.py:7 video/models.py:53
 msgid "Videos"
 msgstr "Videa"
 
-#: video/models.py
+#: video/models.py:21
 msgid "YouTube video ID"
 msgstr "ID videa na YouTube"
 
-#: video/models.py
+#: video/models.py:22
 msgid ""
-"Upload the video to YouTube manually and enter its 11-character ID, not the full URL. "
-"Leave blank to hide the video from the website."
+"Upload the video to YouTube manually and enter its 11-character ID, not the "
+"full URL. Leave blank to hide the video from the website."
 msgstr ""
-"Video nahrajte na YouTube ručně a zadejte jeho 11znakové ID, nikoli celou adresu URL. "
-"Pokud pole ponecháte prázdné, video se na webu nezobrazí."
+"Video nahrajte na YouTube ručně a zadejte jeho 11znakové ID, nikoli celou "
+"adresu URL. Pokud pole ponecháte prázdné, video se na webu nezobrazí."
 
-#: video/models.py
+#: video/models.py:26
 msgid "Enter a valid 11-character YouTube video ID."
 msgstr "Zadejte platné 11znakové ID videa na YouTube."
+
+#~ msgid "Document"
+#~ msgstr "Dokument"

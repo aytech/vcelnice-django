@@ -7,7 +7,6 @@
 
     @if (pricesResource.hasValue()) {
       @let prices = pricesResource.value();
-
       @if (prices.length) {
         <div class="price-grid">
           @for (price of prices; track price.id) {
@@ -62,7 +61,7 @@
       <div class="spinner" role="status">
         <!--suppress HtmlUnknownTarget -->
         <img
-          src="/assets/spinner_horizontal.svg"
+          src="/static/client/assets/spinner_horizontal.svg"
           alt="{{ cultures().loading }}...">
       </div>
     }

@@ -75,7 +75,7 @@ describe('PhotoComponent', () => {
     expect(galleryLinks.map(link => link.getAttribute('href')))
       .toEqual(photos.slice(0, 8).map(photo => photo.image))
     expect(galleryLinks[2].querySelector('img')?.getAttribute('src'))
-      .toBe('/assets/images/default.png')
+      .toBe('/static/client/assets/images/default.png')
     expect(galleryLinks[2].querySelector('img')?.alt).toBe(photos[2].caption)
     expect(element.querySelector('a[hidden]')).toBeNull()
 

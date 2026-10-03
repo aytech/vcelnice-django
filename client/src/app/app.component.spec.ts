@@ -1,11 +1,26 @@
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { TestBed, waitForAsync } from '@angular/core/testing';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Params } from '@angular/router';
+import { Subject } from 'rxjs';
 import { AppComponent } from './app.component';
 import { LanguageService } from '../services';
 
 describe('AppComponent', () => {
+  let queryParams: Subject<Params>;
+  let route: { snapshot: { queryParams: Params }, queryParams: Subject<Params> };
+  let languageService: jasmine.SpyObj<LanguageService>;
+
   beforeEach(waitForAsync(() => {
+    queryParams = new Subject<Params>();
+    route = {
+      snapshot: { queryParams: {} },
+      queryParams
+    };
+    languageService = jasmine.createSpyObj<LanguageService>(
+      'LanguageService',
+      ['setLanguage']
+    );
+
     TestBed.configureTestingModule({
       declarations: [
         AppComponent
@@ -13,24 +28,16 @@ describe('AppComponent', () => {
       providers: [
         {
           provide: ActivatedRoute,
-          useValue: {
-            snapshot: { queryParams: {} },
-            queryParams: { subscribe: () => ({ unsubscribe() {} }) }
-          }
+          useValue: route
         },
         {
           provide: LanguageService,
-          useValue: { setLanguage: () => {} }
+          useValue: languageService
         }
       ],
       schemas: [NO_ERRORS_SCHEMA]
     }).compileComponents();
   }));
-  it('should create the app', () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    const app = fixture.debugElement.componentInstance;
-    expect(app).toBeTruthy();
-  });
   it('should render the application shell', () => {
     const fixture = TestBed.createComponent(AppComponent);
     fixture.detectChanges();
@@ -49,5 +56,25 @@ describe('AppComponent', () => {
     expect(getComputedStyle(compiled).display).toBe('flex');
     expect(getComputedStyle(compiled).flexDirection).toBe('column');
     expect(getComputedStyle(main!).flexGrow).toBe('1');
+  });
+
+  it('uses the locale from the initial URL', () => {
+    route.snapshot.queryParams = { locale: 'en' };
+
+    const fixture = TestBed.createComponent(AppComponent);
+    fixture.detectChanges();
+
+    expect(languageService.setLanguage).toHaveBeenCalledOnceWith('en');
+  });
+
+  it('updates the language when URL query parameters change', () => {
+    const fixture = TestBed.createComponent(AppComponent);
+    fixture.detectChanges();
+
+    queryParams.next({});
+    expect(languageService.setLanguage).not.toHaveBeenCalled();
+
+    queryParams.next({ locale: 'en' });
+    expect(languageService.setLanguage).toHaveBeenCalledOnceWith('en');
   });
 });

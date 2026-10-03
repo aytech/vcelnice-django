@@ -5,7 +5,6 @@ import { ContactComponent } from './contact.component'
 import { LightboxService } from '../shared/lightbox/lightbox.service'
 
 describe('ContactComponent', () => {
-  let component: ContactComponent
   let fixture: ComponentFixture<ContactComponent>
   let lightbox: jasmine.SpyObj<LightboxService>
 
@@ -21,12 +20,7 @@ describe('ContactComponent', () => {
 
   beforeEach(() => {
     fixture = TestBed.createComponent(ContactComponent)
-    component = fixture.componentInstance
     fixture.detectChanges()
-  })
-
-  it('should create', () => {
-    expect(component).toBeTruthy()
   })
 
   it('renders contact cards without a portrait', () => {

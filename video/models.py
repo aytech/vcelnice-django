@@ -5,7 +5,7 @@ from django.core.validators import RegexValidator
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 
-from vcelnice.common.image import ImageUploader
+from common.images import ImageUploader
 
 
 class Video(models.Model):

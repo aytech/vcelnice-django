@@ -1,0 +1,15 @@
+[run]
+branch = True
+source = .
+omit =
+    */migrations/*
+    */tests/*
+    manage.py
+    vcelnice-env/*
+    config/settings/*
+[report]
+show_missing = True
+skip_covered = True
+
+[html]
+directory = htmlcov

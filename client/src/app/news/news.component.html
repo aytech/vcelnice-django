@@ -17,7 +17,7 @@
                 @if (!article.icon) {
                   <img
                     class="card-img-top default"
-                    src="/assets/images/default.png"
+                    src="/static/client/assets/images/default.png"
                     alt="{{ article.title }}">
                 } @else {
                   <img class="card-img-top" src="{{ article.icon }}" alt="{{ article.title }}">
@@ -43,7 +43,7 @@
       <div class="news">
         <div class="spinner" role="status">
           <!--suppress HtmlUnknownTarget -->
-          <img src="/assets/spinner_horizontal.svg" alt="Loading...">
+          <img src="/static/client/assets/spinner_horizontal.svg" alt="Loading...">
         </div>
       </div>
     }

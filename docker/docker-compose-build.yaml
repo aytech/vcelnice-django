@@ -1,56 +1,41 @@
 name: "vcelnice-builder"
 services:
-  init:
-    image: alpine:latest
-    volumes:
-      - shared:/shared
-    command:
-      - sh
-      - -c
-      - |
-        rm -f /shared/node-build-done
-        touch /shared/build-started
-        echo "Build synchronization initialized."
   node:
     image: ${NODE_IMAGE:-node:24-bookworm-slim}
     volumes:
       - ../client:/app
-      - shared:/shared
     working_dir: /app
-    depends_on:
-      init:
-        condition: service_completed_successfully
     command:
       - sh
       - -c
       - |
         echo "Starting Node build..."
+        set -eu
         
-        npm install -g npm@12.2.0 &&
-        npm ci --no-audit --no-fund &&
-        npm run build &&
-        sed -i -E 's+(src|href)="([^/"][^"]*\.(js|css))"+\1="/assets/\2"+g' dist/index.html &&
-        touch /shared/node-build-done
+        npm install -g npm@12.2.0
+        npm ci --no-audit --no-fund
+        npm run build
+        test -s dist/index.html
         
         echo "Node build finished."
   python:
     image: ${PYTHON_IMAGE:-python:3.14-slim}
     volumes:
       - ..:/app
-      - shared:/shared
     working_dir: /app
     environment:
       DJANGO_ALLOWED_HOSTS: ${DJANGO_ALLOWED_HOSTS:-}
       DJANGO_SECRET_KEY: ${DJANGO_SECRET_KEY:-}
-      DJANGO_SETTINGS_MODULE: vcelnice.settings.production
+      DJANGO_SETTINGS_MODULE: config.settings.production
       PATH: "/opt/venv/bin:$PATH"
     depends_on:
-      init:
+      node:
         condition: service_completed_successfully
     command:
       - sh
       - -c
       - |
+        set -eu
         DEBIAN_FRONTEND=noninteractive apt-get update
         DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends zip
         rm -rf /var/lib/apt/lists/*
@@ -60,15 +45,14 @@ services:
         
         python -m pip install --upgrade pip
         python -m pip install -r ./requirements.txt
-        python manage.py collectstatic --clear --noinput --settings=vcelnice.settings.production
         
-        echo "Waiting for Node build to complete..."
+        echo "Node build should be complete by now, collecting static files"
         
-        while [ ! -f "/shared/node-build-done" ]; do
-          sleep 1
-        done
+        test -s client/dist/index.html
+        python manage.py collectstatic --clear --noinput --settings=config.settings.production
+        test -s staticfiles/client/index.html
         
-        echo "Node build complete, zipping"
+        echo "Static files collected, zipping"
         
         rm --force vcelnice.zip
         zip -r vcelnice.zip . \
@@ -85,18 +69,22 @@ services:
           -x "client/e2e/*" \
           -x "client/src/*" \
           -x "client/node_modules/*" \
-          -x "vcelnice/logs/*" \
-          -x "vcelnice/media/*" \
+          -x "config/settings/development.py" \
+          -x "config/settings/testing.py" \
+          -x "logs/*" \
+          -x "media/*" \
           -x "video/tests/*" \
           -x "*/__pycache__/*" \
+          -x "*/tests/*" \
           -x "docker/*" \
+          -x ".coverage" \
+          -x ".coveragerc" \
           -x ".env.tmpl" \
           -x ".dockerignore" \
           -x ".gitignore" \
           -x ".nvmrc" \
+          -x "requirements*.txt" \
           -x "*.sqlite3" \
-          -x "vcelnice/asgi.py" \
-          -x "vcelnice/wsgi.py" \
+          -x "config/asgi.py" \
+          -x "config/wsgi.py" \
           -x "README.md"
-volumes:
-  shared:

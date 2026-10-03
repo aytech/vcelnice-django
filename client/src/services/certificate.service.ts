@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core'
 import { HttpClient } from '@angular/common/http'
-import { Observable } from 'rxjs'
+import { map, Observable } from 'rxjs'
 import { ApiConstants } from '@config'
 import { Certificate } from '@interfaces'
 
@@ -13,7 +13,9 @@ export class CertificateService {
   ) {
   }
 
-  getCertificates(): Observable<Array<Certificate>> {
-    return this.http.get<Certificate[]>(ApiConstants.GET_CERTIFICATES);
+  getCertificates(): Observable<Certificate[]> {
+    return this.http
+      .get<{certificates: Certificate[]}>(ApiConstants.GET_CERTIFICATES)
+      .pipe(map(response => response.certificates))
   }
 }

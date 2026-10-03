@@ -7,5 +7,3 @@ python-dotenv==1.2.1
 python-http-client==3.3.7
 six==1.17.0
 sqlparse==0.5.5
-google-api-python-client==2.187.0
-google-auth-httplib2==0.3.0

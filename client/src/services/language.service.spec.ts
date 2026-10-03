@@ -30,6 +30,9 @@ describe('LanguageService', () => {
   });
 
   it('exposes the default locale and cultures through readonly signals', () => {
+    expect(service.default_locale).toBe('cs');
+    expect(service.locale).toBe('cs');
+    expect(service.cultures.home).toBe('Domů');
     expect(service.localeSignal()).toBe('cs');
     expect(service.culturesSignal().home).toBe('Domů');
     expect(service.culturesSignal().contact).toBe('Kontakt');
@@ -37,6 +40,8 @@ describe('LanguageService', () => {
 
   it('updates locale and merged cultures signals after loading a supported language', () => {
     const initialCultures = service.culturesSignal();
+    const emittedLocales: string[] = [];
+    service.language.subscribe(locale => emittedLocales.push(locale));
 
     service.setLanguage('en');
 
@@ -54,6 +59,7 @@ describe('LanguageService', () => {
     expect(service.culturesSignal().home).toBe('Home');
     expect(service.culturesSignal().news).toBe('News');
     expect(service.culturesSignal().contact).toBe('Kontakt');
+    expect(emittedLocales).toEqual(['en']);
   });
 
   it('ignores an older translation response after the locale changes again', () => {

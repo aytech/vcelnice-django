@@ -26,7 +26,7 @@ describe('LightboxService with GLightbox', () => {
     service = TestBed.inject(LightboxService)
     host = document.createElement('div')
     trigger = document.createElement('a')
-    trigger.href = '/assets/images/default.png'
+    trigger.href = '/static/client/assets/images/default.png'
     trigger.textContent = 'Otevřít fotogalerii'
     host.appendChild(trigger)
     document.body.appendChild(host)
@@ -99,9 +99,9 @@ describe('LightboxService with GLightbox', () => {
   function photo(id: number): Photo {
     return {
       id,
-      image: '/assets/images/default.png',
+      image: '/static/client/assets/images/default.png',
       caption: `Fotografie ${id}`,
-      thumb: '/assets/images/default.png'
+      thumb: '/static/client/assets/images/default.png'
     }
   }
 
