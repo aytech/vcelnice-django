@@ -1,5 +1,5 @@
 export class ApiConstants {
-  public static GET_CULTURES = '/api/v1/cultures/'
+  public static GET_CULTURES = '/api/v1/home/cultures/'
   public static GET_HOME = '/api/v1/home/detail/'
   public static GET_NEWS = '/api/v1/news/'
   public static GET_PRICES = '/api/v1/prices/list/'

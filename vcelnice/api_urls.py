@@ -10,5 +10,4 @@ urlpatterns = [
     path("certificates/", views.certificate_list, name="certificates-api"),
     path("videos/", views.video_list, name="videos-api"),
     path("token/", views.csrf_token, name="csrf-token-api"),
-    path("cultures/", views.get_cultures, name="cultures-api"),
 ]

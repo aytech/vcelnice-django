@@ -81,6 +81,12 @@ Localizing:
 
     `django-admin makemessages -a` or `django-admin makemessages -l cs --ignore={node_modules,dist,static_root}`
     
+   In case gettext tools are missing:
+
+   `apt update`
+
+   `apt install -y gettext`
+
 4. After all strings are translated, compile:
 
     `django-admin compilemessages`
