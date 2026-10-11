@@ -24,7 +24,7 @@ services:
         exec python manage.py runserver 0.0.0.0:8888 --settings=config.settings.development
 
     ports:
-      - "127.0.0.1:8888:8888"
+      - "8888:8888"
 
   ui:
     image: ${NODE_IMAGE:-node:24-bookworm-slim}
@@ -67,7 +67,7 @@ services:
           --proxy-config /config/proxy.conf.json
 
     ports:
-      - "127.0.0.1:4200:4200"
+      - "4200:4200"
 
 volumes:
   django_pip_cache:

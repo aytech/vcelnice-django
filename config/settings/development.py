@@ -1,10 +1,7 @@
 from .base import *
 
 ALLOWED_HOSTS = [
-    '10.0.2.2',
-    '10.0.3.2',
-    'localhost',
-    '0.0.0.0',
+    '10.0.1.18',
     'api'
 ]
 
