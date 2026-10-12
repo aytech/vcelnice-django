@@ -33,6 +33,8 @@ services:
 
     environment:
       NG_CLI_ANALYTICS: "false"
+      CHROME_BIN: /usr/bin/chromium
+      NODE_OPTIONS: --no-deprecation
 
     depends_on:
       - api
@@ -52,6 +54,12 @@ services:
       - sh
       - -c
       - |
+        set -eu
+
+        apt-get update
+        apt-get install -y --no-install-recommends chromium
+        rm -rf /var/lib/apt/lists/*
+
         if [ ! -x node_modules/.bin/ng ]; then
           if [ -f package-lock.json ]; then
             npm ci --prefer-offline --no-audit --no-fund
